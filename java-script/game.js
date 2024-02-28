@@ -5,46 +5,40 @@ let keyboard = new Keyboard();
 function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
-
-    console.log('My Character is', world.character);
 }
 
 document.addEventListener('keydown', (e) => {
-    console.log(e.keyCode);
     if (e.keyCode == 39) {
-        keyboard.RIGHT = true;
+        keyboard.KEY_RIGHT = true;
     }
     if (e.keyCode == 37) {
-        keyboard.LEFT = true;
+        keyboard.KEY_LEFT = true;
     }
     if (e.keyCode == 38) {
-        keyboard.UP = true;
+        keyboard.KEY_UP = true;
     }
     if (e.keyCode == 40) {
-        keyboard.DOWN = true;
+        keyboard.KEY_DOWN = true;
     }
     if (e.keyCode == 32) {
-        keyboard.SPACE = true;
+        keyboard.KEY_SPACE = true;
     }
-
 });
 
 document.addEventListener('keyup', (e) => {
-    console.log(e.keyCode);
     if (e.keyCode == 39) {
-        keyboard.RIGHT = false;
+        keyboard.KEY_RIGHT = false;
     }
     if (e.keyCode == 37) {
-        keyboard.LEFT = false;
+        keyboard.KEY_LEFT = false;
     }
     if (e.keyCode == 38) {
-        keyboard.UP = false;
+        keyboard.KEY_UP = false;
     }
     if (e.keyCode == 40) {
-        keyboard.DOWN = false;
+        keyboard.KEY_DOWN = false;
     }
     if (e.keyCode == 32) {
-        keyboard.SPACE = false;
+        keyboard.KEY_SPACE = false;
     }
-
 });
