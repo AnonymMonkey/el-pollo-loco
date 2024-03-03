@@ -1,10 +1,11 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let coordinates = new Coordinates();
 
 function init() {
     canvas = document.getElementById('canvas');
-    world = new World(canvas, keyboard);
+    world = new World(canvas, keyboard, coordinates);
 }
 
 document.addEventListener('keydown', (e) => {

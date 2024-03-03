@@ -1,13 +1,19 @@
-class MovableObject {
-    x = 120;
-    y = 180;
-    height = 250;
-    width = 125;
+class MovableObject extends Coordinates {
     img;
+    imageLength;
+    imageStartAt;
     imageCache = {};
     currentImage = 0;
-    speed = 0.1;
     otherDirection = false;
+
+    getImages(object, basicPath, secPath) {
+        let IMAGES_WALKING = object.IMAGES_WALKING;
+        let imageStartAt = object.imageStartAt;
+        let imageLength = imageStartAt + object.imageLength;
+        for (let i = imageStartAt; i < imageLength; i++) {
+            IMAGES_WALKING.push(basicPath + i + secPath);
+        }
+    }
 
     loadImage(path) {
         this.img = new Image(); /* this.img = document.getElementById('image')   <img id="image"> */
@@ -35,9 +41,9 @@ class MovableObject {
         }, 1000 / 120);
     }
 
-    moveLeft() {
+    moveLeft(speed) {
         setInterval(() => {
-            this.x -= this.speed;
+            this.x -= speed;
         }, 1000 / 120);
     }
 }

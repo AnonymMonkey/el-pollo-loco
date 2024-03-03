@@ -1,26 +1,19 @@
 class Endboss extends MovableObject {
+    x = this.endbossX;
+    y = this.endbossY;
+    height = this.endbossHeight;
+    width = this.endbossWidth;
 
-    x = 2300;
-    y = 50;
-    height = 400;
-    width = 400;
+    imageLength = 8;
+    imageStartAt = 5;
 
-    IMAGES_WALKING = [
-        'assets/img/4_enemie_boss_chicken/2_alert/G5.png',
-        'assets/img/4_enemie_boss_chicken/2_alert/G6.png',
-        'assets/img/4_enemie_boss_chicken/2_alert/G7.png',
-        'assets/img/4_enemie_boss_chicken/2_alert/G8.png',
-        'assets/img/4_enemie_boss_chicken/2_alert/G9.png',
-        'assets/img/4_enemie_boss_chicken/2_alert/G10.png',
-        'assets/img/4_enemie_boss_chicken/2_alert/G11.png',
-        'assets/img/4_enemie_boss_chicken/2_alert/G12.png'
-    ];
+    IMAGES_WALKING = [];
 
     constructor() {
-        super().loadImage(this.IMAGES_WALKING[0]);
+        super().getImages(this, 'assets/img/4_enemie_boss_chicken/2_alert/G', '.png');
+        this.loadImage(this.IMAGES_WALKING[0]);
         this.loadImages(this.IMAGES_WALKING);
         this.animateModel();
-        /* this.x = 700; */
     }
 
     animateModel() {

@@ -1,18 +1,21 @@
 class Character extends MovableObject {
-    speed = 5;
-    IMAGES_WALKING = [
-        'assets/img/2_character_pepe/2_walk/W-21.png',
-        'assets/img/2_character_pepe/2_walk/W-22.png',
-        'assets/img/2_character_pepe/2_walk/W-23.png',
-        'assets/img/2_character_pepe/2_walk/W-24.png',
-        'assets/img/2_character_pepe/2_walk/W-25.png',
-        'assets/img/2_character_pepe/2_walk/W-26.png'
-    ];
     world;
+
+    x = this.characterX;
+    y = this.characterY;
+    speed = this.characterSpeed;
+    height = this.characterHeight;
+    width = this.characterWidth;
+
+    imageLength = 6;
+    imageStartAt = 21;
+
+    IMAGES_WALKING = [];
     walking_sound = new Audio('assets/audio/running.mp3');
 
     constructor() {
-        super().loadImage('assets/img/2_character_pepe/2_walk/W-21.png');
+        super().getImages(this, 'assets/img/2_character_pepe/2_walk/W-', '.png');
+        this.loadImage(this.IMAGES_WALKING[0]);
         this.loadImages(this.IMAGES_WALKING);
 
         this.animateModel();
