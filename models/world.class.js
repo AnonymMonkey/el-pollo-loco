@@ -24,7 +24,9 @@ class World {
     }
 
     getBackgroundImages(camera_x) {
-        for (let i = 0; i < 5; i++) {
+        /* debugger */
+        let length = this.coordinates.backgroundObjectLength;
+        for (let i = 0; i < length; i++) {
             if (this.count_png) {
                 this.number = 1;
                 this.count_png = false;
@@ -52,7 +54,7 @@ class World {
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
-        this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.collectables);
         this.addToMap(this.character);
 
         this.ctx.translate(-this.camera_x, 0);
@@ -101,5 +103,6 @@ class World {
     setWorld() {
         this.character.world = this;
         this.coordinates.world = this;
+        this.level.level_end_x = this.coordinates.levelEndX;
     }
 }

@@ -1,6 +1,9 @@
 class Coordinates {
     world;
 
+    // Level
+    levelEndX = 720 * 3;
+
     // Character
     characterHeight = 250;
     characterWidth = 125;
@@ -28,6 +31,12 @@ class Coordinates {
     coinsX = 500;
     coinsY = 100;
 
+    // Bottles
+    bottlesHeight = 100;
+    bottlesWidth = 100;
+    bottlesX = 500;
+    bottlesY = 330;
+
     // Clouds
     cloudsHeight = 300;
     cloudsWidth = 600;
@@ -38,4 +47,5 @@ class Coordinates {
     // Background Objects
     backgroundObjectX = 120;
     backgroundObjectY = 180;
+    backgroundObjectLength = 5;
 }
