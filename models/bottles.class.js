@@ -1,8 +1,8 @@
 class Bottle extends MovableObject {
     x = this.bottlesX;
     y = this.bottlesY;
-    height = this.bottlesHeight;
-    width = this.bottlesWidth;
+    height = this.bottlesSize;
+    width = this.bottlesSize;
 
     imageLength = 2;
     imageStartAt = 1;

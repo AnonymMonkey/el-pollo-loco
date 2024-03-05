@@ -1,8 +1,8 @@
 class Clouds extends MovableObject {
     x = this.cloudsX;
     y = this.cloudsY;
-    height = this.cloudsHeight;
-    width = this.cloudsWidth;
+    height = this.cloudsSize;
+    width = this.cloudsSize * 2;
     speed = this.cloudsSpeed;
 
     constructor() {

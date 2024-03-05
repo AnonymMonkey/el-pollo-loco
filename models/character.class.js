@@ -4,8 +4,8 @@ class Character extends MovableObject {
     x = this.characterX;
     y = this.characterY;
     speed = this.characterSpeed;
-    height = this.characterHeight;
-    width = this.characterWidth;
+    height = this.characterSize;
+    width = this.characterSize / 2;
 
     imageLength = 6;
     imageStartAt = 21;

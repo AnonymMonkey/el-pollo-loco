@@ -18,9 +18,43 @@ class World {
         this.canvas = canvas;
         this.keyboard = keyboard;
         this.coordinates = coordinates;
+        this.movableObjectCoordination(this.number, this.level);
         this.getBackgroundImages(this.camera_x);
         this.draw();
         this.setWorld();
+    }
+
+    movableObjectCoordination(number, level) {
+        let self = this;
+        requestAnimationFrame(function () {
+            self.chickenCoordination(number, level);
+            /* self.cloudCoordination(number, level); */
+            self.movableObjectCoordination(number, level);
+        });
+    }
+
+    chickenCoordination(number, level) {
+        number = 6;
+        let enemies = level.enemies;
+        if (enemies.length == 0) {
+            for (let i = 0; i < number; i++) {
+                enemies.push(new Chicken());
+                enemies.push(new Chicken_Small());
+            }
+        };
+
+        if (enemies.length > 1) {
+            enemies.forEach((chicken, index) => {
+                if (chicken.x < -180) {
+                    enemies.splice(index, 1);
+                    if (Math.random() < 0.5) {
+                        enemies.push(new Chicken());
+                    } else {
+                        enemies.push(new Chicken_Small());
+                    }
+                }
+            });
+        }
     }
 
     getBackgroundImages(camera_x) {
@@ -45,6 +79,7 @@ class World {
     }
 
     draw() {
+        let self = this;
         /* setzt einen Ausschnitt der Canvas auf seine Ursprungsfarbe zurück */
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -53,14 +88,14 @@ class World {
 
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
-        this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.collectables);
+        this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.level.bosses);
         this.addToMap(this.character);
 
         this.ctx.translate(-this.camera_x, 0);
 
         /* Draw() wird immer wieder aufgerufen */
-        let self = this;
         requestAnimationFrame(function () {
             self.draw();
         });

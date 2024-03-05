@@ -5,41 +5,38 @@ class Coordinates {
     levelEndX = 720 * 3;
 
     // Character
-    characterHeight = 250;
-    characterWidth = 125;
+    characterSize = 250;
     characterX = 120;
     characterY = 180;
-    characterSpeed = 5;
+    characterSpeed = 10;
 
     // Chicken
-    chickenHeight = 60;
-    chickenWidth = 60;
-    chickenX = 200;
-    chickenY = 370;
-    chickenSpeed = 0.15;
+    chickenSize = 80;
+    chickenX = this.levelEndX;
+    chickenY = 350;
+    chickenSpeed = 0.5;
+
+    chickenSmallSize = 60;
+    chickenSmallY = 370;
 
     // Endboss
-    endbossHeight = 400;
-    endbossWidth = 400;
+    endbossSize = 400;
     endbossX = 2300;
     endbossY = 50;
     /* endbossSpeed = 0; */
 
     // Coins
-    coinsHeight = 120;
-    coinsWidth = 120;
+    coinsSize = 120;
     coinsX = 500;
     coinsY = 100;
 
     // Bottles
-    bottlesHeight = 100;
-    bottlesWidth = 100;
+    bottlesSize = 80;
     bottlesX = 500;
-    bottlesY = 330;
+    bottlesY = 344;
 
     // Clouds
-    cloudsHeight = 300;
-    cloudsWidth = 600;
+    cloudsSize = 300;
     cloudsX = 0;
     cloudsY = 10;
     cloudsSpeed = 0.1;

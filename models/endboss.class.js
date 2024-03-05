@@ -1,8 +1,8 @@
 class Endboss extends MovableObject {
     x = this.endbossX;
     y = this.endbossY;
-    height = this.endbossHeight;
-    width = this.endbossWidth;
+    height = this.endbossSize;
+    width = this.endbossSize;
 
     imageLength = 8;
     imageStartAt = 5;

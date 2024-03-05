@@ -1,8 +1,8 @@
 class Coin extends MovableObject {
     x = this.coinsX;
     y = this.coinsY;
-    height = this.coinsHeight;
-    width = this.coinsWidth;
+    height = this.coinsSize;
+    width = this.coinsSize;
 
     imageLength = 2;
     imageStartAt = 1;
