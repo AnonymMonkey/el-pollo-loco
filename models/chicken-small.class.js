@@ -5,13 +5,18 @@ class Chicken_Small extends MovableObject {
     height = this.chickenSmallSize;
     width = this.chickenSmallSize;
 
-    imageLength = 3;
-    imageStartAt = 1;
-
+    IMAGES_WALKING_StartAt = 1;
+    IMAGES_WALKING_Length = 3;
     IMAGES_WALKING = [];
 
     constructor() {
-        super().getImages(this, 'assets/img/3_enemies_chicken/chicken_small/1_walk/', '_w.png');
+        super().getImages(
+            'assets/img/3_enemies_chicken/chicken_small/1_walk/',
+            '_w.png',
+            this.IMAGES_WALKING_StartAt,
+            this.IMAGES_WALKING_Length,
+            this.IMAGES_WALKING
+        );
         this.loadImage(this.IMAGES_WALKING[0]);
         this.loadImages(this.IMAGES_WALKING);
         this.x = this.x + 500 + Math.random() * this.levelEndX;

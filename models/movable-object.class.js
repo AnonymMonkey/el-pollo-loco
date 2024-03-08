@@ -6,12 +6,27 @@ class MovableObject extends Coordinates {
     currentImage = 0;
     otherDirection = false;
 
-    getImages(object, basicPath, secPath) {
-        let IMAGES_WALKING = object.IMAGES_WALKING;
-        let imageStartAt = object.imageStartAt;
-        let imageLength = imageStartAt + object.imageLength;
+    speedY = 0;
+    acceleration = 2;
+
+    applyGravity() {
+        this.speedY = 0;
+        setInterval(() => {
+            if (this.isAboveGround() || this.speedY > 0) {
+                this.y -= this.speedY;
+                this.speedY -= this.acceleration;
+            }
+        }, 1000 / 25);
+    }
+
+    isAboveGround() {
+        return this.y < 180;
+    }
+
+    getImages(basicPath, secPath, imageStartAt, imageLength, array) {
+        imageLength = imageStartAt + imageLength;
         for (let i = imageStartAt; i < imageLength; i++) {
-            IMAGES_WALKING.push(basicPath + i + secPath);
+            array.push(basicPath + i + secPath);
         }
     }
 
@@ -35,15 +50,21 @@ class MovableObject extends Coordinates {
         this.currentImage++;
     }
 
-    moveRight() {
-        setInterval(() => {
-            this.x += this.speed;
-        }, 1000 / 120);
+    moveRight(speed) {
+        /*         setInterval(() => {
+                    this.x += this.speed;
+                }, 1000 / 120); */
+        this.x += this.speed;
     }
 
     moveLeft(speed) {
-        setInterval(() => {
-            this.x -= speed;
-        }, 1000 / 120);
+        /*         setInterval(() => {
+                    this.x -= speed;
+                }, 1000 / 120); */
+        this.x -= this.speed;
+    }
+
+    jump() {
+        this.speedY = 25;
     }
 }

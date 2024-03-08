@@ -8,6 +8,7 @@ class World {
     camera_x = 0;
     count_png = false;
     number = 1;
+    game_sound = new Audio('assets/audio/background-music.mp3');
 
     constructor(canvas, keyboard, coordinates) {
         /* Der Kontext ist ein Objekt mit Eigenschaften und Methoden, der Grafik innerhalb des Canvas rendert */
@@ -22,6 +23,9 @@ class World {
         this.getBackgroundImages(this.camera_x);
         this.draw();
         this.setWorld();
+        /*         this.game_sound.play();
+                this.game_sound.loop = true;
+                this.game_sound.volume = 0.1; */
     }
 
     movableObjectCoordination(number, level) {
@@ -112,7 +116,10 @@ class World {
             this.flipImage(mo);
         }
         this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
-
+        /*         this.ctx.lineWidth = '5';
+                this.ctx.strokeStyle = 'blue';
+                this.ctx.rect(mo.x, mo.y, mo.x + mo.width, mo.y + mo.height);
+                this.ctx.stroke(); */
         if (mo.otherDirection) {
             this.flipImageBack(mo);
         }
