@@ -4,21 +4,12 @@ class Coin extends MovableObject {
     height = this.coinsSize;
     width = this.coinsSize;
 
-    IMAGES_WALKING_StartAt = 1;
-    IMAGES_WALKING_Length = 2;
-    IMAGES_WALKING = [];
+    IMAGES = this.imagesCoin;
 
     constructor() {
-        /* ebugger */
-        super().getImages(
-            'assets/img/8_coin/coin_',
-            '.png',
-            this.IMAGES_WALKING_StartAt,
-            this.IMAGES_WALKING_Length,
-            this.IMAGES_WALKING
-        );
-        this.loadImage(this.IMAGES_WALKING[0]);
-        this.loadImages(this.IMAGES_WALKING);
+        super().getAllImages(this);
+        this.loadFirstImage(this);
+        this.loadAllImages(this);
 
         this.x = this.x + Math.random() * 1600;
         this.y = this.y + Math.random() * 150;
@@ -28,7 +19,11 @@ class Coin extends MovableObject {
 
     animateModel() {
         setInterval(() => {
-            this.playAnimation(this.IMAGES_WALKING);
+            this.playAnimation(this.coin());
         }, 250);
+    }
+
+    coin() {
+        return this.IMAGES[0]['IMAGES_COIN'];
     }
 }

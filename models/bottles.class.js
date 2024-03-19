@@ -4,20 +4,12 @@ class Bottle extends MovableObject {
     height = this.bottlesSize;
     width = this.bottlesSize;
 
-    IMAGES_WALKING_StartAt = 1;
-    IMAGES_WALKING_Length = 2;
-    IMAGES_WALKING = [];
+    IMAGES = this.imagesBottle;
 
     constructor() {
-        super().getImages(
-            'assets/img/6_salsa_bottle/',
-            '_salsa_bottle_on_ground.png',
-            this.IMAGES_WALKING_StartAt,
-            this.IMAGES_WALKING_Length,
-            this.IMAGES_WALKING
-        );
-        this.loadImage(this.IMAGES_WALKING[0]);
-        this.loadImages(this.IMAGES_WALKING);
+        super().getAllImages(this);
+        this.loadFirstImage(this);
+        this.loadAllImages(this);
 
         this.x = this.x + Math.random() * 1600;
 
@@ -26,7 +18,19 @@ class Bottle extends MovableObject {
 
     animateModel() {
         setInterval(() => {
-            this.playAnimation(this.IMAGES_WALKING);
+            this.playAnimation(this.bottle_Normal());
         }, 250);
+    }
+
+    bottle_Normal() {
+        return this.IMAGES[0]['IMAGES_BOTTLE'];
+    }
+
+    bottle_Rotation() {
+        return this.IMAGES[0]['IMAGES_BOTTLE_ROTATION'];
+    }
+
+    bottle_Splash() {
+        return this.IMAGES[0]['IMAGES_BOTTLE_SPLASH'];
     }
 }

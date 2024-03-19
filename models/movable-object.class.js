@@ -1,13 +1,15 @@
 class MovableObject extends Coordinates {
     img;
-    imageLength;
-    imageStartAt;
+    /*     imageLength;
+        imageStartAt; */
     imageCache = {};
     currentImage = 0;
     otherDirection = false;
 
     speedY = 0;
     acceleration = 2;
+
+    energy = 100;
 
     applyGravity() {
         this.speedY = 0;
@@ -23,24 +25,81 @@ class MovableObject extends Coordinates {
         return this.y < 180;
     }
 
-    getImages(basicPath, secPath, imageStartAt, imageLength, array) {
-        imageLength = imageStartAt + imageLength;
-        for (let i = imageStartAt; i < imageLength; i++) {
-            array.push(basicPath + i + secPath);
+    getAllImages(object) {
+        let images = object.IMAGES;
+        for (let i = 0; i < images.length; i++) {
+            let selectedImageCache = images[i];
+            let basicPath = Object.values(selectedImageCache)[0];
+            let secPath = Object.values(selectedImageCache)[1];
+            let startAt = Object.values(selectedImageCache)[2];
+            let length = Object.values(selectedImageCache)[3];
+            let array = Object.values(selectedImageCache)[4];
+
+            length = startAt + length;
+            for (let p = startAt; p < length; p++) {
+                array.push(basicPath + p + secPath);
+            }
         }
     }
 
-    loadImage(path) {
-        this.img = new Image(); /* this.img = document.getElementById('image')   <img id="image"> */
-        this.img.src = path;
+    loadFirstImage(object, index) {
+        if (index == undefined) {
+            index = 0;
+        }
+        let images = object.IMAGES;
+        let firstObject = images[index];
+        let firstObjectArray = Object.values(firstObject)[4];
+        let firstArrayPath = firstObjectArray[0];
+        this.img = new Image();
+        this.img.src = firstArrayPath;
     }
 
-    loadImages(arr) {
-        arr.forEach(path => {
-            let img = new Image();
-            img.src = path;
-            this.imageCache[path] = img;
-        });
+    loadAllImages(object) {
+        let images = object.IMAGES;
+        for (let i = 0; i < images.length; i++) {
+            let selectedImageCache = images[i];
+            let array = Object.values(selectedImageCache)[4];
+
+            array.forEach(path => {
+                let img = new Image();
+                img.src = path;
+                this.imageCache[path] = img;
+            });
+        }
+    }
+
+    draw(ctx) {
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    }
+
+    drawFrame(ctx) {
+        /* instanceof noch für endboss, coin und bottle */
+        if (this instanceof Character || this instanceof Chicken) {
+            ctx.beginPath();
+            ctx.lineWidth = '5';
+            ctx.strokeStyle = 'blue';
+            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.stroke();
+        }
+    }
+
+    /* character.isColliding(chicken) */
+    isColliding(mo) {
+        return (this.x + this.offset.x + this.width) >= mo.x &&
+            (this.x + this.offset.x) <= (mo.x + mo.width) &&
+            (this.y + this.offset.y + this.height) >= mo.y &&
+            (this.y + this.offset.y) <= (mo.y + mo.height)/*  &&
+            obj.onCollisionCourse */; // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
+    }
+
+    isHurt() {
+
+    }
+
+    isDead() {
+        if (this.energy == 0) {
+
+        }
     }
 
     playAnimation(images) {
@@ -51,16 +110,10 @@ class MovableObject extends Coordinates {
     }
 
     moveRight(speed) {
-        /*         setInterval(() => {
-                    this.x += this.speed;
-                }, 1000 / 120); */
         this.x += this.speed;
     }
 
     moveLeft(speed) {
-        /*         setInterval(() => {
-                    this.x -= speed;
-                }, 1000 / 120); */
         this.x -= this.speed;
     }
 

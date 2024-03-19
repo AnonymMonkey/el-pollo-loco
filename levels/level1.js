@@ -6,7 +6,7 @@ const level1 = new Level(
         /* Chickens */
     ],
     [
-        new Clouds()
+        /* Clouds */
     ],
     [
         new Coin(),

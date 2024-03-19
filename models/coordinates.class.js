@@ -1,10 +1,11 @@
-class Coordinates {
+class Coordinates extends Images {
     world;
 
     // Level
     levelEndX = 720 * 3;
 
     // Character
+    characterSizeOffsets = { x: 20, y: 110, width: -50, height: -100 };
     characterSize = 250;
     characterX = 120;
     characterY = 180;
@@ -16,6 +17,7 @@ class Coordinates {
     chickenY = 350;
     chickenSpeed = 0.5;
 
+    // Chicken Small
     chickenSmallSize = 60;
     chickenSmallY = 370;
 
@@ -40,9 +42,11 @@ class Coordinates {
     cloudsX = 0;
     cloudsY = 10;
     cloudsSpeed = 0.1;
+    other_Cloud = true;
 
     // Background Objects
-    backgroundObjectX = 120;
-    backgroundObjectY = 180;
+    backgroundObjectX = -719;
+    backgroundObjectY = 0;
     backgroundObjectLength = 5;
+    BG_Rotate = true;
 }

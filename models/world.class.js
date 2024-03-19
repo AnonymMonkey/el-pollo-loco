@@ -20,9 +20,10 @@ class World {
         this.keyboard = keyboard;
         this.coordinates = coordinates;
         this.movableObjectCoordination(this.number, this.level);
-        this.getBackgroundImages(this.camera_x);
+        /* this.getBackgroundImages(this.camera_x); */
         this.draw();
         this.setWorld();
+        this.checkCollisions();
         /*         this.game_sound.play();
                 this.game_sound.loop = true;
                 this.game_sound.volume = 0.1; */
@@ -30,9 +31,10 @@ class World {
 
     movableObjectCoordination(number, level) {
         let self = this;
+        this.backgroundCoordination(number, level)
         requestAnimationFrame(function () {
             self.chickenCoordination(number, level);
-            /* self.cloudCoordination(number, level); */
+            self.cloudCoordination(number, level);
             self.movableObjectCoordination(number, level);
         });
     }
@@ -61,25 +63,41 @@ class World {
         }
     }
 
-    getBackgroundImages(camera_x) {
-        /* debugger */
-        let length = this.coordinates.backgroundObjectLength;
-        for (let i = 0; i < length; i++) {
-            if (this.count_png) {
-                this.number = 1;
-                this.count_png = false;
-            } else {
-                this.number = 2;
-                this.count_png = true;
+    cloudCoordination(number, level) {
+        let coordinates = this.coordinates;
+        number = 3;
+        let clouds = level.clouds;
+        if (clouds.length == 0) {
+            for (let i = 0; i < number; i++) {
+                clouds.push(new Clouds(coordinates.other_Cloud));
+                coordinates.other_Cloud = !coordinates.other_Cloud;
             }
-            this.level.backgroundObjects.push(
-                new BackgroundObject('assets/img/5_background/layers/air.png', -719 + camera_x),
-                new BackgroundObject(`assets/img/5_background/layers/3_third_layer/${this.number}.png`, -719 + camera_x),
-                new BackgroundObject(`assets/img/5_background/layers/2_second_layer/${this.number}.png`, -719 + camera_x),
-                new BackgroundObject(`assets/img/5_background/layers/1_first_layer/${this.number}.png`, -719 + camera_x),
-            );
-            camera_x = camera_x + 719;
+        };
+
+        if (clouds.length > 1) {
+            clouds.forEach((cloud, index) => {
+                if (cloud.x < -600) {
+                    clouds.splice(index, 1);
+                    clouds.push(new Clouds(coordinates.other_Cloud));
+                    coordinates.other_Cloud = !coordinates.other_Cloud;
+                }
+            });
         }
+    }
+
+    backgroundCoordination(number, level) {
+        let coordinates = this.coordinates;
+        number = coordinates.backgroundObjectLength;
+        let backgroundObjects = level.backgroundObjects;
+        if (backgroundObjects.length == 0) {
+            for (let i = 0; i < number; i++) {
+                for (let l = 0; l < 4; l++) {
+                    backgroundObjects.push(new BackgroundObject(l, coordinates.backgroundObjectX, coordinates.BG_Rotate));
+                }
+                coordinates.backgroundObjectX = coordinates.backgroundObjectX + 719;
+                coordinates.BG_Rotate = !coordinates.BG_Rotate;
+            }
+        };
     }
 
     draw() {
@@ -115,11 +133,10 @@ class World {
         if (mo.otherDirection) {
             this.flipImage(mo);
         }
-        this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
-        /*         this.ctx.lineWidth = '5';
-                this.ctx.strokeStyle = 'blue';
-                this.ctx.rect(mo.x, mo.y, mo.x + mo.width, mo.y + mo.height);
-                this.ctx.stroke(); */
+
+        mo.draw(this.ctx);
+        mo.drawFrame(this.ctx);
+
         if (mo.otherDirection) {
             this.flipImageBack(mo);
         }
@@ -146,5 +163,17 @@ class World {
         this.character.world = this;
         this.coordinates.world = this;
         this.level.level_end_x = this.coordinates.levelEndX;
+    }
+
+    checkCollisions() {
+        setInterval(() => {
+            this.level.enemies.forEach((enemy) => {
+                if (this.character.isColliding(enemy)) {
+                    this.character.energy -= 2;
+                    /* debugger */
+                    /* console.log('Character Energie =', this.character.energy); */
+                }
+            });
+        }, 200);
     }
 }
