@@ -53,7 +53,11 @@ class Character extends MovableObject {
         /* Animations */
         setInterval(() => {
             let keyboard = this.world.keyboard;
-            if (this.isAboveGround()) {
+            if (this.isHurt()) {
+                this.playAnimation(this.pepe_Hurt());
+            } else if (this.isDead()) {
+                this.playAnimation(this.pepe_Dead());
+            } else if (this.isAboveGround()) {
                 this.playAnimation(this.pepe_Jumping());
             } else if (!this.isAboveGround()) {
                 this.playAnimation(this.pepe_Idle());

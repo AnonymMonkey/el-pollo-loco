@@ -10,6 +10,7 @@ class MovableObject extends Coordinates {
     acceleration = 2;
 
     energy = 100;
+    lastHit = 0;
 
     applyGravity() {
         this.speedY = 0;
@@ -92,14 +93,23 @@ class MovableObject extends Coordinates {
             obj.onCollisionCourse */; // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
     }
 
-    isHurt() {
+    hit() {
+        this.energy -= 2;
+        if (this.energy < 0) {
+            this.energy = 0;
+        } else {
+            this.lastHit = new Date().getTime();
+        }
+    }
 
+    isHurt() {
+        let timepassed = new Date().getTime() - this.lastHit;
+        timepassed = timepassed / 1000;
+        return timepassed < 1;
     }
 
     isDead() {
-        if (this.energy == 0) {
-
-        }
+        return this.energy == 0;
     }
 
     playAnimation(images) {
