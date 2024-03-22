@@ -1,5 +1,6 @@
 class World {
     character = new Character();
+    statusBar = new StatusBar();
     level = level1;
     canvas;
     ctx;
@@ -20,7 +21,6 @@ class World {
         this.keyboard = keyboard;
         this.coordinates = coordinates;
         this.movableObjectCoordination(this.number, this.level);
-        /* this.getBackgroundImages(this.camera_x); */
         this.draw();
         this.setWorld();
         this.checkCollisions();
@@ -113,6 +113,13 @@ class World {
         this.addObjectsToMap(this.level.collectables);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.bosses);
+
+        this.ctx.translate(-this.camera_x, 0);
+
+        this.addToMap(this.statusBar);
+
+        this.ctx.translate(this.camera_x, 0);
+
         this.addToMap(this.character);
 
         this.ctx.translate(-this.camera_x, 0);
@@ -160,6 +167,7 @@ class World {
     }
 
     setWorld() {
+        this.statusBar.world = this;
         this.character.world = this;
         this.coordinates.world = this;
         this.level.level_end_x = this.coordinates.levelEndX;
@@ -171,7 +179,7 @@ class World {
                 if (this.character.isColliding(enemy)) {
                     this.character.hit();
                     /* debugger */
-                    console.log('Character Energie =', this.character.energy);
+                    /* console.log('Character Energie =', this.character.characterEnergy); */
                 }
             });
         }, 200);

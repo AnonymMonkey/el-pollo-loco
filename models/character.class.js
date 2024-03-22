@@ -72,6 +72,7 @@ class Character extends MovableObject {
         }, 100);
     }
 
+
     sleeping() {
         return this.triggerLongIdle = true;
     }

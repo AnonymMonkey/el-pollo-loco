@@ -205,4 +205,29 @@ class Images {
             IMAGES_THIRD_BACKGROUND: [],
         }
     ];
+
+    /* Status Bars Character */
+    imagesStatusBarsCharacter = [
+        {
+            IMAGES_STATUS_COIN_BasicPath: 'assets/img/7_statusbars/1_statusbar/1_statusbar_coin/blue/',
+            IMAGES_STATUS_COIN_SecPath: '.png',
+            IMAGES_STATUS_COIN_StartAt: 0,
+            IMAGES_STATUS_COIN_Length: 6,
+            IMAGES_STATUS_COIN: [],
+        },
+        {
+            IMAGES_STATUS_HEALTH_BasicPath: 'assets/img/7_statusbars/1_statusbar/2_statusbar_health/green/',
+            IMAGES_STATUS_HEALTH_SecPath: '.png',
+            IMAGES_STATUS_HEALTH_StartAt: 0,
+            IMAGES_STATUS_HEALTH_Length: 6,
+            IMAGES_STATUS_HEALTH: [],
+        },
+        {
+            IMAGES_STATUS_BOTTLE_BasicPath: 'assets/img/7_statusbars/1_statusbar/3_statusbar_bottle/orange/',
+            IMAGES_STATUS_BOTTLE_SecPath: '.png',
+            IMAGES_STATUS_BOTTLE_StartAt: 0,
+            IMAGES_STATUS_BOTTLE_Length: 6,
+            IMAGES_STATUS_BOTTLE: [],
+        }
+    ];
 }

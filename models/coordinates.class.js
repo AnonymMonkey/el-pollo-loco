@@ -10,6 +10,11 @@ class Coordinates extends Images {
     characterX = 120;
     characterY = 180;
     characterSpeed = 10;
+    characterEnergy = 100;
+    // Status Bars Character
+    characterStatusBarsSize = 60;
+    characterStatusBarsX = 25;
+    characterStatusBarsY = 0;
 
     // Chicken
     chickenSize = 80;
@@ -49,4 +54,6 @@ class Coordinates extends Images {
     backgroundObjectY = 0;
     backgroundObjectLength = 5;
     BG_Rotate = true;
+
+
 }
