@@ -13,7 +13,7 @@ class Coordinates extends Images {
     characterEnergy = 100;
     // Status Bars Character
     characterStatusBarsSize = 60;
-    characterStatusBarsX = 25;
+    characterStatusBarsX = 10;
     characterStatusBarsY = 0;
 
     // Chicken

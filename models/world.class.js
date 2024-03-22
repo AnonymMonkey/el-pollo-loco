@@ -1,6 +1,8 @@
 class World {
     character = new Character();
-    statusBar = new StatusBar();
+    statusBarCoin = new StatusBar(0);
+    statusBarHealth = new StatusBar(1);
+    statusBarBottle = new StatusBar(2);
     level = level1;
     canvas;
     ctx;
@@ -33,7 +35,7 @@ class World {
         let self = this;
         this.backgroundCoordination(number, level)
         requestAnimationFrame(function () {
-            self.chickenCoordination(number, level);
+            /* self.chickenCoordination(number, level); */
             self.cloudCoordination(number, level);
             self.movableObjectCoordination(number, level);
         });
@@ -116,7 +118,9 @@ class World {
 
         this.ctx.translate(-this.camera_x, 0);
 
-        this.addToMap(this.statusBar);
+        this.addToMap(this.statusBarCoin);
+        this.addToMap(this.statusBarHealth);
+        this.addToMap(this.statusBarBottle);
 
         this.ctx.translate(this.camera_x, 0);
 
@@ -167,7 +171,9 @@ class World {
     }
 
     setWorld() {
-        this.statusBar.world = this;
+        this.statusBarCoin.world = this;
+        this.statusBarHealth.world = this;
+        this.statusBarBottle.world = this;
         this.character.world = this;
         this.coordinates.world = this;
         this.level.level_end_x = this.coordinates.levelEndX;
@@ -175,13 +181,34 @@ class World {
 
     checkCollisions() {
         setInterval(() => {
-            this.level.enemies.forEach((enemy) => {
-                if (this.character.isColliding(enemy)) {
-                    this.character.hit();
-                    /* debugger */
-                    /* console.log('Character Energie =', this.character.characterEnergy); */
-                }
-            });
+            this.collisionsWithEnemy();
+            this.collisionsWithCollectable();
         }, 200);
+    }
+
+    collisionsWithEnemy() {
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy)) {
+                this.character.hit();
+                /* debugger */
+                /* console.log('Character Energie =', this.character.characterEnergy); */
+            }
+        });
+    }
+
+    collisionsWithCollectable() {
+        let collectables = this.level.collectables;
+        collectables.forEach((collectable, index) => {
+            if (this.character.isColliding(collectable)) {
+                collectables.splice(index, 1);
+                if (collectable.constructor.name == 'Bottle') {
+                    this.statusBarBottle.bottleCache++;
+                };
+
+                if (collectable.constructor.name == 'Coin') {
+                    this.statusBarCoin.coinCache++;
+                };
+            }
+        });
     }
 }
