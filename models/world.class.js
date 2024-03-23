@@ -35,7 +35,7 @@ class World {
         let self = this;
         this.backgroundCoordination(number, level)
         requestAnimationFrame(function () {
-            /* self.chickenCoordination(number, level); */
+            self.chickenCoordination(number, level);
             self.cloudCoordination(number, level);
             self.movableObjectCoordination(number, level);
         });

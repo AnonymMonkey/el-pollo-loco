@@ -5,6 +5,8 @@ class Chicken extends MovableObject {
     height = this.chickenSize;
     width = this.chickenSize;
 
+    offset = this.chickenSizeOffsets;
+
     IMAGES = this.imagesChicken;
 
     constructor() {

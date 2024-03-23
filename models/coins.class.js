@@ -4,6 +4,8 @@ class Coin extends MovableObject {
     height = this.coinsSize;
     width = this.coinsSize;
 
+    offset = this.coinSizeOffsets;
+
     IMAGES = this.imagesCoin;
 
     constructor() {

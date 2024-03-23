@@ -4,6 +4,8 @@ class Bottle extends MovableObject {
     height = this.bottlesSize;
     width = this.bottlesSize;
 
+    offset = this.bottleSizeOffsets;
+
     IMAGES = this.imagesBottle;
 
     constructor() {

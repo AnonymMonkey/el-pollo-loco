@@ -4,6 +4,8 @@ class Endboss extends MovableObject {
     height = this.endbossSize;
     width = this.endbossSize;
 
+    offset = this.endbossSizeOffsets;
+
     IMAGES = this.imagesEndboss;
 
     constructor() {
