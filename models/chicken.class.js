@@ -5,6 +5,8 @@ class Chicken extends MovableObject {
   height = this.chickenSize;
   width = this.chickenSize;
 
+  dead = false;
+
   offset = this.chickenSizeOffsets;
 
   IMAGES = this.imagesChicken;
@@ -23,8 +25,13 @@ class Chicken extends MovableObject {
     //setInterval(() => {
     //  this.moveLeft(this.speed);
     //}, 1000 / 60);
+
     setInterval(() => {
-      this.playAnimation(this.chicken_Walking());
+      if (this.dead == true) {
+        this.playAnimation(this.chicken_Dead());
+      } else {
+        this.playAnimation(this.chicken_Walking());
+      }
     }, 160);
   }
 

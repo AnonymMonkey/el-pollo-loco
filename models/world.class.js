@@ -193,11 +193,24 @@ class World {
   }
 
   collisionsWithEnemy() {
-    this.level.enemies.forEach((enemy) => {
-      if (this.character.isColliding(enemy)) {
+    this.level.enemies.forEach((enemy, index) => {
+      if (
+        this.character.isColliding(enemy) &&
+        !this.character.isAboveGround() &&
+        enemy.dead == false
+      ) {
+        //debugger;
         this.character.hit();
         /* debugger */
         /* console.log('Character Energie =', this.character.characterEnergy); */
+      }
+
+      if (this.character.isColliding(enemy) && this.character.isAboveGround()) {
+        console.log("Passt");
+        enemy.dead = true;
+        setTimeout(() => {
+          this.level.enemies.splice(index, 1);
+        }, 2000);
       }
     });
   }

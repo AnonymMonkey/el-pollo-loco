@@ -17,7 +17,7 @@ class MovableObject extends DrawableObject {
   }
 
   isAboveGround() {
-    return this.y < 180;
+    return this.y + this.height - this.offset.height < 310;
   }
 
   /* character.isColliding(chicken) */
@@ -31,6 +31,14 @@ class MovableObject extends DrawableObject {
       this.y + this.offset.y <= mo.y + mo.height - mo.offset.height /*  &&
             obj.onCollisionCourse */
     ); // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
+  }
+
+  isCollidingY(mo) {
+    return (
+      this.y + this.offset.y + this.height - this.offset.height >=
+        mo.y + mo.offset.y &&
+      this.y + this.offset.y <= mo.y + mo.height - mo.offset.height
+    );
   }
 
   hit() {
