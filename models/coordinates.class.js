@@ -5,7 +5,12 @@ class Coordinates extends Images {
   levelEndX = 720 * 3;
 
   // Character
-  characterSizeOffsets = { x: 20, y: 110, width: 50, height: 120 };
+  characterSizeOffsets = {
+    xl: 20,
+    yt: 110,
+    xr: 50,
+    yb: 110 + 10,
+  };
   characterSize = 250;
   characterX = 120;
   characterY = 180;
@@ -17,32 +22,32 @@ class Coordinates extends Images {
   characterStatusBarsY = 0;
 
   // Chicken
-  chickenSizeOffsets = { x: 0, y: 0, width: 0, height: 0 };
+  chickenSizeOffsets = { xl: 5, yt: 5, xr: 10, yb: 10 };
   chickenSize = 80;
   chickenX = 500; //this.levelEndX;
   chickenY = 350;
   chickenSpeed = 0.5;
 
   // Chicken Small
-  chickenSmallSizeOffsets = { x: 0, y: 0, width: 0, height: 0 };
+  chickenSmallSizeOffsets = { xl: 5, yt: 5, xr: 10, yb: 10 };
   chickenSmallSize = 60;
   chickenSmallY = 370;
 
   // Endboss
-  endbossSizeOffsets = { x: 10, y: 75, width: 50, height: 90 };
+  endbossSizeOffsets = { xl: 10, yt: 75, xr: 50, yb: 90 };
   endbossSize = 400;
   endbossX = 2300;
   endbossY = 50;
   /* endbossSpeed = 0; */
 
   // Coins
-  coinSizeOffsets = { x: 40, y: 40, width: 80, height: 80 };
+  coinSizeOffsets = { xl: 40, yt: 40, xr: 80, yb: 80 };
   coinsSize = 120;
   coinsX = 500;
   coinsY = 100;
 
   // Bottles
-  bottleSizeOffsets = { x: 20, y: 15, width: 30, height: 20 };
+  bottleSizeOffsets = { xl: 20, yt: 15, xr: 30, yb: 20 };
   bottlesSize = 80;
   bottlesX = 500;
   bottlesY = 344;

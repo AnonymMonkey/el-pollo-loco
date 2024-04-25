@@ -17,27 +17,18 @@ class MovableObject extends DrawableObject {
   }
 
   isAboveGround() {
-    return this.y + this.height - this.offset.height < 310;
+    return this.y + this.height - this.offset.yb < 310;
   }
 
   /* character.isColliding(chicken) */
   isColliding(mo) {
     return (
-      this.x + this.offset.x + this.width - this.offset.width >=
-        mo.x + mo.offset.x &&
-      this.x + this.offset.x <= mo.x + mo.width - mo.offset.width &&
-      this.y + this.offset.y + this.height - this.offset.height >=
-        mo.y + mo.offset.y &&
-      this.y + this.offset.y <= mo.y + mo.height - mo.offset.height /*  &&
-            obj.onCollisionCourse */
-    ); // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
-  }
-
-  isCollidingY(mo) {
-    return (
-      this.y + this.offset.y + this.height - this.offset.height >=
-        mo.y + mo.offset.y &&
-      this.y + this.offset.y <= mo.y + mo.height - mo.offset.height
+      this.x + this.width + this.offset.xl - this.offset.xr >=
+        mo.x + mo.offset.xl &&
+      this.x + this.offset.xl <= mo.x + mo.width - mo.offset.xr &&
+      this.y + this.height + this.offset.yt - this.offset.yb >
+        mo.y + mo.offset.yt &&
+      this.y + this.offset.yt < mo.y + mo.height - mo.offset.yb
     );
   }
 
