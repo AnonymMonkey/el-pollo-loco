@@ -1,8 +1,13 @@
 class Coordinates extends Images {
   world;
 
+  // Canvas
+  canvasWidth = 720;
+  canvasHeight = 480;
+
   // Level
   levelEndX = 720 * 3;
+  levelSpawnY = 50;
 
   // Character
   characterSizeOffsets = {
@@ -13,7 +18,7 @@ class Coordinates extends Images {
   };
   characterSize = 250;
   characterX = 120;
-  characterY = 180;
+  characterY = this.canvasHeight - this.characterSize + 10 - this.levelSpawnY;
   characterSpeed = 4;
   characterEnergy = 100;
   // Status Bars Character
@@ -22,22 +27,23 @@ class Coordinates extends Images {
   characterStatusBarsY = 0;
 
   // Chicken
-  chickenSizeOffsets = { xl: 5, yt: 5, xr: 10, yb: 10 };
+  chickenSizeOffsets = { xl: 5, yt: 5, xr: 10, yb: 5 + 5 };
   chickenSize = 80;
   chickenX = 500; //this.levelEndX;
-  chickenY = 350;
+  chickenY = this.canvasHeight - this.chickenSize + 5 - this.levelSpawnY;
   chickenSpeed = 0.5;
 
   // Chicken Small
-  chickenSmallSizeOffsets = { xl: 5, yt: 5, xr: 10, yb: 10 };
+  chickenSmallSizeOffsets = { xl: 5, yt: 5, xr: 10, yb: 5 + 5 };
   chickenSmallSize = 60;
-  chickenSmallY = 370;
+  chickenSmallY =
+    this.canvasHeight - this.chickenSmallSize + 5 - this.levelSpawnY;
 
   // Endboss
-  endbossSizeOffsets = { xl: 10, yt: 75, xr: 50, yb: 90 };
+  endbossSizeOffsets = { xl: 10, yt: 75, xr: 50, yb: 75 + 45 };
   endbossSize = 400;
   endbossX = 2300;
-  endbossY = 50;
+  endbossY = this.canvasHeight - this.endbossSize + 45 - this.levelSpawnY;
   /* endbossSpeed = 0; */
 
   // Coins

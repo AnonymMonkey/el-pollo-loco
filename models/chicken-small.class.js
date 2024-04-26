@@ -5,6 +5,8 @@ class Chicken_Small extends MovableObject {
   height = this.chickenSmallSize;
   width = this.chickenSmallSize;
 
+  dead = false;
+
   offset = this.chickenSmallSizeOffsets;
 
   IMAGES = this.imagesSmallChicken;
@@ -23,8 +25,13 @@ class Chicken_Small extends MovableObject {
     //setInterval(() => {
     //    this.moveLeft(this.speed);
     //}, 1000 / 60);
+
     setInterval(() => {
-      this.playAnimation(this.smallChicken_Walking());
+      if (this.dead == true) {
+        this.playAnimation(this.smallChicken_Dead());
+      } else {
+        this.playAnimation(this.smallChicken_Walking());
+      }
     }, 160);
   }
 

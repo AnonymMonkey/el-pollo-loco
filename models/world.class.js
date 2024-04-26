@@ -196,11 +196,10 @@ class World {
     this.level.enemies.forEach((enemy, index) => {
       if (
         this.character.isColliding(enemy) &&
-        !this.character.isAboveGround() &&
-        enemy.dead == false
+        !this.character.isAboveGround()
       ) {
         //debugger;
-        this.character.hit();
+        this.character.hit(enemy);
         /* debugger */
         /* console.log('Character Energie =', this.character.characterEnergy); */
       }

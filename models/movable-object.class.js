@@ -22,22 +22,35 @@ class MovableObject extends DrawableObject {
 
   /* character.isColliding(chicken) */
   isColliding(mo) {
+    return this.collidingX(mo) && this.collidingY(mo);
+  }
+
+  collidingX(mo) {
     return (
       this.x + this.width + this.offset.xl - this.offset.xr >=
         mo.x + mo.offset.xl &&
-      this.x + this.offset.xl <= mo.x + mo.width - mo.offset.xr &&
-      this.y + this.height + this.offset.yt - this.offset.yb >
-        mo.y + mo.offset.yt &&
-      this.y + this.offset.yt < mo.y + mo.height - mo.offset.yb
+      this.x + this.offset.xl <= mo.x + mo.width - mo.offset.xl - mo.offset.xr
     );
   }
 
-  hit() {
-    this.characterEnergy -= 2;
-    if (this.characterEnergy < 0) {
-      this.characterEnergy = 0;
+  collidingY(mo) {
+    return (
+      this.y + this.height + this.offset.yt - this.offset.yb >=
+        mo.y + mo.offset.yt &&
+      this.y + this.offset.yt <= mo.y + mo.height + mo.offset.yt - mo.offset.yb
+    );
+  }
+
+  hit(enemy) {
+    if (enemy.dead == false) {
+      this.characterEnergy -= 2;
+      if (this.characterEnergy < 0) {
+        this.characterEnergy = 0;
+      } else {
+        this.lastHit = new Date().getTime();
+      }
     } else {
-      this.lastHit = new Date().getTime();
+      return;
     }
   }
 
