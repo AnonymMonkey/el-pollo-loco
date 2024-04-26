@@ -42,7 +42,7 @@ class World {
   }
 
   chickenCoordination(number, level) {
-    number = 1; // wieder auf 6 ändern
+    number = 6;
     let enemies = level.enemies;
     if (enemies.length == 0) {
       for (let i = 0; i < number; i++) {
@@ -198,14 +198,10 @@ class World {
         this.character.isColliding(enemy) &&
         !this.character.isAboveGround()
       ) {
-        //debugger;
         this.character.hit(enemy);
-        /* debugger */
-        /* console.log('Character Energie =', this.character.characterEnergy); */
       }
 
       if (this.character.isColliding(enemy) && this.character.isAboveGround()) {
-        console.log("Passt");
         enemy.dead = true;
         setTimeout(() => {
           this.level.enemies.splice(index, 1);
