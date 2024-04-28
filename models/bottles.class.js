@@ -1,38 +1,38 @@
 class Bottle extends MovableObject {
-    x = this.bottlesX;
-    y = this.bottlesY;
-    height = this.bottlesSize;
-    width = this.bottlesSize;
+  x = this.bottlesX;
+  y = this.bottlesY;
+  height = this.bottlesSize;
+  width = this.bottlesSize;
 
-    offset = this.bottleSizeOffsets;
+  offset = this.bottleSizeOffsets;
 
-    IMAGES = this.imagesBottle;
+  IMAGES = this.imagesBottle;
 
-    constructor() {
-        super().getAllImages(this);
-        this.loadFirstImage(this);
-        this.loadAllImages(this);
+  constructor() {
+    super().getAllImages(this);
+    this.loadFirstImage(this);
+    this.loadAllImages(this);
 
-        this.x = this.x + Math.random() * 1600;
+    this.x = this.x + Math.random() * 1600;
 
-        this.animateModel();
-    }
+    this.animateModel();
+  }
 
-    animateModel() {
-        setInterval(() => {
-            this.playAnimation(this.bottle_Normal());
-        }, 250);
-    }
+  animateModel() {
+    setInterval(() => {
+      this.playAnimation(this.bottle_Normal());
+    }, 250);
+  }
 
-    bottle_Normal() {
-        return this.IMAGES[0]['IMAGES_BOTTLE'];
-    }
+  bottle_Normal() {
+    return this.IMAGES[0]["IMAGES_BOTTLE"];
+  }
 
-    bottle_Rotation() {
-        return this.IMAGES[0]['IMAGES_BOTTLE_ROTATION'];
-    }
+  bottle_Rotation() {
+    return this.IMAGES[1]["IMAGES_BOTTLE_ROTATION"];
+  }
 
-    bottle_Splash() {
-        return this.IMAGES[0]['IMAGES_BOTTLE_SPLASH'];
-    }
+  bottle_Splash() {
+    return this.IMAGES[2]["IMAGES_BOTTLE_SPLASH"];
+  }
 }

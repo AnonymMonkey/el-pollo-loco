@@ -46,6 +46,13 @@ class Coordinates extends Images {
   endbossY = this.canvasHeight - this.endbossSize + 45 - this.levelSpawnY;
   /* endbossSpeed = 0; */
 
+  // Clouds
+  cloudsSize = 300;
+  cloudsX = 0;
+  cloudsY = 10;
+  cloudsSpeed = 0.1;
+  other_Cloud = true;
+
   // Coins
   coinSizeOffsets = { xl: 40, yt: 40, xr: 80, yb: 80 };
   coinsSize = 120;
@@ -58,12 +65,11 @@ class Coordinates extends Images {
   bottlesX = 500;
   bottlesY = 344;
 
-  // Clouds
-  cloudsSize = 300;
-  cloudsX = 0;
-  cloudsY = 10;
-  cloudsSpeed = 0.1;
-  other_Cloud = true;
+  // Throwable Objects
+  throwableObjectX = this.characterSize / 2 - this.characterSizeOffsets.xr;
+  throwableObjectY = this.characterY + this.characterSizeOffsets.yt;
+  throwableObjectSpeedX = 50;
+  throwableObjectSpeedY = 30;
 
   // Background Objects
   backgroundObjectX = -719;

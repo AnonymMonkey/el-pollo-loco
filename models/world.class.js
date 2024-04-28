@@ -3,6 +3,7 @@ class World {
   statusBarCoin = new StatusBar(0);
   statusBarHealth = new StatusBar(1);
   statusBarBottle = new StatusBar(2);
+  throwableObjects = [];
   level = level1;
   canvas;
   ctx;
@@ -131,6 +132,7 @@ class World {
     this.ctx.translate(this.camera_x, 0);
 
     this.addToMap(this.character);
+    this.addObjectsToMap(this.throwableObjects);
 
     this.ctx.translate(-this.camera_x, 0);
 
@@ -182,6 +184,7 @@ class World {
     this.statusBarBottle.world = this;
     this.character.world = this;
     this.coordinates.world = this;
+    this.throwableObjects.world = this;
     this.level.level_end_x = this.coordinates.levelEndX;
   }
 
@@ -189,6 +192,7 @@ class World {
     setInterval(() => {
       this.collisionsWithEnemy();
       this.collisionsWithCollectable();
+      this.checkThrowableObjects();
     }, 200);
   }
 
@@ -224,5 +228,14 @@ class World {
         }
       }
     });
+  }
+
+  checkThrowableObjects() {
+    if (this.keyboard.KEY_D) {
+      let tOX = this.character.x + this.coordinates.throwableObjectX;
+      let tOY = this.character.y + 110;
+      let bottle = new ThrowableObject(tOX, tOY);
+      this.throwableObjects.push(bottle);
+    }
   }
 }
