@@ -13,12 +13,18 @@ class Character extends MovableObject {
 
   triggerLongIdle = false;
 
-  walking_sound = new Audio("assets/audio/running.mp3");
+  soundPlayed = false;
+  dead_sound = new Audio(this.sound_deathPepe);
+  hurt_sound = new Audio(this.sound_hurt);
+  jump_sound = new Audio(this.sound_jump);
+  walking_sound = new Audio(this.sound_running);
 
   constructor() {
     super().getAllImages(this);
     this.loadFirstImage(this);
     this.loadAllImages(this);
+
+    this.hurt_sound.volume = 0.2;
 
     this.applyGravity();
     this.animateModel();
@@ -53,10 +59,16 @@ class Character extends MovableObject {
     setInterval(() => {
       let keyboard = this.world.keyboard;
       if (this.isHurt()) {
+        this.soundPlayed = false;
+        this.playSound(this.hurt_sound);
         this.playAnimation(this.pepe_Hurt());
       } else if (this.isDead()) {
+        this.soundPlayed = false;
+        this.playSound(this.dead_sound);
         this.playAnimation(this.pepe_Dead());
       } else if (this.isAboveGround()) {
+        this.soundPlayed = false;
+        this.playSound(this.jump_sound);
         this.playAnimation(this.pepe_Jumping());
       } else if (!this.isAboveGround()) {
         this.playAnimation(this.pepe_Idle());

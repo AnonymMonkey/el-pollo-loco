@@ -9,7 +9,12 @@ class ThrowableObject extends MovableObject {
   speedX = this.throwableObjectSpeedX;
   speedY = this.throwableObjectSpeedY;
 
+  offset = this.throwableObjectSizeOffsets;
+
   IMAGES = this.imagesBottle;
+
+  isCollided = false;
+  wasThrow = false;
 
   constructor(x, y) {
     super().getAllImages(this);
@@ -31,8 +36,15 @@ class ThrowableObject extends MovableObject {
   }
 
   animateModel() {
-    setInterval(() => {
-      this.playAnimation(this.bottle_Rotation());
+    console.log(this.isCollided);
+    let interval = setInterval(() => {
+      if (this.isCollided) {
+        debugger;
+        this.playAnimation(this.bottle_Splash());
+        clearInterval(interval);
+      } else {
+        this.playAnimation(this.bottle_Rotation());
+      }
     }, 120);
   }
 

@@ -57,7 +57,8 @@ class DrawableObject extends Coordinates {
       this instanceof Chicken_Small ||
       this instanceof Endboss ||
       this instanceof Coin ||
-      this instanceof Bottle
+      this instanceof Bottle ||
+      this instanceof ThrowableObject
     ) {
       let os = this.offset;
       ctx.beginPath();
@@ -73,7 +74,8 @@ class DrawableObject extends Coordinates {
       this instanceof Chicken_Small ||
       this instanceof Endboss ||
       this instanceof Coin ||
-      this instanceof Bottle
+      this instanceof Bottle ||
+      this instanceof ThrowableObject
     ) {
       let os = this.offset;
       ctx.beginPath();

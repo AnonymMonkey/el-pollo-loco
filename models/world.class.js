@@ -1,8 +1,9 @@
 class World {
   character = new Character();
-  statusBarCoin = new StatusBar(0);
-  statusBarHealth = new StatusBar(1);
+  statusBarHealth = new StatusBar(0);
+  statusBarCoin = new StatusBar(1);
   statusBarBottle = new StatusBar(2);
+  statusBarEndboss = new StatusBar(3);
   throwableObjects = [];
   level = level1;
   canvas;
@@ -12,7 +13,8 @@ class World {
   camera_x = 0;
   count_png = false;
   number = 1;
-  game_sound = new Audio("assets/audio/background-music.mp3");
+
+  game_sound = new Audio(new Sounds().sound_backgroundMusic);
 
   constructor(canvas, keyboard, coordinates) {
     /* Der Kontext ist ein Objekt mit Eigenschaften und Methoden, der Grafik innerhalb des Canvas rendert */
@@ -27,9 +29,9 @@ class World {
     this.draw();
     this.setWorld();
     this.checkCollisions();
-    /*         this.game_sound.play();
-                this.game_sound.loop = true;
-                this.game_sound.volume = 0.1; */
+    this.game_sound.play();
+    this.game_sound.loop = true;
+    this.game_sound.volume = 0.5;
   }
 
   movableObjectCoordination(number, level) {
@@ -43,7 +45,7 @@ class World {
   }
 
   chickenCoordination(number, level) {
-    number = 6;
+    number = 3;
     let enemies = level.enemies;
     if (enemies.length == 0) {
       for (let i = 0; i < number; i++) {
@@ -128,6 +130,7 @@ class World {
     this.addToMap(this.statusBarCoin);
     this.addToMap(this.statusBarHealth);
     this.addToMap(this.statusBarBottle);
+    this.addToMap(this.statusBarEndboss);
 
     this.ctx.translate(this.camera_x, 0);
 
@@ -182,6 +185,7 @@ class World {
     this.statusBarCoin.world = this;
     this.statusBarHealth.world = this;
     this.statusBarBottle.world = this;
+    this.statusBarEndboss.world = this;
     this.character.world = this;
     this.coordinates.world = this;
     this.throwableObjects.world = this;
@@ -192,8 +196,9 @@ class World {
     setInterval(() => {
       this.collisionsWithEnemy();
       this.collisionsWithCollectable();
+      this.collisionsWithEndboss();
       this.checkThrowableObjects();
-    }, 200);
+    }, 100);
   }
 
   collisionsWithEnemy() {
@@ -230,12 +235,40 @@ class World {
     });
   }
 
+  collisionsWithEndboss() {
+    let throwableObjects = this.throwableObjects;
+    let endboss = this.level.bosses[0];
+    throwableObjects.forEach((throwableObject, index) => {
+      if (throwableObject.isColliding(endboss)) {
+        console.log("hat geklappt");
+
+        this.statusBarEndboss.endbossEnergy--;
+
+        throwableObject.wasThrow = false;
+
+        throwableObjects.splice(index, 1);
+        endboss.wasHit == false;
+      }
+    });
+  }
+
   checkThrowableObjects() {
-    if (this.keyboard.KEY_D) {
-      let tOX = this.character.x + this.coordinates.throwableObjectX;
-      let tOY = this.character.y + 110;
-      let bottle = new ThrowableObject(tOX, tOY);
+    if (this.statusBarBottle.bottleCache > 0) {
+      this.throwBottle();
+    }
+  }
+
+  /*ANCHOR - Hier weiter machen - bottle darf nur einmal fliegen */
+
+  throwBottle() {
+    let tOX = this.character.x + this.coordinates.throwableObjectX;
+    let tOY = this.character.y + 110;
+    let bottle = new ThrowableObject(tOX, tOY);
+    if (this.keyboard.KEY_D && !bottle.wasThrow) {
+      //debugger;
+      bottle.wasThrow = true;
       this.throwableObjects.push(bottle);
+      this.statusBarBottle.bottleCache--;
     }
   }
 }

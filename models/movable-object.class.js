@@ -69,6 +69,13 @@ class MovableObject extends DrawableObject {
     return this.characterEnergy == 0;
   }
 
+  playSound(x) {
+    if (!this.soundPlayed) {
+      x.play();
+      this.soundPlayed = true;
+    }
+  }
+
   playAnimation(images) {
     let i = this.currentImage % images.length;
     let path = images[i];

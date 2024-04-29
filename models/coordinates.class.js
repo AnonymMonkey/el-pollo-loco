@@ -21,10 +21,11 @@ class Coordinates extends Images {
   characterY = this.canvasHeight - this.characterSize + 10 - this.levelSpawnY;
   characterSpeed = 4;
   characterEnergy = 100;
-  // Status Bars Character
-  characterStatusBarsSize = 60;
-  characterStatusBarsX = 10;
-  characterStatusBarsY = 0;
+
+  // Status Bars
+  statusBarsSize = 60;
+  statusBarsX = 10;
+  statusBarsY = 0;
 
   // Chicken
   chickenSizeOffsets = { xl: 5, yt: 5, xr: 10, yb: 5 + 5 };
@@ -66,6 +67,7 @@ class Coordinates extends Images {
   bottlesY = 344;
 
   // Throwable Objects
+  throwableObjectSizeOffsets = { xl: 10, yt: 10, xr: 20, yb: 20 };
   throwableObjectX = this.characterSize / 2 - this.characterSizeOffsets.xr;
   throwableObjectY = this.characterY + this.characterSizeOffsets.yt;
   throwableObjectSpeedX = 50;

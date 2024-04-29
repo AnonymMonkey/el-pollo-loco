@@ -1,43 +1,45 @@
 class Endboss extends MovableObject {
-    x = this.endbossX;
-    y = this.endbossY;
-    height = this.endbossSize;
-    width = this.endbossSize;
+  x = this.endbossX;
+  y = this.endbossY;
+  height = this.endbossSize;
+  width = this.endbossSize;
 
-    offset = this.endbossSizeOffsets;
+  offset = this.endbossSizeOffsets;
 
-    IMAGES = this.imagesEndboss;
+  IMAGES = this.imagesEndboss;
 
-    constructor() {
-        super().getAllImages(this);
-        this.loadFirstImage(this);
-        this.loadAllImages(this);
-        this.animateModel();
-    }
+  wasHit = false;
 
-    animateModel() {
-        setInterval(() => {
-            this.playAnimation(this.endboss_Alert());
-        }, 160);
-    }
+  constructor() {
+    super().getAllImages(this);
+    this.loadFirstImage(this);
+    this.loadAllImages(this);
+    this.animateModel();
+  }
 
-    endboss_Walking() {
-        return this.IMAGES[0]['IMAGES_WALKING'];
-    }
+  animateModel() {
+    setInterval(() => {
+      this.playAnimation(this.endboss_Alert());
+    }, 160);
+  }
 
-    endboss_Alert() {
-        return this.IMAGES[1]['IMAGES_ALERT'];
-    }
+  endboss_Walking() {
+    return this.IMAGES[0]["IMAGES_WALKING"];
+  }
 
-    endboss_Attack() {
-        return this.IMAGES[2]['IMAGES_ATTACK'];
-    }
+  endboss_Alert() {
+    return this.IMAGES[1]["IMAGES_ALERT"];
+  }
 
-    endboss_Hurt() {
-        return this.IMAGES[3]['IMAGES_HURT'];
-    }
+  endboss_Attack() {
+    return this.IMAGES[2]["IMAGES_ATTACK"];
+  }
 
-    endboss_Dead() {
-        return this.IMAGES[4]['IMAGES_DEAD'];
-    }
+  endboss_Hurt() {
+    return this.IMAGES[3]["IMAGES_HURT"];
+  }
+
+  endboss_Dead() {
+    return this.IMAGES[4]["IMAGES_DEAD"];
+  }
 }
