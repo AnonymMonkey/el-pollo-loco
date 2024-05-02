@@ -14,7 +14,6 @@ class ThrowableObject extends MovableObject {
   IMAGES = this.imagesBottle;
 
   isCollided = false;
-  wasThrow = false;
 
   constructor(x, y) {
     super().getAllImages(this);
@@ -23,23 +22,27 @@ class ThrowableObject extends MovableObject {
 
     this.x = x;
     this.y = y;
-    this.throw();
+    this.throw(y);
 
     this.animateModel();
   }
 
-  throw() {
-    this.applyGravity();
-    setInterval(() => {
-      this.x += 10;
-    }, 40);
+  throw(y) {
+    if (!this.isCollidingGround()) {
+      this.applyGravity();
+      setInterval(() => {
+        this.x += 10;
+        //console.log(y);
+      }, 40);
+    }
+    if (this.isCollidingGround()) {
+      debugger;
+    }
   }
 
   animateModel() {
-    console.log(this.isCollided);
     let interval = setInterval(() => {
       if (this.isCollided) {
-        debugger;
         this.playAnimation(this.bottle_Splash());
         clearInterval(interval);
       } else {

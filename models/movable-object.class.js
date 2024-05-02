@@ -46,6 +46,10 @@ class MovableObject extends DrawableObject {
     );
   }
 
+  isCollidingGround() {
+    return this.y >= 350;
+  }
+
   hit(enemy) {
     if (enemy.dead == false) {
       this.characterEnergy -= 2;

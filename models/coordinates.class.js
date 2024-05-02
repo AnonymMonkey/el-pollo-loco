@@ -73,6 +73,10 @@ class Coordinates extends Images {
   throwableObjectSpeedX = 50;
   throwableObjectSpeedY = 30;
 
+  wasThrown = false;
+  bossWasHit = false;
+  groundWasHit = false;
+
   // Background Objects
   backgroundObjectX = -719;
   backgroundObjectY = 0;

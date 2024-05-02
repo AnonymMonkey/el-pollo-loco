@@ -196,8 +196,7 @@ class World {
     setInterval(() => {
       this.collisionsWithEnemy();
       this.collisionsWithCollectable();
-      this.collisionsWithEndboss();
-      this.checkThrowableObjects();
+      this.collisionsCoordinationWithThrowableObject();
     }, 100);
   }
 
@@ -235,40 +234,73 @@ class World {
     });
   }
 
-  collisionsWithEndboss() {
+  collisionsCoordinationWithThrowableObject() {
     let throwableObjects = this.throwableObjects;
     let endboss = this.level.bosses[0];
+    this.throwBottle();
     throwableObjects.forEach((throwableObject, index) => {
-      if (throwableObject.isColliding(endboss)) {
-        console.log("hat geklappt");
+      this.throwBottle();
 
-        this.statusBarEndboss.endbossEnergy--;
-
-        throwableObject.wasThrow = false;
-
-        throwableObjects.splice(index, 1);
-        endboss.wasHit == false;
-      }
+      this.collisionsWithEndboss(throwableObject, index, endboss);
+      this.collisionsWithGround(throwableObject, index);
     });
   }
 
-  checkThrowableObjects() {
-    if (this.statusBarBottle.bottleCache > 0) {
-      this.throwBottle();
+  collisionsWithEndboss(throwableObject, index, endboss) {
+    if (throwableObject.isColliding(endboss)) {
+      this.processForEndboss(throwableObject, index);
     }
   }
 
-  /*ANCHOR - Hier weiter machen - bottle darf nur einmal fliegen */
+  processForEndboss(throwableObject, index) {
+    console.log("flasche hat Boss getroffen");
+    this.coordinates.bossWasHit = true;
+    this.statusBarEndboss.endbossEnergy--;
+    this.bottleSplash(throwableObject, index);
+
+    this.coordinates.wasThrown = false;
+  }
+
+  collisionsWithGround(throwableObject, index) {
+    if (throwableObject.isCollidingGround()) {
+      this.processForGround(throwableObject, index);
+    }
+  }
+
+  processForGround(throwableObject, index) {
+    console.log("flasche hat Boden getroffen");
+
+    this.bottleSplash(throwableObject, index);
+
+    this.coordinates.wasThrown = false;
+  }
+
+  bottleSplash(throwableObject, index) {
+    let throwableObjects = this.throwableObjects;
+    throwableObject.isCollided = true;
+    setTimeout(() => {
+      throwableObjects.splice(index, 1);
+    }, 500);
+  }
+
+  checkThrowableObjects() {
+    if (this.statusBarBottle.bottleCache > 0 && !this.coordinates.wasThrown) {
+      this.throwBottle();
+    }
+  }
 
   throwBottle() {
     let tOX = this.character.x + this.coordinates.throwableObjectX;
     let tOY = this.character.y + 110;
     let bottle = new ThrowableObject(tOX, tOY);
-    if (this.keyboard.KEY_D && !bottle.wasThrow) {
-      //debugger;
-      bottle.wasThrow = true;
+    if (
+      this.keyboard.KEY_D &&
+      this.statusBarBottle.bottleCache > 0 &&
+      !this.coordinates.wasThrown
+    ) {
       this.throwableObjects.push(bottle);
       this.statusBarBottle.bottleCache--;
+      this.coordinates.wasThrown = true;
     }
   }
 }

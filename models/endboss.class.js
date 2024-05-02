@@ -8,8 +8,6 @@ class Endboss extends MovableObject {
 
   IMAGES = this.imagesEndboss;
 
-  wasHit = false;
-
   constructor() {
     super().getAllImages(this);
     this.loadFirstImage(this);
