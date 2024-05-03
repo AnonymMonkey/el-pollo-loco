@@ -31,6 +31,12 @@ document.addEventListener("keydown", (e) => {
   if (e.keyCode == 68) {
     keyboard.KEY_D = true;
   }
+  if (e.keyCode == 67) {
+    keyboard.KEY_C = true;
+  }
+  if (e.keyCode == 88) {
+    keyboard.KEY_X = true;
+  }
 });
 
 document.addEventListener("keyup", (e) => {
@@ -51,5 +57,11 @@ document.addEventListener("keyup", (e) => {
   }
   if (e.keyCode == 68) {
     keyboard.KEY_D = false;
+  }
+  if (e.keyCode == 67) {
+    keyboard.KEY_C = false;
+  }
+  if (e.keyCode == 88) {
+    keyboard.KEY_X = false;
   }
 });

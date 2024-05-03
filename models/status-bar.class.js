@@ -9,9 +9,9 @@ class StatusBar extends DrawableObject {
 
   IMAGES = this.imagesStatusBars;
 
-  /* healPercentege = this.characterEnergy; */
   coinCache = 0;
   bottleCache = 0;
+
   endbossEnergy = 5;
 
   constructor(index) {
@@ -85,13 +85,18 @@ class StatusBar extends DrawableObject {
   getHealthImageIndex() {
     if (this.world.character.characterEnergy == 100) {
       return 5;
-    } else if (this.world.character.characterEnergy > 80) {
+    } else if (this.world.character.characterEnergy >= 80) {
+      return 5;
+    } else if (this.world.character.characterEnergy >= 60) {
       return 4;
-    } else if (this.world.character.characterEnergy > 60) {
+    } else if (this.world.character.characterEnergy >= 40) {
       return 3;
-    } else if (this.world.character.characterEnergy > 40) {
+    } else if (this.world.character.characterEnergy >= 20) {
       return 2;
-    } else if (this.world.character.characterEnergy > 20) {
+    } else if (
+      this.world.character.characterEnergy > 0 &&
+      this.world.character.characterEnergy < 20
+    ) {
       return 1;
     } else {
       return 0;

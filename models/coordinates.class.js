@@ -9,6 +9,8 @@ class Coordinates extends Images {
   levelEndX = 720 * 3;
   levelSpawnY = 50;
 
+  enemeyFirstSpawn = true;
+
   // Character
   characterSizeOffsets = {
     xl: 20,
@@ -76,6 +78,9 @@ class Coordinates extends Images {
   wasThrown = false;
   bossWasHit = false;
   groundWasHit = false;
+
+  // Collectables
+  gotExchanged = false;
 
   // Background Objects
   backgroundObjectX = -719;

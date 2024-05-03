@@ -39,6 +39,7 @@ class World {
     this.backgroundCoordination(number, level);
     requestAnimationFrame(function () {
       self.chickenCoordination(number, level);
+      self.endbossCoordination(level);
       self.cloudCoordination(number, level);
       self.movableObjectCoordination(number, level);
     });
@@ -47,7 +48,8 @@ class World {
   chickenCoordination(number, level) {
     number = 3;
     let enemies = level.enemies;
-    if (enemies.length == 0) {
+    if (enemies.length == 0 && this.coordinates.enemeyFirstSpawn) {
+      this.coordinates.enemeyFirstSpawn = false;
       for (let i = 0; i < number; i++) {
         enemies.push(new Chicken());
         enemies.push(new Chicken_Small());
@@ -68,14 +70,20 @@ class World {
     }
   }
 
+  endbossCoordination(level) {
+    let endboss = level.bosses[0];
+    if (this.character.x == endboss.x - 400) {
+      console.log("Boss hat spieler entdeckt");
+    }
+  }
+
   cloudCoordination(number, level) {
-    let coordinates = this.coordinates;
     number = 3;
     let clouds = level.clouds;
     if (clouds.length == 0) {
       for (let i = 0; i < number; i++) {
-        clouds.push(new Clouds(coordinates.other_Cloud));
-        coordinates.other_Cloud = !coordinates.other_Cloud;
+        clouds.push(new Clouds(this.coordinates.other_Cloud));
+        this.coordinates.other_Cloud = !this.coordinates.other_Cloud;
       }
     }
 
@@ -194,9 +202,13 @@ class World {
 
   checkCollisions() {
     setInterval(() => {
-      this.collisionsWithEnemy();
       this.collisionsWithCollectable();
       this.collisionsCoordinationWithThrowableObject();
+      this.exchangeCoin();
+    }, 1000 / 60);
+
+    setInterval(() => {
+      this.collisionsWithEnemy();
     }, 100);
   }
 
@@ -237,9 +249,9 @@ class World {
   collisionsCoordinationWithThrowableObject() {
     let throwableObjects = this.throwableObjects;
     let endboss = this.level.bosses[0];
-    this.throwBottle();
+    this.checkThrowBottle();
     throwableObjects.forEach((throwableObject, index) => {
-      this.throwBottle();
+      this.checkThrowBottle();
 
       this.collisionsWithEndboss(throwableObject, index, endboss);
       this.collisionsWithGround(throwableObject, index);
@@ -254,11 +266,11 @@ class World {
 
   processForEndboss(throwableObject, index) {
     console.log("flasche hat Boss getroffen");
-    this.coordinates.bossWasHit = true;
-    this.statusBarEndboss.endbossEnergy--;
-    this.bottleSplash(throwableObject, index);
-
-    this.coordinates.wasThrown = false;
+    if (this.coordinates.wasThrown) {
+      this.coordinates.wasThrown = false;
+      this.statusBarEndboss.endbossEnergy--;
+      this.bottleSplash(throwableObject, index);
+    }
   }
 
   collisionsWithGround(throwableObject, index) {
@@ -283,24 +295,59 @@ class World {
     }, 500);
   }
 
-  checkThrowableObjects() {
-    if (this.statusBarBottle.bottleCache > 0 && !this.coordinates.wasThrown) {
-      this.throwBottle();
-    }
-  }
-
-  throwBottle() {
+  //ANCHOR - Flasche buggt beim werfen
+  checkThrowBottle() {
     let tOX = this.character.x + this.coordinates.throwableObjectX;
     let tOY = this.character.y + 110;
     let bottle = new ThrowableObject(tOX, tOY);
+    console.log(this.coordinates.wasThrown);
     if (
       this.keyboard.KEY_D &&
       this.statusBarBottle.bottleCache > 0 &&
       !this.coordinates.wasThrown
     ) {
-      this.throwableObjects.push(bottle);
-      this.statusBarBottle.bottleCache--;
-      this.coordinates.wasThrown = true;
+      this.throwBottle(bottle);
     }
+  }
+
+  throwBottle(bottle) {
+    this.coordinates.wasThrown = true;
+    this.throwableObjects.push(bottle);
+    this.statusBarBottle.bottleCache--;
+  }
+
+  //ANCHOR - Flaschen werden nicht aufgeladen
+  exchangeCoin() {
+    if (this.statusBarCoin.coinCache > 0) {
+      if (this.keyboard.KEY_C && !this.coordinates.gotExchanged) {
+        this.toggleExchange();
+        this.prozessCoinToBottle();
+        setTimeout(() => {
+          this.toggleExchange();
+        }, 500);
+      }
+      if (this.keyboard.KEY_X && !this.coordinates.gotExchanged) {
+        this.toggleExchange();
+        this.prozessCoinToBottle();
+        setTimeout(() => {
+          this.toggleExchange();
+        }, 500);
+      }
+    }
+  }
+
+  toggleExchange() {
+    return (this.coordinates.gotExchanged = !this.coordinates.gotExchanged);
+  }
+
+  prozessCoinToBottle() {
+    return this.statusBarCoin.coinCache-- && this.statusBarBottle.bottleCache++;
+  }
+
+  prozessCoinToBottle() {
+    return (
+      this.statusBarCoin.coinCache-- &&
+      (this.character.characterEnergy = this.character.characterEnergy + 20)
+    );
   }
 }

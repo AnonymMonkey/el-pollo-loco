@@ -21,7 +21,7 @@ class MovableObject extends DrawableObject {
       return this.y + this.height - this.offset.yb < 310;
     }
     if (this instanceof ThrowableObject) {
-      return true;
+      return this.y - this.offset.yb - this.offset.yt < 310;
     }
   }
 
@@ -47,7 +47,7 @@ class MovableObject extends DrawableObject {
   }
 
   isCollidingGround() {
-    return this.y >= 350;
+    return this.y >= 310;
   }
 
   hit(enemy) {

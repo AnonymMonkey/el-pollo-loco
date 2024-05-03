@@ -5,4 +5,6 @@ class Keyboard {
   KEY_DOWN = false;
   KEY_SPACE = false;
   KEY_D = false;
+  KEY_C = false;
+  KEY_X = false;
 }

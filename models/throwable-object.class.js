@@ -22,29 +22,29 @@ class ThrowableObject extends MovableObject {
 
     this.x = x;
     this.y = y;
-    this.throw(y);
+
+    this.throw();
 
     this.animateModel();
   }
 
-  throw(y) {
-    if (!this.isCollidingGround()) {
-      this.applyGravity();
-      setInterval(() => {
+  throw() {
+    this.applyGravity();
+    setInterval(() => {
+      if (!this.isCollided) {
         this.x += 10;
-        //console.log(y);
-      }, 40);
-    }
-    if (this.isCollidingGround()) {
-      debugger;
-    }
+      } else {
+        this.speedY = 0;
+      }
+    }, 40);
   }
 
   animateModel() {
-    let interval = setInterval(() => {
+    setInterval(() => {
       if (this.isCollided) {
+        //debugger;
         this.playAnimation(this.bottle_Splash());
-        clearInterval(interval);
+        //clearInterval(interval);
       } else {
         this.playAnimation(this.bottle_Rotation());
       }
