@@ -29,6 +29,7 @@ class World {
     this.draw();
     this.setWorld();
     this.checkCollisions();
+
     this.game_sound.play();
     this.game_sound.loop = true;
     this.game_sound.volume = 0.5;
@@ -204,8 +205,9 @@ class World {
     setInterval(() => {
       this.collisionsWithCollectable();
       this.collisionsCoordinationWithThrowableObject();
+      this.checkThrowBottle();
       this.exchangeCoin();
-    }, 1000 / 60);
+    }, 1000 / 120);
 
     setInterval(() => {
       this.collisionsWithEnemy();
@@ -249,64 +251,63 @@ class World {
   collisionsCoordinationWithThrowableObject() {
     let throwableObjects = this.throwableObjects;
     let endboss = this.level.bosses[0];
-    this.checkThrowBottle();
     throwableObjects.forEach((throwableObject, index) => {
-      this.checkThrowBottle();
-
       this.collisionsWithEndboss(throwableObject, index, endboss);
       this.collisionsWithGround(throwableObject, index);
     });
   }
 
   collisionsWithEndboss(throwableObject, index, endboss) {
-    if (throwableObject.isColliding(endboss)) {
+    if (throwableObject.isColliding(endboss) && this.coordinates.wasThrown) {
+      this.coordinates.wasThrown = false;
       this.processForEndboss(throwableObject, index);
     }
   }
 
   processForEndboss(throwableObject, index) {
-    console.log("flasche hat Boss getroffen");
-    if (this.coordinates.wasThrown) {
-      this.coordinates.wasThrown = false;
-      this.statusBarEndboss.endbossEnergy--;
-      this.bottleSplash(throwableObject, index);
-    }
+    this.statusBarEndboss.endbossEnergy--;
+
+    this.bottleSplash(throwableObject, index);
   }
 
   collisionsWithGround(throwableObject, index) {
-    if (throwableObject.isCollidingGround()) {
+    if (throwableObject.isCollidingGround() && this.coordinates.wasThrown) {
+      this.coordinates.wasThrown = false;
       this.processForGround(throwableObject, index);
     }
   }
 
   processForGround(throwableObject, index) {
-    console.log("flasche hat Boden getroffen");
-
     this.bottleSplash(throwableObject, index);
-
-    this.coordinates.wasThrown = false;
   }
 
   bottleSplash(throwableObject, index) {
     let throwableObjects = this.throwableObjects;
     throwableObject.isCollided = true;
+
     setTimeout(() => {
       throwableObjects.splice(index, 1);
+      //this.coordinates.wasThrown = false;
     }, 500);
   }
 
-  //ANCHOR - Flasche buggt beim werfen
   checkThrowBottle() {
     let tOX = this.character.x + this.coordinates.throwableObjectX;
     let tOY = this.character.y + 110;
     let bottle = new ThrowableObject(tOX, tOY);
-    console.log(this.coordinates.wasThrown);
+
     if (
       this.keyboard.KEY_D &&
       this.statusBarBottle.bottleCache > 0 &&
-      !this.coordinates.wasThrown
+      !this.coordinates.wasThrown &&
+      !this.throwButtonPressed
     ) {
       this.throwBottle(bottle);
+      this.throwButtonPressed = true;
+
+      setTimeout(() => {
+        this.throwButtonPressed = false;
+      }, 2000);
     }
   }
 
@@ -316,22 +317,25 @@ class World {
     this.statusBarBottle.bottleCache--;
   }
 
-  //ANCHOR - Flaschen werden nicht aufgeladen
   exchangeCoin() {
     if (this.statusBarCoin.coinCache > 0) {
       if (this.keyboard.KEY_C && !this.coordinates.gotExchanged) {
-        this.toggleExchange();
-        this.prozessCoinToBottle();
-        setTimeout(() => {
+        if (this.statusBarBottle.bottleCache < 5) {
           this.toggleExchange();
-        }, 500);
+          this.prozessCoinToBottle();
+          setTimeout(() => {
+            this.toggleExchange();
+          }, 500);
+        }
       }
       if (this.keyboard.KEY_X && !this.coordinates.gotExchanged) {
-        this.toggleExchange();
-        this.prozessCoinToBottle();
-        setTimeout(() => {
+        if (this.character.characterEnergy < 100) {
           this.toggleExchange();
-        }, 500);
+          this.prozessCoinToHealth();
+          setTimeout(() => {
+            this.toggleExchange();
+          }, 500);
+        }
       }
     }
   }
@@ -344,10 +348,18 @@ class World {
     return this.statusBarCoin.coinCache-- && this.statusBarBottle.bottleCache++;
   }
 
-  prozessCoinToBottle() {
-    return (
-      this.statusBarCoin.coinCache-- &&
-      (this.character.characterEnergy = this.character.characterEnergy + 20)
-    );
+  prozessCoinToHealth() {
+    return this.statusBarCoin.coinCache-- && this.checkMaxHealth();
+  }
+
+  checkMaxHealth() {
+    if (this.character.characterEnergy <= 80) {
+      return (this.character.characterEnergy =
+        this.character.characterEnergy + 20);
+    }
+    if (this.character.characterEnergy > 80) {
+      return (this.character.characterEnergy =
+        this.character.characterEnergy - this.character.characterEnergy + 100);
+    }
   }
 }

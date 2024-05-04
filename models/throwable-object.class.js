@@ -15,6 +15,9 @@ class ThrowableObject extends MovableObject {
 
   isCollided = false;
 
+  bossWasHit = false;
+  groundWasHit = false;
+
   constructor(x, y) {
     super().getAllImages(this);
     this.loadFirstImage(this, 1);
@@ -30,21 +33,24 @@ class ThrowableObject extends MovableObject {
 
   throw() {
     this.applyGravity();
-    setInterval(() => {
+    let interval = setInterval(() => {
       if (!this.isCollided) {
         this.x += 10;
       } else {
+        clearInterval(interval);
         this.speedY = 0;
       }
     }, 40);
   }
 
   animateModel() {
-    setInterval(() => {
+    let interval = setInterval(() => {
       if (this.isCollided) {
         //debugger;
         this.playAnimation(this.bottle_Splash());
-        //clearInterval(interval);
+        setTimeout(() => {
+          clearInterval(interval);
+        }, 500);
       } else {
         this.playAnimation(this.bottle_Rotation());
       }

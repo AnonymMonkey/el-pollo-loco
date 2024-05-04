@@ -76,8 +76,6 @@ class Coordinates extends Images {
   throwableObjectSpeedY = 30;
 
   wasThrown = false;
-  bossWasHit = false;
-  groundWasHit = false;
 
   // Collectables
   gotExchanged = false;
