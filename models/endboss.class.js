@@ -1,6 +1,7 @@
 class Endboss extends MovableObject {
   x = this.endbossX;
   y = this.endbossY;
+  speed = this.endbossSpeed;
   height = this.endbossSize;
   width = this.endbossSize;
 
@@ -9,6 +10,8 @@ class Endboss extends MovableObject {
   IMAGES = this.imagesEndboss;
 
   hasDiscoveredCharacter = false;
+  wasHit = false;
+  dead = false;
 
   constructor() {
     super().getAllImages(this);
@@ -19,7 +22,29 @@ class Endboss extends MovableObject {
 
   animateModel() {
     setInterval(() => {
-      this.playAnimation(this.endboss_Alert());
+      if (this.hasDiscoveredCharacter) {
+        let intervalMove = setInterval(() => {
+          this.moveLeft(this.speed);
+          if (this.dead) {
+            clearInterval(intervalMove);
+          }
+        }, 200);
+      }
+    }, 160);
+
+    setInterval(() => {
+      if (!this.hasDiscoveredCharacter) {
+        this.playAnimation(this.endboss_Alert());
+      } else if (this.wasHit && !this.dead) {
+        this.playAnimation(this.endboss_Hurt());
+        setTimeout(() => {
+          this.wasHit = false;
+        }, 500);
+      } else if (this.dead) {
+        this.playAnimation(this.endboss_Dead());
+      } else {
+        this.playAnimation(this.endboss_Walking());
+      }
     }, 160);
   }
 

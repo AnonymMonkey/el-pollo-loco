@@ -8,6 +8,8 @@ class Bottle extends MovableObject {
 
   IMAGES = this.imagesBottle;
 
+  collected = false;
+
   constructor() {
     super().getAllImages(this);
     this.loadFirstImage(this);
@@ -19,8 +21,11 @@ class Bottle extends MovableObject {
   }
 
   animateModel() {
-    setInterval(() => {
+    let intervalAnimation = setInterval(() => {
       this.playAnimation(this.bottle_Normal());
+      if (this.collected) {
+        clearInterval(intervalAnimation);
+      }
     }, 250);
   }
 

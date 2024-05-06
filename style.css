@@ -1,23 +1,46 @@
 * {
-    scroll-behavior: smooth;
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    /*border: 1px solid red;*/
+  scroll-behavior: smooth;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  /*border: 1px solid red;*/
 }
 
 .d-none {
-    display: none;
+  display: none;
 }
 
 body {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: url("assets/img/5_background/desert.png");
+  background-position: center;
+
+  font-family: "zabars", Arial, Helvetica, sans-serif;
+}
+
+h1 {
+  font-size: 56px;
+  letter-spacing: 4px;
+  text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.5);
 }
 
 canvas {
-    background-color: black;
+  background-color: black;
+  display: block;
+}
+
+@media only screen and (max-width: 720px) {
+  canvas {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-height: 480px) {
+  canvas {
+    height: 100vh;
+  }
 }

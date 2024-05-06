@@ -26,16 +26,19 @@ class Chicken extends MovableObject {
   }
 
   animateModel() {
-    let interval = setInterval(() => {
+    let intervalMove = setInterval(() => {
       this.moveLeft(this.speed);
+      if (this.dead) {
+        clearInterval(intervalMove);
+      }
     }, 1000 / 60);
 
-    setInterval(() => {
+    let intervalDead = setInterval(() => {
       this.dead_sound.pause();
       if (this.dead) {
         this.playSound(this.dead_sound);
         this.playAnimation(this.chicken_Dead());
-        clearInterval(interval);
+        clearInterval(intervalDead);
       } else {
         this.playAnimation(this.chicken_Walking());
       }

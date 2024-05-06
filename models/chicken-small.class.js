@@ -18,25 +18,27 @@ class Chicken_Small extends MovableObject {
     super().getAllImages(this);
     this.loadFirstImage(this);
     this.loadAllImages(this);
+
     this.x = this.x + 500 + Math.random() * this.levelEndX;
     this.speed = this.speed + Math.random() * 0.8;
+
     this.animateModel();
   }
 
   animateModel() {
-    let interval = setInterval(() => {
+    let intervalMove = setInterval(() => {
       this.moveLeft(this.speed);
+      if (this.dead) {
+        clearInterval(intervalMove);
+      }
     }, 1000 / 60);
 
-    setInterval(() => {
+    let intervalDead = setInterval(() => {
       this.dead_sound.pause();
       if (this.dead) {
-        if (!this.soundPlayed) {
-          this.dead_sound.play();
-          this.soundPlayed = true;
-        }
+        this.playSound(this.dead_sound);
         this.playAnimation(this.smallChicken_Dead());
-        clearInterval(interval);
+        clearInterval(intervalDead);
       } else {
         this.playAnimation(this.smallChicken_Walking());
       }

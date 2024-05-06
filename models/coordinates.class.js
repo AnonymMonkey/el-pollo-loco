@@ -47,7 +47,7 @@ class Coordinates extends Images {
   endbossSize = 400;
   endbossX = 2300;
   endbossY = this.canvasHeight - this.endbossSize + 45 - this.levelSpawnY;
-  /* endbossSpeed = 0; */
+  endbossSpeed = 0.5;
 
   // Clouds
   cloudsSize = 300;

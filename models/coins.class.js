@@ -1,31 +1,36 @@
 class Coin extends MovableObject {
-    x = this.coinsX;
-    y = this.coinsY;
-    height = this.coinsSize;
-    width = this.coinsSize;
+  x = this.coinsX;
+  y = this.coinsY;
+  height = this.coinsSize;
+  width = this.coinsSize;
 
-    offset = this.coinSizeOffsets;
+  offset = this.coinSizeOffsets;
 
-    IMAGES = this.imagesCoin;
+  IMAGES = this.imagesCoin;
 
-    constructor() {
-        super().getAllImages(this);
-        this.loadFirstImage(this);
-        this.loadAllImages(this);
+  collected = false;
 
-        this.x = this.x + Math.random() * 1600;
-        this.y = this.y + Math.random() * 150;
+  constructor() {
+    super().getAllImages(this);
+    this.loadFirstImage(this);
+    this.loadAllImages(this);
 
-        this.animateModel();
-    }
+    this.x = this.x + Math.random() * 1600;
+    this.y = this.y + Math.random() * 150;
 
-    animateModel() {
-        setInterval(() => {
-            this.playAnimation(this.coin());
-        }, 250);
-    }
+    this.animateModel();
+  }
 
-    coin() {
-        return this.IMAGES[0]['IMAGES_COIN'];
-    }
+  animateModel() {
+    let intervalAnimation = setInterval(() => {
+      this.playAnimation(this.coin());
+      if (this.collected) {
+        clearInterval(intervalAnimation);
+      }
+    }, 250);
+  }
+
+  coin() {
+    return this.IMAGES[0]["IMAGES_COIN"];
+  }
 }

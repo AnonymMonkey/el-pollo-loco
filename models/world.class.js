@@ -30,7 +30,7 @@ class World {
     this.setWorld();
     this.checkCollisions();
 
-    this.game_sound.play();
+    //this.game_sound.play();
     this.game_sound.loop = true;
     this.game_sound.volume = 0.5;
   }
@@ -73,8 +73,12 @@ class World {
 
   endbossCoordination(level) {
     let endboss = level.bosses[0];
-    if (this.character.x == endboss.x - 400) {
-      console.log("Boss hat spieler entdeckt");
+    if (endboss == undefined) {
+      return;
+    } else {
+      if (this.character.x == endboss.x - 400) {
+        endboss.hasDiscoveredCharacter = true;
+      }
     }
   }
 
@@ -91,6 +95,7 @@ class World {
     if (clouds.length > 1) {
       clouds.forEach((cloud, index) => {
         if (cloud.x < -600) {
+          cloud.deleteCloud = true;
           clouds.splice(index, 1);
           clouds.push(new Clouds(coordinates.other_Cloud));
           coordinates.other_Cloud = !coordinates.other_Cloud;
@@ -166,7 +171,7 @@ class World {
     }
 
     mo.draw(this.ctx);
-    mo.drawFrame(this.ctx);
+    //mo.drawFrame(this.ctx);
 
     if (mo.otherDirection) {
       this.flipImageBack(mo);
@@ -190,28 +195,14 @@ class World {
     mo.x = mo.x * -1;
   }
 
-  setWorld() {
-    this.statusBarCoin.world = this;
-    this.statusBarHealth.world = this;
-    this.statusBarBottle.world = this;
-    this.statusBarEndboss.world = this;
-    this.character.world = this;
-    this.coordinates.world = this;
-    this.throwableObjects.world = this;
-    this.level.level_end_x = this.coordinates.levelEndX;
-  }
-
   checkCollisions() {
     setInterval(() => {
+      this.exchangeCoin();
+      this.checkThrowBottle();
+      this.collisionsWithEnemy();
       this.collisionsWithCollectable();
       this.collisionsCoordinationWithThrowableObject();
-      this.checkThrowBottle();
-      this.exchangeCoin();
-    }, 1000 / 120);
-
-    setInterval(() => {
-      this.collisionsWithEnemy();
-    }, 100);
+    }, 50);
   }
 
   collisionsWithEnemy() {
@@ -238,10 +229,12 @@ class World {
       if (this.character.isColliding(collectable)) {
         collectables.splice(index, 1);
         if (collectable.constructor.name == "Bottle") {
+          collectable.collected = true;
           this.statusBarBottle.bottleCache++;
         }
 
         if (collectable.constructor.name == "Coin") {
+          collectable.collected = true;
           this.statusBarCoin.coinCache++;
         }
       }
@@ -260,12 +253,20 @@ class World {
   collisionsWithEndboss(throwableObject, index, endboss) {
     if (throwableObject.isColliding(endboss) && this.coordinates.wasThrown) {
       this.coordinates.wasThrown = false;
-      this.processForEndboss(throwableObject, index);
+      this.processForEndboss(throwableObject, index, endboss);
+      endboss.wasHit = true;
     }
   }
 
-  processForEndboss(throwableObject, index) {
+  processForEndboss(throwableObject, index, endboss) {
     this.statusBarEndboss.endbossEnergy--;
+
+    if (this.statusBarEndboss.endbossEnergy == 0) {
+      endboss.dead = true;
+      setTimeout(() => {
+        this.level.bosses.splice(0, 1);
+      }, 1500);
+    }
 
     this.bottleSplash(throwableObject, index);
   }
@@ -287,9 +288,11 @@ class World {
 
     setTimeout(() => {
       throwableObjects.splice(index, 1);
-      //this.coordinates.wasThrown = false;
     }, 500);
   }
+
+  // |||||||||| |||||||||| |||||||||| |||||||||| |||||||||| \\
+  // |||||||||| |||||||||| |||||||||| |||||||||| |||||||||| \\
 
   checkThrowBottle() {
     let tOX = this.character.x + this.coordinates.throwableObjectX;
@@ -361,5 +364,16 @@ class World {
       return (this.character.characterEnergy =
         this.character.characterEnergy - this.character.characterEnergy + 100);
     }
+  }
+
+  setWorld() {
+    this.statusBarCoin.world = this;
+    this.statusBarHealth.world = this;
+    this.statusBarBottle.world = this;
+    this.statusBarEndboss.world = this;
+    this.character.world = this;
+    this.coordinates.world = this;
+    this.throwableObjects.world = this;
+    this.level.level_end_x = this.coordinates.levelEndX;
   }
 }
