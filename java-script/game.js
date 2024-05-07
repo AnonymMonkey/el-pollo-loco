@@ -4,8 +4,22 @@ let keyboard = new Keyboard();
 let coordinates = new Coordinates();
 
 function init() {
+  bodyElement = document.body;
   canvas = document.getElementById("canvas");
-  world = new World(canvas, keyboard, coordinates);
+  startScreen(bodyElement, canvas);
+  //world = new World(canvas, keyboard, coordinates);
+}
+
+function startScreen(bodyElement, canvas) {
+  //canvas.classList.add("canvas-start-screen");
+  bodyElement.innerHTML += /*html*/ `
+  <div id="startscreen" class="start-screen">
+    <div class="canvas-start-screen-background">
+      <img class="playbutton c-pointer" src="assets/img/buttons/play.png" alt="start game">
+      <img class="infobutton c-pointer" src="assets/img/buttons/info.png" alt="info">
+    </div>
+  </div>
+  `;
 }
 
 function clearAllIntervals() {
