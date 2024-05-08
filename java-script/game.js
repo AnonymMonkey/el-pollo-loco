@@ -3,23 +3,38 @@ let world;
 let keyboard = new Keyboard();
 let coordinates = new Coordinates();
 
+let firstLoading = false;
+
 function init() {
   bodyElement = document.body;
   canvas = document.getElementById("canvas");
-  startScreen(bodyElement, canvas);
+  firstLoading = true;
+  showStartScreen(bodyElement);
   //world = new World(canvas, keyboard, coordinates);
 }
 
-function startScreen(bodyElement, canvas) {
-  //canvas.classList.add("canvas-start-screen");
-  bodyElement.innerHTML += /*html*/ `
-  <div id="startscreen" class="start-screen">
-    <div class="canvas-start-screen-background">
-      <img class="playbutton c-pointer" src="assets/img/buttons/play.png" alt="start game">
-      <img class="infobutton c-pointer" src="assets/img/buttons/info.png" alt="info">
-    </div>
-  </div>
-  `;
+function showStartScreen(bodyElement) {
+  if (firstLoading) {
+    bodyElement.innerHTML = HTML_Startscreen(bodyElement);
+    firstLoading = false;
+  } else {
+    infoscreen = document.getElementById("infoscreen");
+    infoscreen.classList.remove("animation-fade-in");
+    infoscreen.classList.add("animation-fade-out");
+    setTimeout(() => {
+      bodyElement.innerHTML = HTML_Startscreen(bodyElement);
+    }, 250);
+  }
+}
+
+function showInformations(bodyElement) {
+  startscreen = document.getElementById("startscreen");
+  startscreen.classList.remove("animation-fade-in");
+  startscreen.classList.add("animation-fade-out");
+  setTimeout(() => {
+    bodyElement.innerHTML = HTML_ShowInformations(bodyElement);
+    startscreen.classList.remove("animation-fade-out");
+  }, 250);
 }
 
 function clearAllIntervals() {

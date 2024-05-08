@@ -1,0 +1,5 @@
+long idle for char
+
+start screen and informations
+
+win and game over screen

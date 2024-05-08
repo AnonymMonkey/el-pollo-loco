@@ -10,12 +10,35 @@
   cursor: pointer;
 }
 
+.c-pointer:hover,
+.info-img:hover {
+  transition: 125ms;
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+  transform: scale(1.05);
+}
+
 .d-none {
   display: none;
 }
 
+.d-flex {
+  display: flex;
+}
+
 .pos-rel {
   position: relative;
+}
+
+.f-d-column {
+  flex-direction: column;
+}
+
+.j-c-space-between {
+  justify-content: space-between;
+}
+
+.a-i-center {
+  align-items: center;
 }
 
 body {
@@ -40,6 +63,14 @@ h1 {
   text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.5);
 }
 
+h2 {
+  font-size: 40px;
+  letter-spacing: 4px;
+  text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.5);
+
+  margin-bottom: 40px;
+}
+
 canvas {
   background-color: black;
   display: block;
@@ -50,38 +81,31 @@ canvas {
 
 /* ---------- Start Screen ---------- */
 .start-screen {
+  position: relative;
+
   display: flex;
   justify-content: center;
   align-items: center;
 
-  height: 100vh;
-  width: 100%;
+  height: 480px;
+  width: 720px;
 }
 
 .canvas-start-screen-background {
   position: absolute;
 
-  background: url("assets/img/9_intro_outro_screens/start/startscreen_1.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-
-  width: 100%;
-  height: 480px;
-
   border-radius: 24px;
   border: 4px solid rgba(0, 0, 0, 0.5);
   box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.5);
 
-  margin: 0 5vw;
+  width: 100%;
+  height: 100%;
 }
 
 .playbutton {
   position: absolute;
 
-  width: 10%;
-  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+  width: 120px;
 }
 
 .infobutton {
@@ -90,21 +114,110 @@ canvas {
   top: 20px;
   right: 20px;
 
-  width: 10%;
-  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+  width: 100px;
+}
+
+/* ---------- Controll Information ---------- */
+.information-screen {
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  border-radius: 24px;
+  border: 4px solid rgba(0, 0, 0, 0.5);
+  box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.5);
+
+  height: 480px;
+  width: 720px;
+
+  background: linear-gradient(
+    90deg,
+    rgba(153, 68, 9, 1) 0%,
+    rgba(183, 97, 39, 1) 30%,
+    rgba(188, 122, 15, 1) 100%
+  );
+}
+
+b {
+  color: black;
+  font-size: 28px;
+  letter-spacing: 2px;
+}
+
+.info-section {
+  display: flex;
+  align-items: center;
+
+  width: 70%;
+
+  font-size: 24px;
+
+  text-align: start;
+
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.info-img {
+  height: 80px;
+  margin-right: 150px;
+}
+
+.backbutton {
+  position: absolute;
+
+  top: 20px;
+  right: 20px;
+
+  height: 80px;
+}
+
+/* ---------- Animation ---------- */
+.animation-fade-out {
+  animation: 250ms fadeout ease-in-out;
+}
+
+@keyframes fadeout {
+  from {
+    opacity: 1;
+    scale: 1;
+  }
+
+  to {
+    opacity: 0;
+    scale: 0;
+  }
+}
+
+.animation-fade-in {
+  animation: 250ms fadeIn ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    scale: 0;
+  }
+
+  to {
+    opacity: 1;
+    scale: 1;
+  }
 }
 
 /* ---------- Media ---------- */
 @media only screen and (max-width: 720px) {
   canvas,
-  start-screen {
+  .start-screen {
     width: 100%;
   }
 }
 
 @media only screen and (max-height: 480px) {
   canvas,
-  start-screen {
+  .start-screen {
     height: 100vh;
   }
 }
