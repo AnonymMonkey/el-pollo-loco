@@ -1,5 +1,9 @@
-long idle for char
+long idle for char ++
 
-start screen and informations
+start screen and informations ++
 
 win and game over screen
+
+pepe wie mario fallen lassen bei TOD
+
+boss muss pepe killen können

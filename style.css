@@ -41,6 +41,10 @@
   align-items: center;
 }
 
+.w-100 {
+  width: 100%;
+}
+
 body {
   height: 100vh;
   display: flex;
@@ -56,7 +60,7 @@ body {
 h1 {
   position: absolute;
 
-  top: 5vh;
+  top: -75px;
 
   font-size: 56px;
   letter-spacing: 4px;
@@ -69,14 +73,6 @@ h2 {
   text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.5);
 
   margin-bottom: 40px;
-}
-
-canvas {
-  background-color: black;
-  display: block;
-  border-radius: 24px;
-  border: 4px solid rgba(0, 0, 0, 0.5);
-  box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.5);
 }
 
 /* ---------- Start Screen ---------- */
@@ -102,13 +98,13 @@ canvas {
   height: 100%;
 }
 
-.playbutton {
+.play-button {
   position: absolute;
 
   width: 120px;
 }
 
-.infobutton {
+.info-button {
   position: absolute;
 
   top: 20px;
@@ -165,13 +161,134 @@ b {
   margin-right: 150px;
 }
 
-.backbutton {
+.back-button {
   position: absolute;
 
   top: 20px;
   right: 20px;
 
   height: 80px;
+}
+
+/* ---------- Game ---------- */
+.game-screen {
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-image: url("assets/img/5_background/desert.png");
+  background-position: center;
+
+  height: 480px;
+  width: 720px;
+}
+
+canvas {
+  position: absolute;
+  background-color: black;
+  display: block;
+
+  border-radius: 24px;
+  border: 4px solid rgba(0, 0, 0, 0.5);
+  box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+.game-buttons {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.fullscreen-button {
+  height: 80px;
+}
+
+.sound-button {
+  height: 80px;
+}
+
+/* ---------- Game Over ---------- */
+.game-over-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  border-radius: 24px;
+  border: 4px solid rgba(0, 0, 0, 0.5);
+  box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.5);
+
+  height: 480px;
+  width: 720px;
+
+  background: linear-gradient(
+    90deg,
+    rgba(153, 68, 9, 1) 0%,
+    rgba(183, 97, 39, 1) 30%,
+    rgba(188, 122, 15, 1) 100%
+  );
+}
+
+.game-over-screen-inner {
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  overflow: hidden;
+
+  width: 100%;
+  height: 100%;
+}
+
+.game-over-img-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+.game-over-exit-section {
+  position: absolute;
+  top: 10px;
+  display: flex;
+  align-items: center;
+  font-size: 32px;
+  letter-spacing: 2px;
+  z-index: 1;
+}
+
+.game-over-img {
+  position: absolute;
+  opacity: 0;
+}
+
+.game-over-chicken-left {
+  position: absolute;
+  bottom: 10px;
+  left: 100px;
+
+  width: 100px;
+}
+
+.game-over-pepe {
+  position: absolute;
+  bottom: 10px;
+
+  width: 150px;
+}
+
+.game-over-chicken-right {
+  position: absolute;
+  bottom: 10px;
+  right: 100px;
+
+  width: 100px;
 }
 
 /* ---------- Animation ---------- */
@@ -207,17 +324,86 @@ b {
   }
 }
 
+.animation-rotate-in {
+  animation: 500ms rotateIn ease-in-out;
+}
+
+@keyframes rotateIn {
+  from {
+    opacity: 0;
+    scale: 0;
+    transform: rotate(0deg);
+  }
+
+  to {
+    opacity: 1;
+    scale: 1;
+    transform: rotate(360deg);
+  }
+}
+
+.animation-rotate-infinite {
+  animation: 2000ms rotateInfinite ease-in-out forwards;
+  animation-delay: 500ms;
+}
+
+@keyframes rotateInfinite {
+  0% {
+    opacity: 0;
+    scale: 1;
+    transform: rotate(0deg);
+  }
+
+  100% {
+    opacity: 1;
+    scale: 0.5;
+    transform: rotate(720deg);
+  }
+}
+
+.shake {
+  animation: shake 250ms ease-in-out;
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-5px);
+  }
+
+  50% {
+    transform: translateX(5px);
+  }
+
+  75% {
+    transform: translateX(-5px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
 /* ---------- Media ---------- */
 @media only screen and (max-width: 720px) {
   canvas,
-  .start-screen {
+  .game-screen,
+  .start-screen,
+  .information-screen,
+  .game-over-screen {
     width: 100%;
   }
 }
 
 @media only screen and (max-height: 480px) {
   canvas,
-  .start-screen {
+  .game-screen,
+  .start-screen,
+  .information-screen,
+  .game-over-screen {
     height: 100vh;
   }
 }

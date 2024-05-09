@@ -56,7 +56,7 @@ class StatusBar extends DrawableObject {
       return this.statusBarsY + 50 * 2;
     }
     if (this.endbossStatusBar()) {
-      return this.statusBarsY;
+      return this.statusBarsY + 75;
     }
   }
 

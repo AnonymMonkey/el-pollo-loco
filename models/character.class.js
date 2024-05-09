@@ -12,6 +12,7 @@ class Character extends MovableObject {
   IMAGES = this.imagesCharacter;
 
   triggerLongIdle = false;
+  sleepTimeOut;
 
   soundPlayed = false;
   dead_sound = new Audio(this.sound_deathPepe);
@@ -59,38 +60,57 @@ class Character extends MovableObject {
     setInterval(() => {
       let keyboard = this.world.keyboard;
       if (this.isHurt()) {
+        this.awake();
         this.soundPlayed = false;
         this.playSound(this.hurt_sound);
         this.playAnimation(this.pepe_Hurt());
       } else if (this.isDead()) {
+        this.awake();
         this.soundPlayed = false;
         this.playSound(this.dead_sound);
         this.playAnimation(this.pepe_Dead());
+        setTimeout(() => {
+          gameOver();
+        }, 500);
       } else if (this.isAboveGround()) {
+        this.awake();
         this.soundPlayed = false;
         this.playSound(this.jump_sound);
         this.playAnimation(this.pepe_Jumping());
-      } else if (!this.isAboveGround()) {
+      } else if (!this.isAboveGround() && !this.triggerLongIdle) {
         this.playAnimation(this.pepe_Idle());
+
+        setTimeout(() => {
+          this.sleeping();
+        }, 5000);
+      } else if (!this.isAboveGround() && this.triggerLongIdle) {
+        this.playAnimation(this.pepe_Long_Idle());
       }
 
       if (
         (keyboard.KEY_RIGHT && !this.isAboveGround()) ||
         (keyboard.KEY_LEFT && !this.isAboveGround())
       ) {
+        this.awake();
         this.playAnimation(this.pepe_Walking());
       }
-      if (this.triggerLongIdle) {
-      }
+
+      //if (
+      //  (keyboard.KEY_RIGHT && !this.isAboveGround()) ||
+      //  (keyboard.KEY_LEFT && !this.isAboveGround())
+      //) {
+      //  this.awake();
+      //  this.playAnimation(this.pepe_Walking());
+      //}
     }, 100);
   }
 
   sleeping() {
-    return (this.triggerLongIdle = true);
+    this.triggerLongIdle = true;
   }
 
   awake() {
-    return (this.triggerLongIdle = false);
+    this.triggerLongIdle = false;
   }
 
   pepe_Idle() {
