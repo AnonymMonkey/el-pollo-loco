@@ -56,6 +56,7 @@ function gameOver() {
   console.log("Spiel ende");
   clearAllIntervals();
   bodyElement.innerHTML = HTML_GameOver();
+  firstLoading = true;
 }
 
 // fullscreen
