@@ -1,7 +1,7 @@
 let canvas;
 let world;
-let keyboard = new Keyboard();
-let coordinates = new Coordinates();
+let keyboard;
+let coordinates;
 
 let bodyElement;
 
@@ -11,8 +11,8 @@ let isFullscreen = false;
 function init() {
   bodyElement = document.body;
   firstLoading = true;
-  //showStartScreen();
-  gameOver();
+  showStartScreen();
+  //gameOver();
 }
 
 function showStartScreen() {
@@ -47,6 +47,8 @@ function startGame() {
   setTimeout(() => {
     bodyElement.innerHTML = HTML_StartGame();
     canvas = document.getElementById("canvas");
+    keyboard = new Keyboard();
+    coordinates = new Coordinates();
     world = new World(canvas, keyboard, coordinates);
     startscreen.classList.remove("animation-fade-out");
   }, 250);
@@ -54,9 +56,14 @@ function startGame() {
 
 function gameOver() {
   console.log("Spiel ende");
-  clearAllIntervals();
   bodyElement.innerHTML = HTML_GameOver();
   firstLoading = true;
+
+  resetGame();
+}
+
+function resetGame() {
+  clearAllIntervals();
 }
 
 // fullscreen
