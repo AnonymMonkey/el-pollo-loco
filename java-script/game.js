@@ -1,7 +1,7 @@
 let canvas;
 let world;
-let keyboard;
-let coordinates;
+let keyboard = new Keyboard();
+let coordinates = new Coordinates();
 
 let bodyElement;
 
@@ -53,17 +53,19 @@ function startGame() {
   }, 250);
 }
 
-async function gameOver() {
+function gameOver() {
   console.log("Spiel ende");
-  await clearAllIntervals();
   bodyElement.innerHTML = HTML_GameOver();
   firstLoading = true;
 
   resetGame();
 }
 
-function resetGame() {
-  clearAllIntervals();
+async function resetGame() {
+  await clearAllIntervals();
+  world = null;
+  keyboard = new Keyboard();
+  coordinates = new Coordinates();
 }
 
 // fullscreen

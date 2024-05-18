@@ -70,7 +70,7 @@ class Character extends MovableObject {
         this.playSound(this.dead_sound);
         this.playAnimation(this.pepe_Dead());
         setTimeout(() => {
-          gameOver(this.enemeyFirstSpawn);
+          gameOver();
         }, 500);
       } else if (this.isAboveGround()) {
         this.awake();
