@@ -1,7 +1,7 @@
 let canvas;
 let world;
-let keyboard = new Keyboard();
-let coordinates = new Coordinates();
+let keyboard;
+let coordinates;
 
 let bodyElement;
 
@@ -11,8 +11,8 @@ let isFullscreen = false;
 function init() {
   bodyElement = document.body;
   firstLoading = true;
-  //showStartScreen();
-  gameOver();
+  showStartScreen();
+  //gameOver();
 }
 
 function showStartScreen() {
@@ -58,6 +58,12 @@ async function gameOver() {
   await clearAllIntervals();
   bodyElement.innerHTML = HTML_GameOver();
   firstLoading = true;
+
+  resetGame();
+}
+
+function resetGame() {
+  clearAllIntervals();
 }
 
 // fullscreen
