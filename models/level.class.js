@@ -1,6 +1,4 @@
 class Level {
-    world;
-
     bosses;
     enemies;
     clouds;

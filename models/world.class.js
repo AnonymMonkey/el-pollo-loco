@@ -50,6 +50,7 @@ class World {
     number = 3;
     let enemies = level.enemies;
     if (enemies.length == 0 && this.coordinates.enemeyFirstSpawn) {
+      debugger
       this.coordinates.enemeyFirstSpawn = false;
       for (let i = 0; i < number; i++) {
         enemies.push(new Chicken());

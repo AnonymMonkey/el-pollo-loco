@@ -47,14 +47,15 @@ function startGame() {
   setTimeout(() => {
     bodyElement.innerHTML = HTML_StartGame();
     canvas = document.getElementById("canvas");
+    loadLevel();
     world = new World(canvas, keyboard, coordinates);
     startscreen.classList.remove("animation-fade-out");
   }, 250);
 }
 
-function gameOver() {
+async function gameOver() {
   console.log("Spiel ende");
-  clearAllIntervals();
+  await clearAllIntervals();
   bodyElement.innerHTML = HTML_GameOver();
   firstLoading = true;
 }
