@@ -210,7 +210,7 @@ canvas {
 }
 
 /* ---------- Game Over ---------- */
-.game-over-screen {
+.game-end-screen {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -231,7 +231,7 @@ canvas {
   );
 }
 
-.game-over-screen-inner {
+.game-end-screen-inner {
   position: relative;
 
   display: flex;
@@ -244,7 +244,7 @@ canvas {
   height: 100%;
 }
 
-.game-over-img-section {
+.game-end-img-section {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -253,7 +253,7 @@ canvas {
   position: absolute;
 }
 
-.game-over-exit-section {
+.game-end-exit-section {
   position: absolute;
   top: 10px;
   display: flex;
@@ -263,12 +263,12 @@ canvas {
   z-index: 1;
 }
 
-.game-over-img {
+.game-end-img {
   position: absolute;
   opacity: 0;
 }
 
-.game-over-chicken-left {
+.game-end-chicken-left {
   position: absolute;
   bottom: 10px;
   left: 100px;
@@ -276,19 +276,35 @@ canvas {
   width: 100px;
 }
 
-.game-over-pepe {
+.game-end-pepe {
   position: absolute;
   bottom: 10px;
 
   width: 150px;
 }
 
-.game-over-chicken-right {
+.game-end-chicken-right {
   position: absolute;
   bottom: 10px;
   right: 100px;
 
   width: 100px;
+}
+
+.game-end-boss-left {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+
+  width: 180px;
+}
+
+.game-end-boss-right {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  width: 180px;
 }
 
 /* ---------- Animation ---------- */
@@ -393,7 +409,7 @@ canvas {
   .game-screen,
   .start-screen,
   .information-screen,
-  .game-over-screen {
+  .game-end-screen {
     width: 100%;
   }
 }
@@ -403,7 +419,7 @@ canvas {
   .game-screen,
   .start-screen,
   .information-screen,
-  .game-over-screen {
+  .game-end-screen {
     height: 100vh;
   }
 }

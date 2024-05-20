@@ -9,8 +9,13 @@ let firstLoading = false;
 let isFullscreen = false;
 let isSoundActiv = false;
 
+let lose = false;
+
 game_sound = new Audio(new Sounds().sound_backgroundMusic);
-let soundBox = [];
+sound_endboss_battle = new Audio(new Sounds().sound_endboss_battle);
+sound_gameWin = new Audio(new Sounds().sound_gameWin);
+sound_gameOver = new Audio(new Sounds().sound_gameOver);
+sound_click = new Audio(new Sounds().sound_click);
 
 function init() {
   bodyElement = document.body;
@@ -18,11 +23,13 @@ function init() {
   showStartScreen();
 }
 
-function showStartScreen() {
+function showStartScreen(clicked) {
+  checkClicked(clicked);
   if (firstLoading) {
     bodyElement.innerHTML = HTML_Startscreen();
     firstLoading = false;
   } else {
+    sound_click.play();
     infoscreen = document.getElementById("infoscreen");
     infoscreen.classList.remove("animation-fade-in");
     infoscreen.classList.add("animation-fade-out");
@@ -32,7 +39,8 @@ function showStartScreen() {
   }
 }
 
-function showInformations() {
+function showInformations(clicked) {
+  checkClicked(clicked);
   startscreen = document.getElementById("startscreen");
   startscreen.classList.remove("animation-fade-in");
   startscreen.classList.add("animation-fade-out");
@@ -42,7 +50,8 @@ function showInformations() {
   }, 250);
 }
 
-function startGame() {
+function startGame(clicked) {
+  checkClicked(clicked);
   startscreen = document.getElementById("startscreen");
   startscreen.classList.remove("animation-fade-in");
   startscreen.classList.add("animation-fade-out");
@@ -57,13 +66,18 @@ function startGame() {
   }, 250);
 }
 
-function gameOver() {
-  console.log("Spiel ende");
-  isSoundActiv = !isSoundActiv;
-  backgroundMusic();
-  bodyElement.innerHTML = HTML_GameOver();
+function gameEnd() {
+  isSoundActiv = true;
+  //debugger;
+  toggleSound();
+  if (lose) {
+    sound_gameOver.play();
+    bodyElement.innerHTML = HTML_GameOver();
+  } else {
+    sound_gameWin.play();
+    bodyElement.innerHTML = HTML_GameWin();
+  }
   firstLoading = true;
-
   resetGame();
 }
 
@@ -75,7 +89,8 @@ async function resetGame() {
 }
 
 // fullscreen
-function toggleFullScreen() {
+function toggleFullScreen(clicked) {
+  checkClicked(clicked);
   if (!isFullscreen) {
     enterFullscreen(gamescreen);
     //enterFullscreen(canvas);
@@ -105,17 +120,17 @@ function exitFullscreen() {
 }
 
 // toggle Sound on/off
-function toggleSound() {
+function toggleSound(clicked) {
+  checkClicked(clicked);
   if (!isSoundActiv) {
     isSoundActiv = !isSoundActiv;
-    console.log(isSoundActiv);
     soundbutton.src = "assets/img/buttons/sound-on.png";
     backgroundMusic();
   } else {
     isSoundActiv = !isSoundActiv;
-    console.log(isSoundActiv);
     soundbutton.src = "assets/img/buttons/sound-off.png";
     backgroundMusic();
+    battleMusic();
   }
 }
 
@@ -127,6 +142,23 @@ function backgroundMusic() {
   } else {
     game_sound.pause();
     game_sound.currentTime = 0;
+  }
+}
+
+function battleMusic() {
+  if (isSoundActiv) {
+    sound_endboss_battle.play();
+    sound_endboss_battle.loop = true;
+    sound_endboss_battle.volume = 0.5;
+  } else {
+    sound_endboss_battle.pause();
+    sound_endboss_battle.currentTime = 0;
+  }
+}
+
+function checkClicked(clicked) {
+  if (clicked) {
+    sound_click.play();
   }
 }
 

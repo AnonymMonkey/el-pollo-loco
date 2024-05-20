@@ -13,8 +13,9 @@ class Endboss extends MovableObject {
   wasHit = false;
   dead = false;
 
+  deadSoundPlayed = false;
+
   sound_endboss = new Audio(new Sounds().sound_endboss);
-  sound_endboss_battle = new Audio(new Sounds().sound_endboss_battle);
   sound_deathEndboss = new Audio(new Sounds().sound_deathEndboss);
   sound_endboss_hit = new Audio(new Sounds().sound_endboss_hit);
 
@@ -27,15 +28,19 @@ class Endboss extends MovableObject {
 
   animateModel() {
     setInterval(() => {
-      if (this.hasDiscoveredCharacter) {
+      if (this.hasDiscoveredCharacter && !this.dead) {
         let intervalMove = setInterval(() => {
           this.moveLeft(this.speed);
           this.playSound(this.sound_endboss);
           setTimeout(() => {
-            this.soundPlayed = false;
-            this.playSound(this.sound_endboss_battle);
+            battleMusic();
           }, 500);
           if (this.dead) {
+            if (!this.deadSoundPlayed) {
+              this.soundPlayed = false;
+              this.deadSoundPlayed = true;
+            }
+            this.playSound(this.sound_deathEndboss);
             clearInterval(intervalMove);
           }
         }, 200);
@@ -43,7 +48,7 @@ class Endboss extends MovableObject {
     }, 160);
 
     setInterval(() => {
-      this.soundPlayed = false;
+      //this.soundPlayed = false;
       if (!this.hasDiscoveredCharacter) {
         this.playAnimation(this.endboss_Alert());
       } else if (this.wasHit && !this.dead) {
@@ -54,13 +59,6 @@ class Endboss extends MovableObject {
           this.wasHit = false;
         }, 500);
       } else if (this.dead) {
-        this.soundPlayed = false;
-        let deadSoundPlayed = false;
-        if (!deadSoundPlayed) {
-          this.playSound(this.sound_deathEndboss);
-          deadSoundPlayed = true;
-          //ANCHOR - Vielleicht liegts am x error
-        }
         this.playAnimation(this.endboss_Dead());
       } else {
         this.playAnimation(this.endboss_Walking());

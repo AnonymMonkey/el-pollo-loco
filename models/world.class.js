@@ -225,8 +225,12 @@ class World {
 
   collisionsWithEndboss() {
     let endboss = this.level.bosses[0];
-    if (this.character.isColliding(endboss)) {
-      this.character.characterEnergy = 0;
+    if (endboss == undefined) {
+      return;
+    } else {
+      if (this.character.isColliding(endboss)) {
+        this.character.characterEnergy = 0;
+      }
     }
   }
 
@@ -276,6 +280,8 @@ class World {
       endboss.dead = true;
       setTimeout(() => {
         this.level.bosses.splice(0, 1);
+        lose = false;
+        gameEnd();
       }, 1500);
     }
 

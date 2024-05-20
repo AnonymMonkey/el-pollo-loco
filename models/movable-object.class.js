@@ -25,7 +25,6 @@ class MovableObject extends DrawableObject {
     }
   }
 
-  /* character.isColliding(chicken) */
   isColliding(mo) {
     return this.collidingX(mo) && this.collidingY(mo);
   }

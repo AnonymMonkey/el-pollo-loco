@@ -44,14 +44,12 @@ class Character extends MovableObject {
         this.moveRight(this.speed);
         this.otherDirection = false;
         this.walkingSound();
-        soundBox.push(this.walking_sound);
       }
 
       if (keyboard.KEY_LEFT && this.x > 0) {
         this.moveLeft(this.speed);
         this.otherDirection = true;
         this.walkingSound();
-        soundBox.push(this.walking_sound);
       }
 
       if (keyboard.KEY_UP && !this.isAboveGround()) {
@@ -79,7 +77,8 @@ class Character extends MovableObject {
         this.playSound(this.dead_sound);
         this.playAnimation(this.pepe_Dead());
         setTimeout(() => {
-          gameOver();
+          lose = true;
+          gameEnd();
         }, 500);
       } else if (this.isAboveGround()) {
         this.awake();
