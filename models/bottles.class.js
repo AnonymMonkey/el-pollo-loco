@@ -8,6 +8,8 @@ class Bottle extends MovableObject {
 
   IMAGES = this.imagesBottle;
 
+  sound_collect_bottle = new Audio(new Sounds().sound_collect_bottle);
+
   collected = false;
 
   constructor() {
@@ -24,6 +26,7 @@ class Bottle extends MovableObject {
     let intervalAnimation = setInterval(() => {
       this.playAnimation(this.bottle_Normal());
       if (this.collected) {
+        this.playSound(this.sound_collect_bottle);
         clearInterval(intervalAnimation);
       }
     }, 250);

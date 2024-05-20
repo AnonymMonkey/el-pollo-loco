@@ -65,7 +65,7 @@ class MovableObject extends DrawableObject {
 
   isHurt() {
     let timepassed = new Date().getTime() - this.lastHit;
-    timepassed = timepassed / 1000;
+    timepassed = timepassed / 500;
     return timepassed < 1;
   }
 
@@ -74,7 +74,7 @@ class MovableObject extends DrawableObject {
   }
 
   playSound(x) {
-    if (!this.soundPlayed) {
+    if (!this.soundPlayed && isSoundActiv) {
       x.play();
       this.soundPlayed = true;
     }

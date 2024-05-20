@@ -44,7 +44,7 @@ function HTML_StartGame() {
     <h1>El pollo loco</h1>
     <canvas id="canvas" width="720px" height="480px"></canvas>
     <div class="game-buttons">
-      <img class="sound-button c-pointer" src="assets/img/buttons/sound-on.png" alt="toggle sound">
+      <img onclick="toggleSound()" id="soundbutton" class="sound-button c-pointer" src="assets/img/buttons/sound-on.png" alt="toggle sound">
       <img onclick="toggleFullScreen()" class="fullscreen-button c-pointer" src="assets/img/buttons/fullscreen.png" alt="toggle fullscreen">
     </div>
   </div>

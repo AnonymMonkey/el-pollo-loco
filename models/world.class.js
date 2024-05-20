@@ -14,7 +14,10 @@ class World {
   count_png = false;
   number = 1;
 
-  game_sound = new Audio(new Sounds().sound_backgroundMusic);
+  sound_exchange = new Audio(new Sounds().sound_exchange);
+  sound_breakingBottle = new Audio(new Sounds().sound_breakingBottle);
+  sound_throwBottle = new Audio(new Sounds().sound_throwBottle);
+  sound_throwBottle_sec = new Audio(new Sounds().sound_throwBottle_sec);
 
   constructor(canvas, keyboard, coordinates) {
     /* Der Kontext ist ein Objekt mit Eigenschaften und Methoden, der Grafik innerhalb des Canvas rendert */
@@ -29,10 +32,6 @@ class World {
     this.draw();
     this.setWorld();
     this.checkCollisions();
-
-    //this.game_sound.play();
-    this.game_sound.loop = true;
-    this.game_sound.volume = 0.5;
   }
 
   movableObjectCoordination(number, level) {
@@ -200,6 +199,7 @@ class World {
       this.exchangeCoin();
       this.checkThrowBottle();
       this.collisionsWithEnemy();
+      this.collisionsWithEndboss();
       this.collisionsWithCollectable();
       this.collisionsCoordinationWithThrowableObject();
     }, 50);
@@ -221,6 +221,13 @@ class World {
         }, 2000);
       }
     });
+  }
+
+  collisionsWithEndboss() {
+    let endboss = this.level.bosses[0];
+    if (this.character.isColliding(endboss)) {
+      this.character.characterEnergy = 0;
+    }
   }
 
   collisionsWithCollectable() {
@@ -245,12 +252,16 @@ class World {
     let throwableObjects = this.throwableObjects;
     let endboss = this.level.bosses[0];
     throwableObjects.forEach((throwableObject, index) => {
-      this.collisionsWithEndboss(throwableObject, index, endboss);
-      this.collisionsWithGround(throwableObject, index);
+      this.throwableObjectsCollisionsWithEndboss(
+        throwableObject,
+        index,
+        endboss
+      );
+      this.throwableObjectsCollisionsWithGround(throwableObject, index);
     });
   }
 
-  collisionsWithEndboss(throwableObject, index, endboss) {
+  throwableObjectsCollisionsWithEndboss(throwableObject, index, endboss) {
     if (throwableObject.isColliding(endboss) && this.coordinates.wasThrown) {
       this.coordinates.wasThrown = false;
       this.processForEndboss(throwableObject, index, endboss);
@@ -271,7 +282,7 @@ class World {
     this.bottleSplash(throwableObject, index);
   }
 
-  collisionsWithGround(throwableObject, index) {
+  throwableObjectsCollisionsWithGround(throwableObject, index) {
     if (throwableObject.isCollidingGround() && this.coordinates.wasThrown) {
       this.coordinates.wasThrown = false;
       this.processForGround(throwableObject, index);
@@ -285,6 +296,7 @@ class World {
   bottleSplash(throwableObject, index) {
     let throwableObjects = this.throwableObjects;
     throwableObject.isCollided = true;
+    this.sound_breakingBottle.play();
 
     setTimeout(() => {
       throwableObjects.splice(index, 1);
@@ -318,12 +330,18 @@ class World {
     this.coordinates.wasThrown = true;
     this.throwableObjects.push(bottle);
     this.statusBarBottle.bottleCache--;
+    if (Math.random() < 0.5) {
+      this.sound_throwBottle.play();
+    } else {
+      this.sound_throwBottle_sec.play();
+    }
   }
 
   exchangeCoin() {
     if (this.statusBarCoin.coinCache > 0) {
       if (this.keyboard.KEY_C && !this.coordinates.gotExchanged) {
         if (this.statusBarBottle.bottleCache < 5) {
+          this.sound_exchange.play();
           this.toggleExchange();
           this.prozessCoinToBottle();
           setTimeout(() => {
@@ -333,6 +351,7 @@ class World {
       }
       if (this.keyboard.KEY_X && !this.coordinates.gotExchanged) {
         if (this.character.characterEnergy < 100) {
+          this.sound_exchange.play();
           this.toggleExchange();
           this.prozessCoinToHealth();
           setTimeout(() => {

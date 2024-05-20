@@ -7,12 +7,15 @@ let bodyElement;
 
 let firstLoading = false;
 let isFullscreen = false;
+let isSoundActiv = false;
+
+game_sound = new Audio(new Sounds().sound_backgroundMusic);
+let soundBox = [];
 
 function init() {
   bodyElement = document.body;
   firstLoading = true;
   showStartScreen();
-  //gameOver();
 }
 
 function showStartScreen() {
@@ -49,12 +52,15 @@ function startGame() {
     canvas = document.getElementById("canvas");
     loadLevel();
     world = new World(canvas, keyboard, coordinates);
+    toggleSound();
     startscreen.classList.remove("animation-fade-out");
   }, 250);
 }
 
 function gameOver() {
   console.log("Spiel ende");
+  isSoundActiv = !isSoundActiv;
+  backgroundMusic();
   bodyElement.innerHTML = HTML_GameOver();
   firstLoading = true;
 
@@ -95,6 +101,32 @@ function exitFullscreen() {
     document.exitFullscreen();
   } else if (document.webkitExitFullscreen) {
     document.webkitExitFullscreen();
+  }
+}
+
+// toggle Sound on/off
+function toggleSound() {
+  if (!isSoundActiv) {
+    isSoundActiv = !isSoundActiv;
+    console.log(isSoundActiv);
+    soundbutton.src = "assets/img/buttons/sound-on.png";
+    backgroundMusic();
+  } else {
+    isSoundActiv = !isSoundActiv;
+    console.log(isSoundActiv);
+    soundbutton.src = "assets/img/buttons/sound-off.png";
+    backgroundMusic();
+  }
+}
+
+function backgroundMusic() {
+  if (isSoundActiv) {
+    game_sound.play();
+    game_sound.loop = true;
+    game_sound.volume = 0.5;
+  } else {
+    game_sound.pause();
+    game_sound.currentTime = 0;
   }
 }
 
