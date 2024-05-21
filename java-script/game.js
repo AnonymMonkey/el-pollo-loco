@@ -61,6 +61,9 @@ function startGame(clicked) {
     canvas = document.getElementById("canvas");
     loadLevel();
     world = new World(canvas, keyboard, coordinates);
+    //
+
+    //
     toggleSound();
     startscreen.classList.remove("animation-fade-out");
   }, 250);

@@ -307,6 +307,25 @@ canvas {
   width: 180px;
 }
 
+/* ---------- Landscape ---------- */
+.landscape-navigation-left {
+  position: absolute;
+  bottom: -50px;
+  left: 10px;
+  width: 35%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.landscape-navigation-right {
+  position: absolute;
+  bottom: -50px;
+  right: 10px;
+  width: 35%;
+  display: flex;
+  justify-content: space-between;
+}
+
 /* ---------- Animation ---------- */
 .animation-fade-out {
   animation: 250ms fadeout ease-in-out;

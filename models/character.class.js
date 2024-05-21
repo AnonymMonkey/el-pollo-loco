@@ -11,8 +11,8 @@ class Character extends MovableObject {
 
   IMAGES = this.imagesCharacter;
 
-  triggerLongIdle = false;
-  sleepTimer;
+  awake = true;
+  tired = null;
 
   soundPlayed = false;
   dead_sound = new Audio(new Sounds().sound_deathPepe);
@@ -44,12 +44,14 @@ class Character extends MovableObject {
         this.moveRight(this.speed);
         this.otherDirection = false;
         this.walkingSound();
+        this.isAwake();
       }
 
       if (keyboard.KEY_LEFT && this.x > 0) {
         this.moveLeft(this.speed);
         this.otherDirection = true;
         this.walkingSound();
+        this.isAwake();
       }
 
       if (keyboard.KEY_UP && !this.isAboveGround()) {
@@ -63,7 +65,7 @@ class Character extends MovableObject {
     setInterval(() => {
       let keyboard = this.world.keyboard;
       if (this.isHurt()) {
-        this.awake();
+        this.isAwake();
         this.soundPlayed = false;
         if (Math.random() < 0.5) {
           this.playSound(this.hurt_sound);
@@ -72,7 +74,7 @@ class Character extends MovableObject {
         }
         this.playAnimation(this.pepe_Hurt());
       } else if (this.isDead()) {
-        this.awake();
+        this.isAwake();
         this.soundPlayed = false;
         this.playSound(this.dead_sound);
         this.playAnimation(this.pepe_Dead());
@@ -81,29 +83,23 @@ class Character extends MovableObject {
           gameEnd();
         }, 500);
       } else if (this.isAboveGround()) {
-        this.awake();
+        this.isAwake();
         this.soundPlayed = false;
         this.playSound(this.jump_sound);
         this.playAnimation(this.pepe_Jumping());
-      } else if (!this.isAboveGround() && !this.triggerLongIdle) {
+      } else if (!this.isAboveGround()) {
         this.playAnimation(this.pepe_Idle());
         this.snoring_sound.pause();
 
-        this.sleepTimer = setTimeout(() => {
-          this.sleeping();
-        }, 5000);
-      } else if (!this.isAboveGround() && this.triggerLongIdle) {
-        this.playAnimation(this.pepe_Long_Idle());
-        this.playSound(this.snoring_sound);
-        this.snoring_sound.loop = true;
+        this.isTired();
+        this.checkSleeping();
       }
-
       if (
         (keyboard.KEY_RIGHT && !this.isAboveGround()) ||
         (keyboard.KEY_LEFT && !this.isAboveGround())
       ) {
-        this.awake();
         this.playAnimation(this.pepe_Walking());
+        this.isAwake();
       }
     }, 140);
   }
@@ -114,14 +110,29 @@ class Character extends MovableObject {
     }
   }
 
-  sleeping() {
-    this.triggerLongIdle = true;
+  isTired() {
+    if (this.awake) {
+      this.tired = new Date().getTime();
+      this.awake = !this.awake;
+    }
   }
 
-  awake() {
-    this.triggerLongIdle = false;
-    clearTimeout(this.sleepTimer);
-    this.snoring_sound.pause();
+  sleeping() {
+    let sleepTimer = new Date().getTime() - this.tired;
+    sleepTimer = sleepTimer / 1000;
+    return sleepTimer > 3;
+  }
+
+  checkSleeping() {
+    if (!this.isAboveGround() && this.sleeping()) {
+      this.soundPlayed = false;
+      this.playAnimation(this.pepe_Long_Idle());
+      this.playSound(this.snoring_sound);
+    }
+  }
+
+  isAwake() {
+    this.awake = true;
   }
 
   pepe_Idle() {

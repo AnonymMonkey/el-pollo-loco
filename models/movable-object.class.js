@@ -76,6 +76,9 @@ class MovableObject extends DrawableObject {
     if (!this.soundPlayed && isSoundActiv) {
       x.play();
       this.soundPlayed = true;
+    } else if (!isSoundActiv) {
+      x.pause();
+      this.soundPlayed = true;
     }
   }
 

@@ -20,6 +20,7 @@ function HTML_ShowInformations() {
         <div class="f-d-column">
           <p>Push Arrow-Key <b>Left</b> to run left.</p>
           <p>Push Arrow-Key <b>Right</b> to run right.</p>
+          <p>Push Arrow-Key <b>UP</b> to jump.</p>
         </div>
       </div>
       <div class="info-section">
@@ -45,7 +46,15 @@ function HTML_StartGame() {
     <canvas id="canvas" width="720px" height="480px"></canvas>
     <div class="game-buttons">
       <img onclick="toggleSound(true)" id="soundbutton" class="sound-button c-pointer" src="assets/img/buttons/sound-on.png" alt="toggle sound">
-      <img onclick="toggleFullScreen(true)" class="fullscreen-button c-pointer" src="assets/img/buttons/fullscreen.png" alt="toggle fullscreen">
+      <img onclick="toggleFullScreen(true)" id="fullcscreen-button" class="fullscreen-button c-pointer" src="assets/img/buttons/fullscreen.png" alt="toggle fullscreen">
+    </div>
+    <div class="landscape-navigation-left">
+      <img onclick="checkClicked(true)" id="left-button" class="landscape-left c-pointer" src="assets/img/buttons/left.png" alt="left">
+      <img onclick="checkClicked(true)" id="right-button" class="landscape-right c-pointer" src="assets/img/buttons/right.png" alt="right">
+    </div>
+    <div class="landscape-navigation-right">
+      <img onclick="checkClicked(true)" id="jump-button" class="landscape-left c-pointer" src="assets/img/buttons/jump.png" alt="jump">
+      <img onclick="checkClicked(true)" id="attack-button" class="landscape-right c-pointer" src="assets/img/buttons/attack.png" alt="attack">
     </div>
   </div>
       `;
