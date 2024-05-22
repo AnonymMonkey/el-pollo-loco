@@ -30,7 +30,7 @@ class World {
     this.setWorld();
     this.checkCollisions();
 
-    //this.game_sound.play();
+    this.game_sound.play();
     this.game_sound.loop = true;
     this.game_sound.volume = 0.5;
   }
