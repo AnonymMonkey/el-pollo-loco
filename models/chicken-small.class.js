@@ -12,7 +12,7 @@ class Chicken_Small extends MovableObject {
 
   IMAGES = this.imagesSmallChicken;
 
-  dead_sound = new Audio(this.sound_deathEnemie);
+  sound_deathEnemie = new Audio(this.sound_deathEnemie);
 
   constructor() {
     super().getAllImages(this);
@@ -34,9 +34,9 @@ class Chicken_Small extends MovableObject {
     }, 1000 / 60);
 
     let intervalDead = setInterval(() => {
-      this.dead_sound.pause();
+      this.sound_deathEnemie.pause();
       if (this.dead) {
-        this.playSound(this.dead_sound);
+        this.playSound(this.sound_deathEnemie);
         this.playAnimation(this.smallChicken_Dead());
         clearInterval(intervalDead);
       } else {

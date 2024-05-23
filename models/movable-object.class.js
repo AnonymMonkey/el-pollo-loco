@@ -25,7 +25,6 @@ class MovableObject extends DrawableObject {
     }
   }
 
-  /* character.isColliding(chicken) */
   isColliding(mo) {
     return this.collidingX(mo) && this.collidingY(mo);
   }
@@ -65,7 +64,7 @@ class MovableObject extends DrawableObject {
 
   isHurt() {
     let timepassed = new Date().getTime() - this.lastHit;
-    timepassed = timepassed / 1000;
+    timepassed = timepassed / 500;
     return timepassed < 1;
   }
 
@@ -74,8 +73,11 @@ class MovableObject extends DrawableObject {
   }
 
   playSound(x) {
-    if (!this.soundPlayed) {
+    if (!this.soundPlayed && isSoundActiv) {
       x.play();
+      this.soundPlayed = true;
+    } else if (!isSoundActiv) {
+      x.pause();
       this.soundPlayed = true;
     }
   }

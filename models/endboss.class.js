@@ -13,6 +13,12 @@ class Endboss extends MovableObject {
   wasHit = false;
   dead = false;
 
+  deadSoundPlayed = false;
+
+  sound_endboss = new Audio(new Sounds().sound_endboss);
+  sound_deathEndboss = new Audio(new Sounds().sound_deathEndboss);
+  sound_endboss_hit = new Audio(new Sounds().sound_endboss_hit);
+
   constructor() {
     super().getAllImages(this);
     this.loadFirstImage(this);
@@ -22,10 +28,19 @@ class Endboss extends MovableObject {
 
   animateModel() {
     setInterval(() => {
-      if (this.hasDiscoveredCharacter) {
+      if (this.hasDiscoveredCharacter && !this.dead) {
         let intervalMove = setInterval(() => {
           this.moveLeft(this.speed);
+          this.playSound(this.sound_endboss);
+          setTimeout(() => {
+            battleMusic();
+          }, 500);
           if (this.dead) {
+            if (!this.deadSoundPlayed) {
+              this.soundPlayed = false;
+              this.deadSoundPlayed = true;
+            }
+            this.playSound(this.sound_deathEndboss);
             clearInterval(intervalMove);
           }
         }, 200);
@@ -33,10 +48,13 @@ class Endboss extends MovableObject {
     }, 160);
 
     setInterval(() => {
+      //this.soundPlayed = false;
       if (!this.hasDiscoveredCharacter) {
         this.playAnimation(this.endboss_Alert());
       } else if (this.wasHit && !this.dead) {
+        this.soundPlayed = false;
         this.playAnimation(this.endboss_Hurt());
+        this.playSound(this.sound_endboss_hit);
         setTimeout(() => {
           this.wasHit = false;
         }, 500);

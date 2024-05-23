@@ -11,14 +11,16 @@ class Character extends MovableObject {
 
   IMAGES = this.imagesCharacter;
 
-  triggerLongIdle = false;
-  sleepTimeOut;
+  awake = true;
+  tired = null;
 
   soundPlayed = false;
-  dead_sound = new Audio(this.sound_deathPepe);
-  hurt_sound = new Audio(this.sound_hurt);
-  jump_sound = new Audio(this.sound_jump);
-  walking_sound = new Audio(this.sound_running);
+  dead_sound = new Audio(new Sounds().sound_deathPepe);
+  snoring_sound = new Audio(new Sounds().sound_snoring);
+  hurt_sound = new Audio(new Sounds().sound_hurt);
+  hurt_sound_sec = new Audio(new Sounds().sound_hurt_sec);
+  jump_sound = new Audio(new Sounds().sound_jump);
+  walking_sound = new Audio(new Sounds().sound_running);
 
   constructor() {
     super().getAllImages(this);
@@ -35,18 +37,21 @@ class Character extends MovableObject {
     /* Movement */
     setInterval(() => {
       let keyboard = this.world.keyboard;
+
       this.walking_sound.pause();
 
       if (keyboard.KEY_RIGHT && this.x < this.world.level.level_end_x) {
         this.moveRight(this.speed);
         this.otherDirection = false;
-        this.walking_sound.play();
+        this.walkingSound();
+        this.isAwake();
       }
 
       if (keyboard.KEY_LEFT && this.x > 0) {
         this.moveLeft(this.speed);
         this.otherDirection = true;
-        this.walking_sound.play();
+        this.walkingSound();
+        this.isAwake();
       }
 
       if (keyboard.KEY_UP && !this.isAboveGround()) {
@@ -60,57 +65,74 @@ class Character extends MovableObject {
     setInterval(() => {
       let keyboard = this.world.keyboard;
       if (this.isHurt()) {
-        this.awake();
+        this.isAwake();
         this.soundPlayed = false;
-        this.playSound(this.hurt_sound);
+        if (Math.random() < 0.5) {
+          this.playSound(this.hurt_sound);
+        } else {
+          this.playSound(this.hurt_sound_sec);
+        }
         this.playAnimation(this.pepe_Hurt());
       } else if (this.isDead()) {
-        this.awake();
+        this.isAwake();
         this.soundPlayed = false;
         this.playSound(this.dead_sound);
         this.playAnimation(this.pepe_Dead());
         setTimeout(() => {
-          gameOver();
+          lose = true;
+          gameEnd();
         }, 500);
       } else if (this.isAboveGround()) {
-        this.awake();
+        this.isAwake();
         this.soundPlayed = false;
         this.playSound(this.jump_sound);
         this.playAnimation(this.pepe_Jumping());
-      } else if (!this.isAboveGround() && !this.triggerLongIdle) {
+      } else if (!this.isAboveGround()) {
         this.playAnimation(this.pepe_Idle());
+        this.snoring_sound.pause();
 
-        setTimeout(() => {
-          this.sleeping();
-        }, 5000);
-      } else if (!this.isAboveGround() && this.triggerLongIdle) {
-        this.playAnimation(this.pepe_Long_Idle());
+        this.isTired();
+        this.checkSleeping();
       }
-
       if (
         (keyboard.KEY_RIGHT && !this.isAboveGround()) ||
         (keyboard.KEY_LEFT && !this.isAboveGround())
       ) {
-        this.awake();
         this.playAnimation(this.pepe_Walking());
+        this.isAwake();
       }
+    }, 140);
+  }
 
-      //if (
-      //  (keyboard.KEY_RIGHT && !this.isAboveGround()) ||
-      //  (keyboard.KEY_LEFT && !this.isAboveGround())
-      //) {
-      //  this.awake();
-      //  this.playAnimation(this.pepe_Walking());
-      //}
-    }, 100);
+  walkingSound() {
+    if (isSoundActiv) {
+      this.walking_sound.play();
+    }
+  }
+
+  isTired() {
+    if (this.awake) {
+      this.tired = new Date().getTime();
+      this.awake = !this.awake;
+    }
   }
 
   sleeping() {
-    this.triggerLongIdle = true;
+    let sleepTimer = new Date().getTime() - this.tired;
+    sleepTimer = sleepTimer / 1000;
+    return sleepTimer > 3;
   }
 
-  awake() {
-    this.triggerLongIdle = false;
+  checkSleeping() {
+    if (!this.isAboveGround() && this.sleeping()) {
+      this.soundPlayed = false;
+      this.playAnimation(this.pepe_Long_Idle());
+      this.playSound(this.snoring_sound);
+    }
+  }
+
+  isAwake() {
+    this.awake = true;
   }
 
   pepe_Idle() {

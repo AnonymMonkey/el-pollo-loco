@@ -8,6 +8,8 @@ class Coin extends MovableObject {
 
   IMAGES = this.imagesCoin;
 
+  sound_collect_coin = new Audio(new Sounds().sound_collect_coin);
+
   collected = false;
 
   constructor() {
@@ -25,6 +27,7 @@ class Coin extends MovableObject {
     let intervalAnimation = setInterval(() => {
       this.playAnimation(this.coin());
       if (this.collected) {
+        this.playSound(this.sound_collect_coin);
         clearInterval(intervalAnimation);
       }
     }, 250);
