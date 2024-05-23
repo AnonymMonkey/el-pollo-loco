@@ -1,7 +1,7 @@
 let canvas;
 let world;
-let keyboard = new Keyboard();
-let coordinates = new Coordinates();
+let keyboard;
+let coordinates;
 
 let bodyElement;
 
@@ -60,19 +60,27 @@ function startGame(clicked) {
     bodyElement.innerHTML = HTML_StartGame();
     canvas = document.getElementById("canvas");
     loadLevel();
+    coordinates = new Coordinates();
+    keyboard = new Keyboard();
     world = new World(canvas, keyboard, coordinates);
     //
+    toggleSound();
 
+    setTimeout(() => {
+      clearAllIntervals();
+    }, 500);
     //
     toggleSound();
     startscreen.classList.remove("animation-fade-out");
   }, 250);
 }
 
-function gameEnd() {
+function gameEnd(cancel) {
   isSoundActiv = true;
-  //debugger;
   toggleSound();
+  if (cancel) {
+    lose = true;
+  }
   if (lose) {
     sound_gameOver.play();
     bodyElement.innerHTML = HTML_GameOver();
@@ -87,8 +95,8 @@ function gameEnd() {
 async function resetGame() {
   await clearAllIntervals();
   world = null;
-  keyboard = new Keyboard();
-  coordinates = new Coordinates();
+  //keyboard = new Keyboard();
+  //coordinates = new Coordinates();
 }
 
 // fullscreen

@@ -48,13 +48,20 @@ function HTML_StartGame() {
       <img onclick="toggleSound(true)" id="soundbutton" class="sound-button c-pointer" src="assets/img/buttons/sound-on.png" alt="toggle sound">
       <img onclick="toggleFullScreen(true)" id="fullcscreen-button" class="fullscreen-button c-pointer" src="assets/img/buttons/fullscreen.png" alt="toggle fullscreen">
     </div>
+    <div class="cancel-button">
+      <img onclick="gameEnd(true)" id="cancel-button" class="c-pointer" src="assets/img/buttons/cancel.png" alt="cancel">
+    </div>
     <div class="landscape-navigation-left">
-      <img onclick="checkClicked(true)" id="left-button" class="landscape-left c-pointer" src="assets/img/buttons/left.png" alt="left">
-      <img onclick="checkClicked(true)" id="right-button" class="landscape-right c-pointer" src="assets/img/buttons/right.png" alt="right">
+      <img onclick="checkClicked(true)" id="left-button" class="c-pointer" src="assets/img/buttons/left.png" alt="left">
+      <img onclick="checkClicked(true)" id="right-button" class="c-pointer" src="assets/img/buttons/right.png" alt="right">
     </div>
     <div class="landscape-navigation-right">
-      <img onclick="checkClicked(true)" id="jump-button" class="landscape-left c-pointer" src="assets/img/buttons/jump.png" alt="jump">
-      <img onclick="checkClicked(true)" id="attack-button" class="landscape-right c-pointer" src="assets/img/buttons/attack.png" alt="attack">
+      <img onclick="checkClicked(true)" id="jump-button" class="c-pointer" src="assets/img/buttons/jump.png" alt="jump">
+      <img onclick="checkClicked(true)" id="attack-button" class="c-pointer" src="assets/img/buttons/attack.png" alt="attack">
+    </div>
+    <div class="landscape-navigation-right-sub">
+      <img onclick="checkClicked(true)" id="c-button" class="c-pointer" src="assets/img/buttons/key-c.png" alt="exchange bottle">
+      <img onclick="checkClicked(true)" id="x-button" class="c-pointer" src="assets/img/buttons/key-x.png" alt="exchange heal">
     </div>
   </div>
       `;

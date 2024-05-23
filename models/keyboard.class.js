@@ -9,16 +9,15 @@ class Keyboard {
   KEY_X = false;
 
   constructor() {
-    debugger;
     this.bindButtons();
   }
 
   /**
-   * Mainfunction
+   * Mainfunction for keybindings
    */
   bindButtons() {
     this.bindTouchButtons();
-    this.bindClickBButtons();
+    this.bindClickButtons();
   }
 
   /**
@@ -76,6 +75,30 @@ class Keyboard {
       if (e.cancelable) e.preventDefault();
       this.KEY_UP = false;
     });
+
+    document
+      .getElementById("c-button")
+      .addEventListener("touchstart", (e) => {
+        if (e.cancelable) e.preventDefault();
+        this.KEY_C = true;
+      });
+
+    document.getElementById("c-button").addEventListener("touchend", (e) => {
+      if (e.cancelable) e.preventDefault();
+      this.KEY_C = false;
+    });
+
+    document
+      .getElementById("x-button")
+      .addEventListener("touchstart", (e) => {
+        if (e.cancelable) e.preventDefault();
+        this.KEY_X = true;
+      });
+
+    document.getElementById("x-button").addEventListener("touchend", (e) => {
+      if (e.cancelable) e.preventDefault();
+      this.KEY_X = false;
+    });
   }
 
   /**
@@ -127,6 +150,30 @@ class Keyboard {
       .addEventListener("mouseleave", (e) => {
         if (e.cancelable) e.preventDefault();
         this.KEY_UP = false;
+      });
+
+    document.getElementById("c-button").addEventListener("click", (e) => {
+      if (e.cancelable) e.preventDefault();
+      this.KEY_C = true;
+    });
+
+    document
+      .getElementById("c-button")
+      .addEventListener("mouseleave", (e) => {
+        if (e.cancelable) e.preventDefault();
+        this.KEY_C = false;
+      });
+
+    document.getElementById("x-button").addEventListener("click", (e) => {
+      if (e.cancelable) e.preventDefault();
+      this.KEY_X = true;
+    });
+
+    document
+      .getElementById("x-button")
+      .addEventListener("mouseleave", (e) => {
+        if (e.cancelable) e.preventDefault();
+        this.KEY_X = false;
       });
   }
 }

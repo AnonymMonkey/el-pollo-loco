@@ -129,12 +129,10 @@ h2 {
   height: 480px;
   width: 720px;
 
-  background: linear-gradient(
-    90deg,
-    rgba(153, 68, 9, 1) 0%,
-    rgba(183, 97, 39, 1) 30%,
-    rgba(188, 122, 15, 1) 100%
-  );
+  background: linear-gradient(90deg,
+      rgba(153, 68, 9, 1) 0%,
+      rgba(183, 97, 39, 1) 30%,
+      rgba(188, 122, 15, 1) 100%);
 }
 
 b {
@@ -201,6 +199,11 @@ canvas {
   right: 10px;
 }
 
+.cancel-button {
+  position: absolute;
+  top: 0px;
+}
+
 .fullscreen-button {
   height: 80px;
 }
@@ -223,12 +226,10 @@ canvas {
   height: 480px;
   width: 720px;
 
-  background: linear-gradient(
-    90deg,
-    rgba(153, 68, 9, 1) 0%,
-    rgba(183, 97, 39, 1) 30%,
-    rgba(188, 122, 15, 1) 100%
-  );
+  background: linear-gradient(90deg,
+      rgba(153, 68, 9, 1) 0%,
+      rgba(183, 97, 39, 1) 30%,
+      rgba(188, 122, 15, 1) 100%);
 }
 
 .game-end-screen-inner {
@@ -238,6 +239,7 @@ canvas {
   justify-content: center;
   align-items: center;
 
+  border-radius: 20px;
   overflow: hidden;
 
   width: 100%;
@@ -312,7 +314,7 @@ canvas {
   position: absolute;
   bottom: -50px;
   left: 10px;
-  width: 35%;
+  width: 30%;
   display: flex;
   justify-content: space-between;
 }
@@ -321,10 +323,19 @@ canvas {
   position: absolute;
   bottom: -50px;
   right: 10px;
-  width: 35%;
+  width: 30%;
   display: flex;
   justify-content: space-between;
 }
+
+.landscape-navigation-right-sub {
+  position: absolute;
+  bottom: -100px;
+  width: 25%;
+  display: flex;
+  justify-content: space-between;
+}
+
 
 /* ---------- Animation ---------- */
 .animation-fade-out {
@@ -424,6 +435,7 @@ canvas {
 
 /* ---------- Media ---------- */
 @media only screen and (max-width: 720px) {
+
   canvas,
   .game-screen,
   .start-screen,
@@ -434,6 +446,7 @@ canvas {
 }
 
 @media only screen and (max-height: 480px) {
+
   canvas,
   .game-screen,
   .start-screen,
