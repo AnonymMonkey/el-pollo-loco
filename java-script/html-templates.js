@@ -51,17 +51,23 @@ function HTML_StartGame() {
     <div class="cancel-button">
       <img onclick="gameEnd(true)" id="cancel-button" class="c-pointer" src="assets/img/buttons/cancel.png" alt="cancel">
     </div>
-    <div class="landscape-navigation-left">
-      <img onclick="checkClicked(true)" id="left-button" class="c-pointer" src="assets/img/buttons/left.png" alt="left">
-      <img onclick="checkClicked(true)" id="right-button" class="c-pointer" src="assets/img/buttons/right.png" alt="right">
+    <div id="landscape-nav-left" class="landscape-navigation-left">
+      <img onclick="checkClicked(true)" id="left-button" class="landscape-smaller-img c-pointer" src="assets/img/buttons/left.png" alt="left">
+      <img onclick="checkClicked(true)" id="right-button" class="landscape-smaller-img c-pointer" src="assets/img/buttons/right.png" alt="right">
     </div>
-    <div class="landscape-navigation-right">
-      <img onclick="checkClicked(true)" id="jump-button" class="c-pointer" src="assets/img/buttons/jump.png" alt="jump">
-      <img onclick="checkClicked(true)" id="attack-button" class="c-pointer" src="assets/img/buttons/attack.png" alt="attack">
+    <div class="landscape-navigation-mid">
+      <div>
+        <img class="landscape-smaller-img-sub" src="assets/img/7_statusbars/3_icons/icon_health.png" alt="exchange heal">
+        <img onclick="checkClicked(true)" id="x-button" class="landscape-smaller-img c-pointer" src="assets/img/buttons/key-x.png" alt="exchange heal">
+      </div>
+      <div>
+        <img onclick="checkClicked(true)" id="c-button" class="landscape-smaller-img c-pointer" src="assets/img/buttons/key-c.png" alt="exchange bottle">
+        <img class="landscape-smaller-img-sub" src="assets/img/7_statusbars/3_icons/icon_salsa_bottle.png" alt="exchange bottle">
+      </div>
     </div>
-    <div class="landscape-navigation-right-sub">
-      <img onclick="checkClicked(true)" id="c-button" class="c-pointer" src="assets/img/buttons/key-c.png" alt="exchange bottle">
-      <img onclick="checkClicked(true)" id="x-button" class="c-pointer" src="assets/img/buttons/key-x.png" alt="exchange heal">
+    <div id="landscape-nav-right" class="landscape-navigation-right">
+      <img onclick="checkClicked(true)" id="jump-button" class="landscape-smaller-img c-pointer" src="assets/img/buttons/jump.png" alt="jump">
+      <img onclick="checkClicked(true)" id="attack-button" class="landscape-smaller-img c-pointer" src="assets/img/buttons/attack.png" alt="attack">
     </div>
   </div>
       `;
@@ -105,4 +111,14 @@ function HTML_GameWin() {
       </div>
     </div>
   `;
+}
+
+function hidePortraitMode() {
+  return /*html*/`
+    <div class="landscape-notification">
+      <h1>Please rotate your Phone to Landscape mode.</h1>
+      <img src="assets/img/buttons/landscape.png" alt="landscape mode">
+    </div>
+  `
+
 }

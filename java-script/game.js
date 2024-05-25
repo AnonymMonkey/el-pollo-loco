@@ -232,3 +232,18 @@ document.addEventListener("keyup", (e) => {
     keyboard.KEY_X = false;
   }
 });
+
+function updateOrientation() {
+  function applyOrientationChange() {
+    if (window.matchMedia("(max-width: 720px) and (orientation: portrait)").matches) {
+      document.body.innerHTML = hidePortraitMode();
+    } else {
+      document.body.innerHTML = HTML_Startscreen();
+    }
+  }
+
+  window.addEventListener('resize', applyOrientationChange);
+  applyOrientationChange();
+}
+
+document.addEventListener('DOMContentLoaded', updateOrientation);

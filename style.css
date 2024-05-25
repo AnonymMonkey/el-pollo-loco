@@ -53,6 +53,8 @@ body {
   align-items: center;
   background-image: url("assets/img/5_background/desert.png");
   background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 
   font-family: "zabars", Arial, Helvetica, sans-serif;
 }
@@ -178,6 +180,8 @@ b {
 
   background-image: url("assets/img/5_background/desert.png");
   background-position: center;
+
+  border-radius: 24px;
 
   height: 480px;
   width: 720px;
@@ -310,31 +314,83 @@ canvas {
 }
 
 /* ---------- Landscape ---------- */
-.landscape-navigation-left {
-  position: absolute;
-  bottom: -50px;
-  left: 10px;
-  width: 30%;
-  display: flex;
-  justify-content: space-between;
+@media screen and (max-width: 912px) and (orientation: landscape) {
+
+  .landscape-navigation-left {
+    position: absolute;
+    bottom: 0;
+    left: 10px;
+    width: 20%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .landscape-navigation-right {
+    position: absolute;
+    bottom: 0;
+    right: 10px;
+    width: 20%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .landscape-navigation-mid {
+    position: absolute;
+    bottom: 0;
+    width: 32%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .landscape-smaller-img {
+    width: 60px;
+    opacity: 0.75;
+  }
+
+  .landscape-smaller-img-sub {
+    height: 40px;
+  }
+
+  .game-buttons img {
+    height: 60px;
+  }
 }
 
-.landscape-navigation-right {
+
+.landscape-notification {
   position: absolute;
-  bottom: -50px;
-  right: 10px;
-  width: 30%;
+
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
+
+  height: 100vh;
+  width: 100%;
+
+  background: linear-gradient(90deg,
+      rgba(153, 68, 9, 1) 0%,
+      rgba(183, 97, 39, 1) 30%,
+      rgba(188, 122, 15, 1) 100%);
+
+  box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 1);
+
+  z-index: 999 !important;
 }
 
-.landscape-navigation-right-sub {
+.landscape-notification h1 {
   position: absolute;
-  bottom: -100px;
-  width: 25%;
-  display: flex;
-  justify-content: space-between;
+  top: 20vh;
+
+  margin: 0 5vw;
+
+  font-size: 40px;
+  text-align: center;
 }
+
+.landscape-notification img {
+  filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 1));
+}
+
 
 
 /* ---------- Animation ---------- */
@@ -453,5 +509,9 @@ canvas {
   .information-screen,
   .game-end-screen {
     height: 100vh;
+  }
+
+  canvas {
+    width: 100%;
   }
 }
