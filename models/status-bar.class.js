@@ -15,7 +15,6 @@ class StatusBar extends DrawableObject {
   endbossEnergy = 5;
 
   constructor(index) {
-    /* debugger */
     super().getAllImages(this);
     this.loadFirstImage(this, index);
     this.loadAllImages(this);

@@ -3,6 +3,10 @@ class DrawableObject extends Coordinates {
   imageCache = {};
   currentImage = 0;
 
+  /**
+   *
+   * @param {*} object
+   */
   getAllImages(object) {
     let images = object.IMAGES;
     for (let i = 0; i < images.length; i++) {
@@ -20,6 +24,11 @@ class DrawableObject extends Coordinates {
     }
   }
 
+  /**
+   *
+   * @param {*} object
+   * @param {*} index
+   */
   loadFirstImage(object, index) {
     if (index == undefined) {
       index = 0;
@@ -32,6 +41,10 @@ class DrawableObject extends Coordinates {
     this.img.src = firstArrayPath;
   }
 
+  /**
+   *
+   * @param {*} object
+   */
   loadAllImages(object) {
     let images = object.IMAGES;
     for (let i = 0; i < images.length; i++) {
@@ -46,10 +59,15 @@ class DrawableObject extends Coordinates {
     }
   }
 
+  /**
+   *
+   * @param {*} ctx
+   */
   draw(ctx) {
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
   }
 
+  /*
   drawFrame(ctx) {
     if (
       this instanceof Character ||
@@ -60,7 +78,6 @@ class DrawableObject extends Coordinates {
       this instanceof Bottle ||
       this instanceof ThrowableObject
     ) {
-      let os = this.offset;
       ctx.beginPath();
       ctx.lineWidth = "2";
       ctx.strokeStyle = "red";
@@ -89,5 +106,5 @@ class DrawableObject extends Coordinates {
       );
       ctx.stroke();
     }
-  }
+  } */
 }

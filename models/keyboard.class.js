@@ -76,24 +76,20 @@ class Keyboard {
       this.KEY_UP = false;
     });
 
-    document
-      .getElementById("c-button")
-      .addEventListener("touchstart", (e) => {
-        if (e.cancelable) e.preventDefault();
-        this.KEY_C = true;
-      });
+    document.getElementById("c-button").addEventListener("touchstart", (e) => {
+      if (e.cancelable) e.preventDefault();
+      this.KEY_C = true;
+    });
 
     document.getElementById("c-button").addEventListener("touchend", (e) => {
       if (e.cancelable) e.preventDefault();
       this.KEY_C = false;
     });
 
-    document
-      .getElementById("x-button")
-      .addEventListener("touchstart", (e) => {
-        if (e.cancelable) e.preventDefault();
-        this.KEY_X = true;
-      });
+    document.getElementById("x-button").addEventListener("touchstart", (e) => {
+      if (e.cancelable) e.preventDefault();
+      this.KEY_X = true;
+    });
 
     document.getElementById("x-button").addEventListener("touchend", (e) => {
       if (e.cancelable) e.preventDefault();
@@ -157,23 +153,73 @@ class Keyboard {
       this.KEY_C = true;
     });
 
-    document
-      .getElementById("c-button")
-      .addEventListener("mouseleave", (e) => {
-        if (e.cancelable) e.preventDefault();
-        this.KEY_C = false;
-      });
+    document.getElementById("c-button").addEventListener("mouseleave", (e) => {
+      if (e.cancelable) e.preventDefault();
+      this.KEY_C = false;
+    });
 
     document.getElementById("x-button").addEventListener("click", (e) => {
       if (e.cancelable) e.preventDefault();
       this.KEY_X = true;
     });
 
-    document
-      .getElementById("x-button")
-      .addEventListener("mouseleave", (e) => {
-        if (e.cancelable) e.preventDefault();
-        this.KEY_X = false;
-      });
+    document.getElementById("x-button").addEventListener("mouseleave", (e) => {
+      if (e.cancelable) e.preventDefault();
+      this.KEY_X = false;
+    });
   }
 }
+
+document.addEventListener("keydown", (e) => {
+  if (e.keyCode == 39) {
+    keyboard.KEY_RIGHT = true;
+  }
+  if (e.keyCode == 37) {
+    keyboard.KEY_LEFT = true;
+  }
+  if (e.keyCode == 38) {
+    keyboard.KEY_UP = true;
+  }
+  if (e.keyCode == 40) {
+    keyboard.KEY_DOWN = true;
+  }
+  if (e.keyCode == 32) {
+    keyboard.KEY_SPACE = true;
+  }
+  if (e.keyCode == 68) {
+    keyboard.KEY_D = true;
+  }
+  if (e.keyCode == 67) {
+    keyboard.KEY_C = true;
+  }
+  if (e.keyCode == 88) {
+    keyboard.KEY_X = true;
+  }
+});
+
+document.addEventListener("keyup", (e) => {
+  if (e.keyCode == 39) {
+    keyboard.KEY_RIGHT = false;
+  }
+  if (e.keyCode == 37) {
+    keyboard.KEY_LEFT = false;
+  }
+  if (e.keyCode == 38) {
+    keyboard.KEY_UP = false;
+  }
+  if (e.keyCode == 40) {
+    keyboard.KEY_DOWN = false;
+  }
+  if (e.keyCode == 32) {
+    keyboard.KEY_SPACE = false;
+  }
+  if (e.keyCode == 68) {
+    keyboard.KEY_D = false;
+  }
+  if (e.keyCode == 67) {
+    keyboard.KEY_C = false;
+  }
+  if (e.keyCode == 88) {
+    keyboard.KEY_X = false;
+  }
+});

@@ -17,28 +17,52 @@ sound_gameWin = new Audio(new Sounds().sound_gameWin);
 sound_gameOver = new Audio(new Sounds().sound_gameOver);
 sound_click = new Audio(new Sounds().sound_click);
 
+/**
+ * load game
+ */
 function init() {
   bodyElement = document.body;
   firstLoading = true;
   showStartScreen();
 }
 
+/**
+ * show startscreen
+ */
 function showStartScreen(clicked) {
   checkClicked(clicked);
   if (firstLoading) {
-    bodyElement.innerHTML = HTML_Startscreen();
-    firstLoading = false;
+    firstStartscreenLoading();
   } else {
-    sound_click.play();
-    infoscreen = document.getElementById("infoscreen");
-    infoscreen.classList.remove("animation-fade-in");
-    infoscreen.classList.add("animation-fade-out");
-    setTimeout(() => {
-      bodyElement.innerHTML = HTML_Startscreen();
-    }, 250);
+    secStartscreenLoading();
   }
 }
 
+/**
+ * show startscreen on first loading
+ */
+function firstStartscreenLoading() {
+  bodyElement.innerHTML = HTML_Startscreen();
+  firstLoading = false;
+}
+
+/**
+ * show startscreen on all other loadings
+ */
+function secStartscreenLoading() {
+  sound_click.play();
+  infoscreen = document.getElementById("infoscreen");
+  infoscreen.classList.remove("animation-fade-in");
+  infoscreen.classList.add("animation-fade-out");
+  setTimeout(() => {
+    bodyElement.innerHTML = HTML_Startscreen();
+  }, 250);
+}
+
+/**
+ * show Informations
+ * @param {boolean} clicked
+ */
 function showInformations(clicked) {
   checkClicked(clicked);
   startscreen = document.getElementById("startscreen");
@@ -50,12 +74,23 @@ function showInformations(clicked) {
   }, 250);
 }
 
+/**
+ * start game
+ * @param {boolean} clicked
+ */
 function startGame(clicked) {
   checkClicked(clicked);
   startscreen = document.getElementById("startscreen");
   startscreen.classList.remove("animation-fade-in");
   startscreen.classList.add("animation-fade-out");
 
+  initialNewGame();
+}
+
+/**
+ * initial for new Game
+ */
+function initialNewGame() {
   setTimeout(() => {
     bodyElement.innerHTML = HTML_StartGame();
     canvas = document.getElementById("canvas");
@@ -63,48 +98,71 @@ function startGame(clicked) {
     coordinates = new Coordinates();
     keyboard = new Keyboard();
     world = new World(canvas, keyboard, coordinates);
-    //
-    toggleSound();
 
-    setTimeout(() => {
-      clearAllIntervals();
-    }, 500);
-    //
     toggleSound();
     startscreen.classList.remove("animation-fade-out");
   }, 250);
 }
 
+/**
+ * game end
+ * @param {boolean} cancel
+ */
 function gameEnd(cancel) {
   isSoundActiv = true;
   toggleSound();
-  if (cancel) {
-    lose = true;
-  }
+  checkIsGameCancel(cancel);
   if (lose) {
-    sound_gameOver.play();
-    bodyElement.innerHTML = HTML_GameOver();
+    setScreenToGameOver();
   } else {
-    sound_gameWin.play();
-    bodyElement.innerHTML = HTML_GameWin();
+    setScreenToGameWin();
   }
   firstLoading = true;
   resetGame();
 }
 
+/**
+ * check is game canceled
+ * @param {boolean} cancel
+ */
+function checkIsGameCancel(cancel) {
+  if (cancel) {
+    lose = true;
+  }
+}
+
+/**
+ * show lose screen
+ */
+function setScreenToGameOver() {
+  sound_gameOver.play();
+  bodyElement.innerHTML = HTML_GameOver();
+}
+
+/**
+ * show win screen
+ */
+function setScreenToGameWin() {
+  sound_gameWin.play();
+  bodyElement.innerHTML = HTML_GameWin();
+}
+
+/**
+ * reset game
+ */
 async function resetGame() {
   await clearAllIntervals();
   world = null;
-  //keyboard = new Keyboard();
-  //coordinates = new Coordinates();
 }
 
-// fullscreen
+/**
+ * toggle fullscreen
+ * @param {boolean} clicked
+ */
 function toggleFullScreen(clicked) {
   checkClicked(clicked);
   if (!isFullscreen) {
-    enterFullscreen(gamescreen);
-    //enterFullscreen(canvas);
+    enterFullscreen();
     isFullscreen = true;
   } else {
     exitFullscreen();
@@ -112,16 +170,23 @@ function toggleFullScreen(clicked) {
   }
 }
 
-function enterFullscreen(element) {
-  if (element.requestFullscreen) {
-    element.requestFullscreen();
-  } else if (element.msRequestFullscreen) {
-    element.msRequestFullscreen();
-  } else if (element.webkitRequestFullscreen) {
-    element.webkitRequestFullscreen();
+/**
+ * set fullscreen
+ * @param {html element} element
+ */
+function enterFullscreen() {
+  if (gamescreen.requestFullscreen) {
+    gamescreen.requestFullscreen();
+  } else if (gamescreen.msRequestFullscreen) {
+    gamescreen.msRequestFullscreen();
+  } else if (gamescreen.webkitRequestFullscreen) {
+    gamescreen.webkitRequestFullscreen();
   }
 }
 
+/**
+ * exit fullscreen
+ */
 function exitFullscreen() {
   if (document.exitFullscreen) {
     document.exitFullscreen();
@@ -130,7 +195,10 @@ function exitFullscreen() {
   }
 }
 
-// toggle Sound on/off
+/**
+ * toggle sound
+ * @param {boolean} clicked
+ */
 function toggleSound(clicked) {
   checkClicked(clicked);
   if (!isSoundActiv) {
@@ -145,6 +213,9 @@ function toggleSound(clicked) {
   }
 }
 
+/**
+ * set background music
+ */
 function backgroundMusic() {
   if (isSoundActiv) {
     game_sound.play();
@@ -156,6 +227,9 @@ function backgroundMusic() {
   }
 }
 
+/**
+ *set battle music
+ */
 function battleMusic() {
   if (isSoundActiv) {
     sound_endboss_battle.play();
@@ -167,83 +241,42 @@ function battleMusic() {
   }
 }
 
+/**
+ * check if a element was clicked
+ * @param {boolean} clicked
+ */
 function checkClicked(clicked) {
   if (clicked) {
     sound_click.play();
   }
 }
 
-// stop intervals
+/**
+ * stop all intervals
+ */
 function clearAllIntervals() {
   for (let i = 1; i < 9999; i++) window.clearInterval(i);
 }
 
-// Keys
-document.addEventListener("keydown", (e) => {
-  if (e.keyCode == 39) {
-    keyboard.KEY_RIGHT = true;
-  }
-  if (e.keyCode == 37) {
-    keyboard.KEY_LEFT = true;
-  }
-  if (e.keyCode == 38) {
-    keyboard.KEY_UP = true;
-  }
-  if (e.keyCode == 40) {
-    keyboard.KEY_DOWN = true;
-  }
-  if (e.keyCode == 32) {
-    keyboard.KEY_SPACE = true;
-  }
-  if (e.keyCode == 68) {
-    keyboard.KEY_D = true;
-  }
-  if (e.keyCode == 67) {
-    keyboard.KEY_C = true;
-  }
-  if (e.keyCode == 88) {
-    keyboard.KEY_X = true;
-  }
-});
-
-document.addEventListener("keyup", (e) => {
-  if (e.keyCode == 39) {
-    keyboard.KEY_RIGHT = false;
-  }
-  if (e.keyCode == 37) {
-    keyboard.KEY_LEFT = false;
-  }
-  if (e.keyCode == 38) {
-    keyboard.KEY_UP = false;
-  }
-  if (e.keyCode == 40) {
-    keyboard.KEY_DOWN = false;
-  }
-  if (e.keyCode == 32) {
-    keyboard.KEY_SPACE = false;
-  }
-  if (e.keyCode == 68) {
-    keyboard.KEY_D = false;
-  }
-  if (e.keyCode == 67) {
-    keyboard.KEY_C = false;
-  }
-  if (e.keyCode == 88) {
-    keyboard.KEY_X = false;
-  }
-});
-
+/**
+ * set landscape mode
+ */
 function updateOrientation() {
   function applyOrientationChange() {
-    if (window.matchMedia("(max-width: 720px) and (orientation: portrait)").matches) {
+    if (
+      window.matchMedia("(max-width: 720px) and (orientation: portrait)")
+        .matches
+    ) {
       document.body.innerHTML = hidePortraitMode();
     } else {
       document.body.innerHTML = HTML_Startscreen();
     }
   }
 
-  window.addEventListener('resize', applyOrientationChange);
+  window.addEventListener("resize", applyOrientationChange);
   applyOrientationChange();
 }
 
-document.addEventListener('DOMContentLoaded', updateOrientation);
+document.addEventListener("DOMContentLoaded", updateOrientation);
+
+/*ANCHOR - Überprüfen das der fullscreen und landscape mode richtig funktioniert - danach dann jsdoc weiter */

@@ -1,3 +1,7 @@
+/**
+ *
+ * @returns
+ */
 function HTML_Startscreen() {
   return /*html*/ `
     <div id="startscreen" class="start-screen animation-fade-in">
@@ -9,6 +13,10 @@ function HTML_Startscreen() {
     `;
 }
 
+/**
+ *
+ * @returns
+ */
 function HTML_ShowInformations() {
   return /*html*/ `
     <div id="infoscreen" class="information-screen animation-fade-in">
@@ -39,6 +47,10 @@ function HTML_ShowInformations() {
   `;
 }
 
+/**
+ *
+ * @returns
+ */
 function HTML_StartGame() {
   return /*html*/ `
   <div id="gamescreen" class="game-screen animation-rotate-in">
@@ -73,6 +85,10 @@ function HTML_StartGame() {
       `;
 }
 
+/**
+ *
+ * @returns
+ */
 function HTML_GameOver() {
   return /*html*/ `
     <div class="game-end-screen shake">
@@ -93,6 +109,10 @@ function HTML_GameOver() {
   `;
 }
 
+/**
+ *
+ * @returns
+ */
 function HTML_GameWin() {
   return /*html*/ `
     <div class="game-end-screen">
@@ -113,12 +133,15 @@ function HTML_GameWin() {
   `;
 }
 
+/**
+ *
+ * @returns
+ */
 function hidePortraitMode() {
-  return /*html*/`
+  return /*html*/ `
     <div class="landscape-notification">
       <h1>Please rotate your Phone to Landscape mode.</h1>
       <img src="assets/img/buttons/landscape.png" alt="landscape mode">
     </div>
-  `
-
+  `;
 }

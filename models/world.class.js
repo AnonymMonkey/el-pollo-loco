@@ -20,9 +20,6 @@ class World {
   sound_throwBottle_sec = new Audio(new Sounds().sound_throwBottle_sec);
 
   constructor(canvas, keyboard, coordinates) {
-    /* Der Kontext ist ein Objekt mit Eigenschaften und Methoden, der Grafik innerhalb des Canvas rendert */
-    /* Die Funktion getContext erstellt dabei ein Context-Objekt,
-        dessen Typ durch den ersten Parameter spezifiziert wird, in unserem Beispiel ist er also 2d  */
     this.ctx = canvas.getContext("2d");
 
     this.canvas = canvas;
@@ -34,6 +31,11 @@ class World {
     this.checkCollisions();
   }
 
+  /**
+   *
+   * @param {*} number
+   * @param {*} level
+   */
   movableObjectCoordination(number, level) {
     let self = this;
     this.backgroundCoordination(number, level);
@@ -45,9 +47,24 @@ class World {
     });
   }
 
+  /**
+   *
+   * @param {*} number
+   * @param {*} level
+   */
   chickenCoordination(number, level) {
     number = 3;
     let enemies = level.enemies;
+    this.chickenCoordinationSpawner(number, enemies);
+    this.chickenCoordinationRandomizer(enemies);
+  }
+
+  /**
+   *
+   * @param {*} number
+   * @param {*} enemies
+   */
+  chickenCoordinationSpawner(number, enemies) {
     if (enemies.length == 0 && this.coordinates.enemeyFirstSpawn) {
       this.coordinates.enemeyFirstSpawn = false;
       for (let i = 0; i < number; i++) {
@@ -55,7 +72,13 @@ class World {
         enemies.push(new Chicken_Small());
       }
     }
+  }
 
+  /**
+   *
+   * @param {*} enemies
+   */
+  chickenCoordinationRandomizer(enemies) {
     if (enemies.length > 1) {
       enemies.forEach((chicken, index) => {
         if (chicken.x < -180) {
@@ -70,6 +93,11 @@ class World {
     }
   }
 
+  /**
+   *
+   * @param {*} level
+   * @returns
+   */
   endbossCoordination(level) {
     let endboss = level.bosses[0];
     if (endboss == undefined) {
@@ -81,16 +109,37 @@ class World {
     }
   }
 
+  /**
+   *
+   * @param {*} number
+   * @param {*} level
+   */
   cloudCoordination(number, level) {
     number = 3;
     let clouds = level.clouds;
+    this.cloudCoordinationSpawner(number, clouds);
+    this.cloudCoordinationChanger(clouds);
+  }
+
+  /**
+   *
+   * @param {*} number
+   * @param {*} clouds
+   */
+  cloudCoordinationSpawner(number, clouds) {
     if (clouds.length == 0) {
       for (let i = 0; i < number; i++) {
         clouds.push(new Clouds(this.coordinates.other_Cloud));
         this.coordinates.other_Cloud = !this.coordinates.other_Cloud;
       }
     }
+  }
 
+  /**
+   *
+   * @param {*} clouds
+   */
+  cloudCoordinationChanger(clouds) {
     if (clouds.length > 1) {
       clouds.forEach((cloud, index) => {
         if (cloud.x < -600) {
@@ -103,10 +152,25 @@ class World {
     }
   }
 
+  /**
+   *
+   * @param {*} number
+   * @param {*} level
+   */
   backgroundCoordination(number, level) {
     let coordinates = this.coordinates;
     number = coordinates.backgroundObjectLength;
     let backgroundObjects = level.backgroundObjects;
+    this.backgroundCoordinationSpawner(coordinates, number, backgroundObjects);
+  }
+
+  /**
+   *
+   * @param {*} coordinates
+   * @param {*} number
+   * @param {*} backgroundObjects
+   */
+  backgroundCoordinationSpawner(coordinates, number, backgroundObjects) {
     if (backgroundObjects.length == 0) {
       for (let i = 0; i < number; i++) {
         for (let l = 0; l < 4; l++) {
@@ -124,12 +188,13 @@ class World {
     }
   }
 
+  /**
+   *
+   */
   draw() {
     let self = this;
-    /* setzt einen Ausschnitt der Canvas auf seine Ursprungsfarbe zurück */
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    /* Verschiebt alles, was nach dem Aufrufen von translate gezeichnet wird, um die angegebenen Koordinaten */
     this.ctx.translate(this.camera_x, 0);
 
     this.addObjectsToMap(this.level.backgroundObjects);
@@ -152,18 +217,25 @@ class World {
 
     this.ctx.translate(-this.camera_x, 0);
 
-    /* Draw() wird immer wieder aufgerufen */
     requestAnimationFrame(function () {
       self.draw();
     });
   }
 
+  /**
+   *
+   * @param {*} objects
+   */
   addObjectsToMap(objects) {
     objects.forEach((o) => {
       this.addToMap(o);
     });
   }
 
+  /**
+   *
+   * @param {*} mo
+   */
   addToMap(mo) {
     if (mo.otherDirection) {
       this.flipImage(mo);
@@ -177,23 +249,32 @@ class World {
     }
   }
 
+  /**
+   *
+   * @param {*} mo
+   */
   flipImage(mo) {
     this.ctx.save();
     this.ctx.translate(mo.width, 0);
 
-    /* spiegelt die Zeichnung */
     this.ctx.scale(-1, 1);
 
     mo.x = mo.x * -1;
   }
 
+  /**
+   *
+   * @param {*} mo
+   */
   flipImageBack(mo) {
-    /* restore läd die zuvor gespeicherten daten durch "save()" wieder um auf den ursprünglichen stand zu kommen */
     this.ctx.restore();
 
     mo.x = mo.x * -1;
   }
 
+  /**
+   *
+   */
   checkCollisions() {
     setInterval(() => {
       this.exchangeCoin();
@@ -205,24 +286,44 @@ class World {
     }, 50);
   }
 
+  /**
+   *
+   */
   collisionsWithEnemy() {
     this.level.enemies.forEach((enemy, index) => {
-      if (
-        this.character.isColliding(enemy) &&
-        !this.character.isAboveGround()
-      ) {
-        this.character.hit(enemy);
-      }
-
-      if (this.character.isColliding(enemy) && this.character.isAboveGround()) {
-        enemy.dead = true;
-        setTimeout(() => {
-          this.level.enemies.splice(index, 1);
-        }, 2000);
-      }
+      this.enemyHurtCharacter(enemy);
+      this.enemyDied(enemy, index);
     });
   }
 
+  /**
+   *
+   * @param {*} enemy
+   */
+  enemyHurtCharacter(enemy) {
+    if (this.character.isColliding(enemy) && !this.character.isAboveGround()) {
+      this.character.hit(enemy);
+    }
+  }
+
+  /**
+   *
+   * @param {*} enemy
+   * @param {*} index
+   */
+  enemyDied(enemy, index) {
+    if (this.character.isColliding(enemy) && this.character.isAboveGround()) {
+      enemy.dead = true;
+      setTimeout(() => {
+        this.level.enemies.splice(index, 1);
+      }, 2000);
+    }
+  }
+
+  /**
+   *
+   * @returns
+   */
   collisionsWithEndboss() {
     let endboss = this.level.bosses[0];
     if (endboss == undefined) {
@@ -234,24 +335,45 @@ class World {
     }
   }
 
+  /**
+   *
+   */
   collisionsWithCollectable() {
     let collectables = this.level.collectables;
     collectables.forEach((collectable, index) => {
       if (this.character.isColliding(collectable)) {
         collectables.splice(index, 1);
-        if (collectable.constructor.name == "Bottle") {
-          collectable.collected = true;
-          this.statusBarBottle.bottleCache++;
-        }
-
-        if (collectable.constructor.name == "Coin") {
-          collectable.collected = true;
-          this.statusBarCoin.coinCache++;
-        }
+        this.collectedBottle(collectable);
+        this.collectedCoin(collectable);
       }
     });
   }
 
+  /**
+   *
+   * @param {*} collectable
+   */
+  collectedBottle(collectable) {
+    if (collectable.constructor.name == "Bottle") {
+      collectable.collected = true;
+      this.statusBarBottle.bottleCache++;
+    }
+  }
+
+  /**
+   *
+   * @param {*} collectable
+   */
+  collectedCoin(collectable) {
+    if (collectable.constructor.name == "Coin") {
+      collectable.collected = true;
+      this.statusBarCoin.coinCache++;
+    }
+  }
+
+  /**
+   *
+   */
   collisionsCoordinationWithThrowableObject() {
     let throwableObjects = this.throwableObjects;
     let endboss = this.level.bosses[0];
@@ -265,6 +387,12 @@ class World {
     });
   }
 
+  /**
+   *
+   * @param {*} throwableObject
+   * @param {*} index
+   * @param {*} endboss
+   */
   throwableObjectsCollisionsWithEndboss(throwableObject, index, endboss) {
     if (throwableObject.isColliding(endboss) && this.coordinates.wasThrown) {
       this.coordinates.wasThrown = false;
@@ -273,6 +401,12 @@ class World {
     }
   }
 
+  /**
+   *
+   * @param {*} throwableObject
+   * @param {*} index
+   * @param {*} endboss
+   */
   processForEndboss(throwableObject, index, endboss) {
     this.statusBarEndboss.endbossEnergy--;
 
@@ -288,6 +422,11 @@ class World {
     this.bottleSplash(throwableObject, index);
   }
 
+  /**
+   *
+   * @param {*} throwableObject
+   * @param {*} index
+   */
   throwableObjectsCollisionsWithGround(throwableObject, index) {
     if (throwableObject.isCollidingGround() && this.coordinates.wasThrown) {
       this.coordinates.wasThrown = false;
@@ -295,10 +434,20 @@ class World {
     }
   }
 
+  /**
+   *
+   * @param {*} throwableObject
+   * @param {*} index
+   */
   processForGround(throwableObject, index) {
     this.bottleSplash(throwableObject, index);
   }
 
+  /**
+   *
+   * @param {*} throwableObject
+   * @param {*} index
+   */
   bottleSplash(throwableObject, index) {
     let throwableObjects = this.throwableObjects;
     throwableObject.isCollided = true;
@@ -309,9 +458,9 @@ class World {
     }, 500);
   }
 
-  // |||||||||| |||||||||| |||||||||| |||||||||| |||||||||| \\
-  // |||||||||| |||||||||| |||||||||| |||||||||| |||||||||| \\
-
+  /**
+   *
+   */
   checkThrowBottle() {
     let tOX = this.character.x + this.coordinates.throwableObjectX;
     let tOY = this.character.y + 110;
@@ -332,6 +481,10 @@ class World {
     }
   }
 
+  /**
+   *
+   * @param {*} bottle
+   */
   throwBottle(bottle) {
     this.coordinates.wasThrown = true;
     this.throwableObjects.push(bottle);
@@ -343,43 +496,76 @@ class World {
     }
   }
 
+  /**
+   *
+   */
   exchangeCoin() {
     if (this.statusBarCoin.coinCache > 0) {
       if (this.keyboard.KEY_C && !this.coordinates.gotExchanged) {
-        if (this.statusBarBottle.bottleCache < 5) {
-          this.sound_exchange.play();
-          this.toggleExchange();
-          this.prozessCoinToBottle();
-          setTimeout(() => {
-            this.toggleExchange();
-          }, 500);
-        }
+        this.coinToBottle();
       }
       if (this.keyboard.KEY_X && !this.coordinates.gotExchanged) {
-        if (this.character.characterEnergy < 100) {
-          this.sound_exchange.play();
-          this.toggleExchange();
-          this.prozessCoinToHealth();
-          setTimeout(() => {
-            this.toggleExchange();
-          }, 500);
-        }
+        this.coinToHealth();
       }
     }
   }
 
+  /**
+   *
+   */
+  coinToBottle() {
+    if (this.statusBarBottle.bottleCache < 5) {
+      this.sound_exchange.play();
+      this.toggleExchange();
+      this.prozessCoinToBottle();
+      setTimeout(() => {
+        this.toggleExchange();
+      }, 500);
+    }
+  }
+
+  /**
+   *
+   */
+  coinToHealth() {
+    if (this.character.characterEnergy < 100) {
+      this.sound_exchange.play();
+      this.toggleExchange();
+      this.prozessCoinToHealth();
+      setTimeout(() => {
+        this.toggleExchange();
+      }, 500);
+    }
+  }
+
+  /**
+   *
+   * @returns
+   */
   toggleExchange() {
     return (this.coordinates.gotExchanged = !this.coordinates.gotExchanged);
   }
 
+  /**
+   *
+   * @returns
+   */
   prozessCoinToBottle() {
     return this.statusBarCoin.coinCache-- && this.statusBarBottle.bottleCache++;
   }
 
+  /**
+   *
+   * @returns
+   */
   prozessCoinToHealth() {
     return this.statusBarCoin.coinCache-- && this.checkMaxHealth();
   }
 
+  /**
+   *
+   * @returns
+   */
   checkMaxHealth() {
     if (this.character.characterEnergy <= 80) {
       return (this.character.characterEnergy =
@@ -391,6 +577,9 @@ class World {
     }
   }
 
+  /**
+   *
+   */
   setWorld() {
     this.statusBarCoin.world = this;
     this.statusBarHealth.world = this;

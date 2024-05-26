@@ -22,6 +22,9 @@ class Bottle extends MovableObject {
     this.animateModel();
   }
 
+  /**
+   *
+   */
   animateModel() {
     let intervalAnimation = setInterval(() => {
       this.playAnimation(this.bottle_Normal());
@@ -32,14 +35,26 @@ class Bottle extends MovableObject {
     }, 250);
   }
 
+  /**
+   *
+   * @returns
+   */
   bottle_Normal() {
     return this.IMAGES[0]["IMAGES_BOTTLE"];
   }
 
+  /**
+   *
+   * @returns
+   */
   bottle_Rotation() {
     return this.IMAGES[1]["IMAGES_BOTTLE_ROTATION"];
   }
 
+  /**
+   *
+   * @returns
+   */
   bottle_Splash() {
     return this.IMAGES[2]["IMAGES_BOTTLE_SPLASH"];
   }

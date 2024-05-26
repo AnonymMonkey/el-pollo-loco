@@ -23,6 +23,9 @@ class Coin extends MovableObject {
     this.animateModel();
   }
 
+  /**
+   *
+   */
   animateModel() {
     let intervalAnimation = setInterval(() => {
       this.playAnimation(this.coin());
@@ -33,6 +36,10 @@ class Coin extends MovableObject {
     }, 250);
   }
 
+  /**
+   *
+   * @returns
+   */
   coin() {
     return this.IMAGES[0]["IMAGES_COIN"];
   }

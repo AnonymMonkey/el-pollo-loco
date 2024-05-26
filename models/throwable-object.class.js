@@ -46,7 +46,6 @@ class ThrowableObject extends MovableObject {
   animateModel() {
     let interval = setInterval(() => {
       if (this.isCollided) {
-        //debugger;
         this.playAnimation(this.bottle_Splash());
         setTimeout(() => {
           clearInterval(interval);

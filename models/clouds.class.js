@@ -23,6 +23,9 @@ class Clouds extends MovableObject {
     this.animate();
   }
 
+  /**
+   *
+   */
   animate() {
     let intervalMove = setInterval(() => {
       this.moveLeft(this.speed);
@@ -32,10 +35,18 @@ class Clouds extends MovableObject {
     }, 1000 / 60);
   }
 
+  /**
+   *
+   * @returns
+   */
   clouds() {
     return this.IMAGES[0]["IMAGES_CLOUDS"];
   }
 
+  /**
+   *
+   * @returns
+   */
   sec_Clouds() {
     return this.IMAGES[1]["IMAGES_SEC_CLOUDS"];
   }

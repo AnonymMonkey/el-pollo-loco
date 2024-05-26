@@ -25,14 +25,30 @@ class Chicken_Small extends MovableObject {
     this.animateModel();
   }
 
+  /**
+   *
+   */
   animateModel() {
+    this.smallChickenMovement();
+    this.smallChickenAnimation();
+  }
+
+  /**
+   *
+   */
+  smallChickenMovement() {
     let intervalMove = setInterval(() => {
       this.moveLeft(this.speed);
       if (this.dead) {
         clearInterval(intervalMove);
       }
     }, 1000 / 60);
+  }
 
+  /**
+   *
+   */
+  smallChickenAnimation() {
     let intervalDead = setInterval(() => {
       this.sound_deathEnemie.pause();
       if (this.dead) {
@@ -45,10 +61,18 @@ class Chicken_Small extends MovableObject {
     }, 160);
   }
 
+  /**
+   *
+   * @returns
+   */
   smallChicken_Walking() {
     return this.IMAGES[0]["IMAGES_WALKING"];
   }
 
+  /**
+   *
+   * @returns
+   */
   smallChicken_Dead() {
     return this.IMAGES[1]["IMAGES_DEAD"];
   }

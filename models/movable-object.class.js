@@ -6,8 +6,10 @@ class MovableObject extends DrawableObject {
 
   lastHit = 0;
 
+  /**
+   *
+   */
   applyGravity() {
-    //this.speedY = 0;
     setInterval(() => {
       if (this.isAboveGround() || this.speedY > 0) {
         this.y -= this.speedY;
@@ -16,6 +18,10 @@ class MovableObject extends DrawableObject {
     }, 1000 / 25);
   }
 
+  /**
+   *
+   * @returns
+   */
   isAboveGround() {
     if (this instanceof Character) {
       return this.y + this.height - this.offset.yb < 310;
@@ -25,10 +31,20 @@ class MovableObject extends DrawableObject {
     }
   }
 
+  /**
+   *
+   * @param {*} mo
+   * @returns
+   */
   isColliding(mo) {
     return this.collidingX(mo) && this.collidingY(mo);
   }
 
+  /**
+   *
+   * @param {*} mo
+   * @returns
+   */
   collidingX(mo) {
     return (
       this.x + this.width + this.offset.xl - this.offset.xr >=
@@ -37,6 +53,11 @@ class MovableObject extends DrawableObject {
     );
   }
 
+  /**
+   *
+   * @param {*} mo
+   * @returns
+   */
   collidingY(mo) {
     return (
       this.y + this.height + this.offset.yt - this.offset.yb >=
@@ -45,10 +66,19 @@ class MovableObject extends DrawableObject {
     );
   }
 
+  /**
+   *
+   * @returns
+   */
   isCollidingGround() {
     return this.y >= 310;
   }
 
+  /**
+   *
+   * @param {*} enemy
+   * @returns
+   */
   hit(enemy) {
     if (enemy.dead == false) {
       this.characterEnergy -= 2;
@@ -62,16 +92,28 @@ class MovableObject extends DrawableObject {
     }
   }
 
+  /**
+   *
+   * @returns
+   */
   isHurt() {
     let timepassed = new Date().getTime() - this.lastHit;
     timepassed = timepassed / 500;
     return timepassed < 1;
   }
 
+  /**
+   *
+   * @returns
+   */
   isDead() {
     return this.characterEnergy == 0;
   }
 
+  /**
+   *
+   * @param {*} x
+   */
   playSound(x) {
     if (!this.soundPlayed && isSoundActiv) {
       x.play();
@@ -82,6 +124,10 @@ class MovableObject extends DrawableObject {
     }
   }
 
+  /**
+   *
+   * @param {*} images
+   */
   playAnimation(images) {
     let i = this.currentImage % images.length;
     let path = images[i];
@@ -89,14 +135,23 @@ class MovableObject extends DrawableObject {
     this.currentImage++;
   }
 
-  moveRight(speed) {
+  /**
+   *
+   */
+  moveRight() {
     this.x += this.speed;
   }
 
-  moveLeft(speed) {
+  /**
+   *
+   */
+  moveLeft() {
     this.x -= this.speed;
   }
 
+  /**
+   *
+   */
   jump() {
     this.speedY = 25;
   }

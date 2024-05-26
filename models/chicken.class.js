@@ -25,14 +25,30 @@ class Chicken extends MovableObject {
     this.animateModel();
   }
 
+  /**
+   *
+   */
   animateModel() {
+    this.chickenMovement();
+    this.chickenAnimation();
+  }
+
+  /**
+   *
+   */
+  chickenMovement() {
     let intervalMove = setInterval(() => {
       this.moveLeft(this.speed);
       if (this.dead) {
         clearInterval(intervalMove);
       }
     }, 1000 / 60);
+  }
 
+  /**
+   *
+   */
+  chickenAnimation() {
     let intervalDead = setInterval(() => {
       this.sound_deathEnemie_sec.pause();
       if (this.dead) {
@@ -45,10 +61,18 @@ class Chicken extends MovableObject {
     }, 160);
   }
 
+  /**
+   *
+   * @returns
+   */
   chicken_Walking() {
     return this.IMAGES[0]["IMAGES_WALKING"];
   }
 
+  /**
+   *
+   * @returns
+   */
   chicken_Dead() {
     return this.IMAGES[1]["IMAGES_DEAD"];
   }
