@@ -283,7 +283,7 @@ class World {
       this.collisionsWithEndboss();
       this.collisionsWithCollectable();
       this.collisionsCoordinationWithThrowableObject();
-    }, 50);
+    }, 100);
   }
 
   /**
@@ -292,7 +292,7 @@ class World {
   collisionsWithEnemy() {
     this.level.enemies.forEach((enemy, index) => {
       this.enemyHurtCharacter(enemy);
-      this.enemyDied(enemy, index);
+      this.enemyDiedProzess(enemy, index);
     });
   }
 
@@ -311,13 +311,20 @@ class World {
    * @param {*} enemy
    * @param {*} index
    */
-  enemyDied(enemy, index) {
+  enemyDiedProzess(enemy, index) {
     if (this.character.isColliding(enemy) && this.character.isAboveGround()) {
-      enemy.dead = true;
-      setTimeout(() => {
-        this.level.enemies.splice(index, 1);
-      }, 2000);
+      this.enemyDied(enemy, index);
     }
+  }
+
+  /**
+   *
+   */
+  enemyDied(enemy, index) {
+    enemy.dead = true;
+    setTimeout(() => {
+      this.level.enemies.splice(index, 1);
+    }, 1000);
   }
 
   /**
@@ -383,6 +390,7 @@ class World {
         index,
         endboss
       );
+      this.throwableObjectsCollisionsWithChicken(throwableObject, index);
       this.throwableObjectsCollisionsWithGround(throwableObject, index);
     });
   }
@@ -420,6 +428,20 @@ class World {
     }
 
     this.bottleSplash(throwableObject, index);
+  }
+
+  /**
+   *
+   * @param {*} throwableObject
+   * @param {*} indexBottle
+   */
+  throwableObjectsCollisionsWithChicken(throwableObject, indexBottle) {
+    this.level.enemies.forEach((enemy, index) => {
+      if (throwableObject.isColliding(enemy)) {
+        this.enemyDied(enemy, index);
+        this.bottleSplash(throwableObject, indexBottle);
+      }
+    });
   }
 
   /**

@@ -25,18 +25,18 @@ function init() {
   bodyElement = document.body;
   firstLoading = true;
   updateOrientation();
-  bodyElement.innerHTML = HTML_ShowIconsInformations();
+  showStartScreen();
 }
 
 /**
  * show startscreen
  */
-function showStartScreen(clicked) {
+function showStartScreen(clicked, lastPage) {
   checkClicked(clicked);
   if (firstLoading) {
     firstStartscreenLoading();
   } else {
-    secStartscreenLoading();
+    secStartscreenLoading(lastPage);
   }
 }
 
@@ -51,11 +51,11 @@ function firstStartscreenLoading() {
 /**
  * show startscreen on all other loadings
  */
-function secStartscreenLoading() {
-  sound_click.play();
-  infoscreen = document.getElementById("infoscreen");
-  infoscreen.classList.remove("animation-fade-in");
-  infoscreen.classList.add("animation-fade-out");
+function secStartscreenLoading(lastPage) {
+  //sound_click.play();
+  lastPage = document.getElementById(lastPage);
+  lastPage.classList.remove("animation-fade-in");
+  lastPage.classList.add("animation-fade-out");
   setTimeout(() => {
     bodyElement.innerHTML = HTML_Startscreen();
   }, 250);
@@ -73,6 +73,51 @@ function showGameInformations(clicked) {
   setTimeout(() => {
     bodyElement.innerHTML = HTML_ShowGameInformations();
     startscreen.classList.remove("animation-fade-out");
+  }, 250);
+}
+
+/**
+ *
+ * @param {*} clicked
+ */
+function showSubInformations(clicked) {
+  checkClicked(clicked);
+  startscreen = document.getElementById("startscreen");
+  startscreen.classList.remove("animation-fade-in");
+  startscreen.classList.add("animation-fade-out");
+  setTimeout(() => {
+    bodyElement.innerHTML = HTML_ShowSubInformations();
+    startscreen.classList.remove("animation-fade-out");
+  }, 250);
+}
+
+/**
+ *
+ * @param {*} clicked
+ */
+function showCreaterInformations(clicked) {
+  checkClicked(clicked);
+  subinfoscreen = document.getElementById("subinfoscreen");
+  subinfoscreen.classList.remove("animation-fade-in");
+  subinfoscreen.classList.add("animation-fade-out");
+  setTimeout(() => {
+    bodyElement.innerHTML = HTML_ShowCreaterInformations();
+    subinfoscreen.classList.remove("animation-fade-out");
+  }, 250);
+}
+
+/**
+ *
+ * @param {*} clicked
+ */
+function showIconInformations(clicked) {
+  checkClicked(clicked);
+  subinfoscreen = document.getElementById("subinfoscreen");
+  subinfoscreen.classList.remove("animation-fade-in");
+  subinfoscreen.classList.add("animation-fade-out");
+  setTimeout(() => {
+    bodyElement.innerHTML = HTML_ShowIconsInformations();
+    subinfoscreen.classList.remove("animation-fade-out");
   }, 250);
 }
 
@@ -276,8 +321,6 @@ function updateOrientation() {
     if (document.fullscreenElement) {
       return;
     }
-
-    let gameContent = document.getElementById("gamescreen");
     if (
       window.matchMedia("(max-width: 720px) and (orientation: portrait)")
         .matches
@@ -287,18 +330,25 @@ function updateOrientation() {
       if (!isGameStarted) {
         document.body.innerHTML = HTML_Startscreen();
       } else {
-        document.body.innerHTML = ""; // Clear the body
-        isSoundActiv = false;
-        firstLoading = true;
-        backgroundMusic();
-        resetGame();
-        showStartScreen();
+        resetAndShowStartscreen();
       }
     }
   }
 
   window.addEventListener("resize", applyOrientationChange);
   applyOrientationChange();
+}
+
+/**
+ * Game reset if resize Window
+ */
+function resetAndShowStartscreen() {
+  document.body.innerHTML = "";
+  isSoundActiv = false;
+  firstLoading = true;
+  backgroundMusic();
+  resetGame();
+  showStartScreen();
 }
 
 document.addEventListener("DOMContentLoaded", updateOrientation);

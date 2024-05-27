@@ -5,7 +5,7 @@
 function HTML_Startscreen() {
   return /*html*/ `
     <div id="startscreen" class="start-screen animation-fade-in">
-      <h1>El pollo loco</h1>
+      <h1 id="gameheadline">El pollo loco</h1>
       <img class="canvas-start-screen-background" src="assets/img/9_intro_outro_screens/start/startscreen_1.png" alt="background">
       <img onclick="startGame(true)" class="play-button c-pointer" src="assets/img/buttons/play.png" alt="start game">
       <img onclick="showGameInformations(true)" class="info-button c-pointer" src="assets/img/buttons/controlls.png" alt="info">
@@ -21,8 +21,8 @@ function HTML_Startscreen() {
 function HTML_ShowGameInformations() {
   return /*html*/ `
     <div id="infoscreen" class="information-screen animation-fade-in">
-      <h1>El pollo loco</h1>
-      <img onclick="showStartScreen(true)" class="back-button c-pointer" src="assets/img/buttons/home.png" alt="home">
+      <h1 id="gameheadline">El pollo loco</h1>
+      <img onclick="showStartScreen(true, 'infoscreen')" class="back-button c-pointer" src="assets/img/buttons/home.png" alt="home">
       <h2>Controll Informations</h2>
       <div class="info-section">
         <img class="info-img" src="assets/img/buttons/arrow-keys.png" alt="arrow keys">
@@ -48,29 +48,37 @@ function HTML_ShowGameInformations() {
   `;
 }
 
+/**
+ *
+ * @returns
+ */
 function HTML_ShowSubInformations() {
   return /*html*/ `
     <div id="subinfoscreen" class="information-screen animation-fade-in">
-      <h1>El pollo loco</h1>
-      <img onclick="showStartScreen(true)" class="back-button c-pointer" src="assets/img/buttons/home.png" alt="home">
+      <h1 id="gameheadline">El pollo loco</h1>
+      <img onclick="showStartScreen(true, 'subinfoscreen')" class="back-button c-pointer" src="assets/img/buttons/home.png" alt="home">
       <h2>Sub Informations</h2>
-      <div class="info-section">
-        <img class="info-img c-pointer" src="assets/img/buttons/createrinfo.png" alt="creater info">
+      <div onclick="showCreaterInformations(true)" class="info-section c-pointer">
+        <img class="info-img" src="assets/img/buttons/createrinfo.png" alt="creater info">
         <p>Creater Informations</p>
       </div>
-      <div class="info-section">
-        <img class="info-img c-pointer" src="assets/img/buttons/icons8.png" alt="icons8">
+      <div onclick="showIconInformations(true)" class="info-section c-pointer">
+        <img class="info-img" src="assets/img/buttons/icons8.png" alt="icons8">
         <p><b>icons8</b> Icons</p>
       </div>
     </div>
   `;
 }
 
+/**
+ *
+ * @returns
+ */
 function HTML_ShowCreaterInformations() {
   return /*html*/ `
-    <div id="subinfoscreen" class="information-screen animation-fade-in">
-      <h1>El pollo loco</h1>
-      <img onclick="showStartScreen(true)" class="back-button c-pointer" src="assets/img/buttons/home.png" alt="back">
+    <div id="createrinfoscreen" class="information-screen animation-fade-in">
+      <h1 id="gameheadline">El pollo loco</h1>
+      <img onclick="showStartScreen(true, 'createrinfoscreen')" class="back-button c-pointer" src="assets/img/buttons/home.png" alt="back">
       <h2>Creater Informations</h2>
       <div class="info-section">
         <img class="info-img-sub c-pointer" src="assets/img/buttons/createrinfo.png" alt="creater info">
@@ -79,22 +87,21 @@ function HTML_ShowCreaterInformations() {
           <p>Andino Eichberger</p>
           <p>Niedersachen</p>
           <p>Deutschland</p>
-          <br>
-          <br>
-          <p>Kontaktmöglichkeiten bitte über mein Portfolio überprüfen:</p>
-          <br>
-          <a href="#">Portfolio | Eichberger, Andino</a>
         </div>
       </div>
     </div>
   `;
 }
 
+/**
+ *
+ * @returns
+ */
 function HTML_ShowIconsInformations() {
   return /*html*/ `
-    <div id="subinfoscreen" class="information-screen animation-fade-in">
-      <h1>El pollo loco</h1>
-      <img onclick="showStartScreen(true)" class="back-button c-pointer" src="assets/img/buttons/home.png" alt="back">
+    <div id="iconinfoscreen" class="information-screen animation-fade-in">
+      <h1 id="gameheadline">El pollo loco</h1>
+      <img onclick="showStartScreen(true, 'iconinfoscreen')" class="back-button c-pointer" src="assets/img/buttons/home.png" alt="back">
       <h2>Used Icons</h2>
       <div class="icon-section">
         <div class="icon-section-list">
@@ -134,7 +141,7 @@ function HTML_ShowIconsInformations() {
 function HTML_StartGame() {
   return /*html*/ `
   <div id="gamescreen" class="game-screen animation-rotate-in">
-    <h1>El pollo loco</h1>
+    <h1 id="gameheadline">El pollo loco</h1>
     <canvas id="canvas" width="720px" height="480px"></canvas>
     <div class="game-buttons">
       <img onclick="toggleSound(true)" id="soundbutton" class="sound-button c-pointer" src="assets/img/buttons/sound-on.png" alt="toggle sound">
@@ -172,7 +179,7 @@ function HTML_StartGame() {
 function HTML_GameOver() {
   return /*html*/ `
     <div class="game-end-screen shake">
-      <h1>El pollo loco</h1>
+      <h1 id="gameheadline">El pollo loco</h1>
       <div class="game-end-screen-inner">
         <img class="game-end-img animation-rotate-in animation-rotate-infinite" src="assets/img/9_intro_outro_screens/game_over/game over!.png" alt="game over">
         <div onclick="showStartScreen(true)" class="game-end-exit-section c-pointer">
@@ -196,7 +203,7 @@ function HTML_GameOver() {
 function HTML_GameWin() {
   return /*html*/ `
     <div class="game-end-screen">
-      <h1>El pollo loco</h1>
+      <h1 id="gameheadline">El pollo loco</h1>
       <div class="game-end-screen-inner">
         <img class="game-end-img animation-rotate-in animation-rotate-infinite" src="assets/img/9_intro_outro_screens/win/win_2.png" alt="game win">
         <div onclick="showStartScreen(true)" class="game-end-exit-section c-pointer">
