@@ -6,6 +6,7 @@ let coordinates;
 let bodyElement;
 
 let firstLoading = false;
+let isGameStarted = false;
 let isFullscreen = false;
 let isSoundActiv = false;
 
@@ -23,7 +24,8 @@ sound_click = new Audio(new Sounds().sound_click);
 function init() {
   bodyElement = document.body;
   firstLoading = true;
-  showStartScreen();
+  updateOrientation();
+  bodyElement.innerHTML = HTML_ShowIconsInformations();
 }
 
 /**
@@ -63,13 +65,13 @@ function secStartscreenLoading() {
  * show Informations
  * @param {boolean} clicked
  */
-function showInformations(clicked) {
+function showGameInformations(clicked) {
   checkClicked(clicked);
   startscreen = document.getElementById("startscreen");
   startscreen.classList.remove("animation-fade-in");
   startscreen.classList.add("animation-fade-out");
   setTimeout(() => {
-    bodyElement.innerHTML = HTML_ShowInformations();
+    bodyElement.innerHTML = HTML_ShowGameInformations();
     startscreen.classList.remove("animation-fade-out");
   }, 250);
 }
@@ -98,6 +100,7 @@ function initialNewGame() {
     coordinates = new Coordinates();
     keyboard = new Keyboard();
     world = new World(canvas, keyboard, coordinates);
+    isGameStarted = true;
 
     toggleSound();
     startscreen.classList.remove("animation-fade-out");
@@ -160,9 +163,10 @@ async function resetGame() {
  * @param {boolean} clicked
  */
 function toggleFullScreen(clicked) {
+  let gameContent = document.getElementById("gamescreen");
   checkClicked(clicked);
   if (!isFullscreen) {
-    enterFullscreen();
+    enterFullscreen(gameContent);
     isFullscreen = true;
   } else {
     exitFullscreen();
@@ -174,13 +178,15 @@ function toggleFullScreen(clicked) {
  * set fullscreen
  * @param {html element} element
  */
-function enterFullscreen() {
-  if (gamescreen.requestFullscreen) {
-    gamescreen.requestFullscreen();
-  } else if (gamescreen.msRequestFullscreen) {
-    gamescreen.msRequestFullscreen();
-  } else if (gamescreen.webkitRequestFullscreen) {
-    gamescreen.webkitRequestFullscreen();
+function enterFullscreen(gameContent) {
+  if (gameContent.requestFullscreen) {
+    gameContent.requestFullscreen();
+  } else if (gameContent.msRequestFullscreen) {
+    gameContent.msRequestFullscreen();
+  } else if (gameContent.webkitRequestFullscreen) {
+    gameContent.webkitRequestFullscreen();
+  } else if (gameContent.mozRequestFullScreen) {
+    gameContent.mozRequestFullScreen();
   }
 }
 
@@ -190,8 +196,12 @@ function enterFullscreen() {
 function exitFullscreen() {
   if (document.exitFullscreen) {
     document.exitFullscreen();
+  } else if (document.msExitFullscreen) {
+    document.msExitFullscreen();
   } else if (document.webkitExitFullscreen) {
     document.webkitExitFullscreen();
+  } else if (document.mozCancelFullScreen) {
+    document.mozCancelFullScreen();
   }
 }
 
@@ -263,13 +273,27 @@ function clearAllIntervals() {
  */
 function updateOrientation() {
   function applyOrientationChange() {
+    if (document.fullscreenElement) {
+      return;
+    }
+
+    let gameContent = document.getElementById("gamescreen");
     if (
       window.matchMedia("(max-width: 720px) and (orientation: portrait)")
         .matches
     ) {
       document.body.innerHTML = hidePortraitMode();
     } else {
-      document.body.innerHTML = HTML_Startscreen();
+      if (!isGameStarted) {
+        document.body.innerHTML = HTML_Startscreen();
+      } else {
+        document.body.innerHTML = ""; // Clear the body
+        isSoundActiv = false;
+        firstLoading = true;
+        backgroundMusic();
+        resetGame();
+        showStartScreen();
+      }
     }
   }
 
