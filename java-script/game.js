@@ -122,6 +122,23 @@ function showIconInformations(clicked) {
 }
 
 /**
+ * show loader
+ */
+function showLoader() {
+  bodyElement.innerHTML += HTML_loader();
+}
+
+/**
+ * hide loader
+ */
+function hideLoader() {
+  let loader = document.querySelector(".wrapper");
+  if (loader) {
+    loader.remove();
+  }
+}
+
+/**
  * start game
  * @param {boolean} clicked
  */
@@ -130,6 +147,8 @@ function startGame(clicked) {
   startscreen = document.getElementById("startscreen");
   startscreen.classList.remove("animation-fade-in");
   startscreen.classList.add("animation-fade-out");
+
+  showLoader();
 
   initialNewGame();
 }
@@ -140,6 +159,7 @@ function startGame(clicked) {
 function initialNewGame() {
   setTimeout(() => {
     bodyElement.innerHTML = HTML_StartGame();
+    showLoader();
     canvas = document.getElementById("canvas");
     loadLevel();
     coordinates = new Coordinates();
@@ -148,8 +168,8 @@ function initialNewGame() {
     isGameStarted = true;
 
     toggleSound();
-    startscreen.classList.remove("animation-fade-out");
   }, 250);
+  setTimeout(hideLoader, 2500);
 }
 
 /**
@@ -352,5 +372,3 @@ function resetAndShowStartscreen() {
 }
 
 document.addEventListener("DOMContentLoaded", updateOrientation);
-
-/*ANCHOR - Überprüfen das der fullscreen und landscape mode richtig funktioniert - danach dann jsdoc weiter */

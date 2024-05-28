@@ -1,9 +1,0 @@
-long idle for char ++
-(awake bzw. timer löschen geht nicht)
-
-start screen and informations ++
-
-win and game over screen
-
-pepe wie mario fallen lassen bei TOD
-
