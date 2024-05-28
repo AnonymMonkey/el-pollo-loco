@@ -1,7 +1,7 @@
 let level1;
 
 /**
- *
+ * load level content
  */
 function loadLevel() {
   level1 = new Level(

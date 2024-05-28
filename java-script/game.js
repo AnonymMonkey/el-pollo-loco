@@ -25,7 +25,6 @@ function init() {
   bodyElement = document.body;
   firstLoading = true;
   updateOrientation();
-  showStartScreen();
 }
 
 /**

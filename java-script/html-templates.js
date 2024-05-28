@@ -1,5 +1,5 @@
 /**
- *
+ * html for startscreen
  * @returns
  */
 function HTML_Startscreen() {
@@ -15,7 +15,7 @@ function HTML_Startscreen() {
 }
 
 /**
- *
+ * html for game informations
  * @returns
  */
 function HTML_ShowGameInformations() {
@@ -49,7 +49,7 @@ function HTML_ShowGameInformations() {
 }
 
 /**
- *
+ * html for sub informations
  * @returns
  */
 function HTML_ShowSubInformations() {
@@ -71,7 +71,7 @@ function HTML_ShowSubInformations() {
 }
 
 /**
- *
+ * html for creater informations
  * @returns
  */
 function HTML_ShowCreaterInformations() {
@@ -94,7 +94,7 @@ function HTML_ShowCreaterInformations() {
 }
 
 /**
- *
+ * html for icon informations
  * @returns
  */
 function HTML_ShowIconsInformations() {
@@ -135,7 +135,7 @@ function HTML_ShowIconsInformations() {
 }
 
 /**
- *
+ * html for game
  * @returns
  */
 function HTML_StartGame() {
@@ -173,7 +173,7 @@ function HTML_StartGame() {
 }
 
 /**
- *
+ * html for game over screen
  * @returns
  */
 function HTML_GameOver() {
@@ -197,7 +197,7 @@ function HTML_GameOver() {
 }
 
 /**
- *
+ * html for game win screen
  * @returns
  */
 function HTML_GameWin() {
@@ -221,7 +221,7 @@ function HTML_GameWin() {
 }
 
 /**
- *
+ * html for landscape information
  * @returns
  */
 function hidePortraitMode() {
@@ -233,6 +233,10 @@ function hidePortraitMode() {
   `;
 }
 
+/**
+ * html for loading screen
+ * @returns
+ */
 function HTML_loader() {
   return /*html*/ `
   	<div class="wrapper">

@@ -32,9 +32,9 @@ class World {
   }
 
   /**
-   *
-   * @param {*} number
-   * @param {*} level
+   * movable object coordination
+   * @param {number} number
+   * @param {object} level
    */
   movableObjectCoordination(number, level) {
     let self = this;
@@ -48,9 +48,9 @@ class World {
   }
 
   /**
-   *
-   * @param {*} number
-   * @param {*} level
+   * chicken coordination
+   * @param {number} number
+   * @param {object} level
    */
   chickenCoordination(number, level) {
     number = 3;
@@ -60,9 +60,9 @@ class World {
   }
 
   /**
-   *
-   * @param {*} number
-   * @param {*} enemies
+   * chicken spawner
+   * @param {number} number
+   * @param {object} enemies
    */
   chickenCoordinationSpawner(number, enemies) {
     if (enemies.length == 0 && this.coordinates.enemeyFirstSpawn) {
@@ -75,8 +75,8 @@ class World {
   }
 
   /**
-   *
-   * @param {*} enemies
+   * chicken splice and respawn coordination
+   * @param {object} enemies
    */
   chickenCoordinationRandomizer(enemies) {
     if (enemies.length > 1) {
@@ -94,8 +94,8 @@ class World {
   }
 
   /**
-   *
-   * @param {*} level
+   * endboss coordination
+   * @param {object} level
    * @returns
    */
   endbossCoordination(level) {
@@ -110,9 +110,9 @@ class World {
   }
 
   /**
-   *
-   * @param {*} number
-   * @param {*} level
+   * cloud coordination
+   * @param {number} number
+   * @param {object} level
    */
   cloudCoordination(number, level) {
     number = 3;
@@ -122,9 +122,9 @@ class World {
   }
 
   /**
-   *
-   * @param {*} number
-   * @param {*} clouds
+   * cloud spawner
+   * @param {number} number
+   * @param {object} clouds
    */
   cloudCoordinationSpawner(number, clouds) {
     if (clouds.length == 0) {
@@ -136,8 +136,8 @@ class World {
   }
 
   /**
-   *
-   * @param {*} clouds
+   * cloud splice and respawn coordination
+   * @param {object} clouds
    */
   cloudCoordinationChanger(clouds) {
     if (clouds.length > 1) {
@@ -153,9 +153,9 @@ class World {
   }
 
   /**
-   *
-   * @param {*} number
-   * @param {*} level
+   * coordination for Background
+   * @param {number} number
+   * @param {object} level
    */
   backgroundCoordination(number, level) {
     let coordinates = this.coordinates;
@@ -165,10 +165,10 @@ class World {
   }
 
   /**
-   *
-   * @param {*} coordinates
-   * @param {*} number
-   * @param {*} backgroundObjects
+   * spawns the backgrounds
+   * @param {object} coordinates
+   * @param {number} number
+   * @param {object} backgroundObjects
    */
   backgroundCoordinationSpawner(coordinates, number, backgroundObjects) {
     if (backgroundObjects.length == 0) {
@@ -189,7 +189,7 @@ class World {
   }
 
   /**
-   *
+   * draws the objects in canvas
    */
   draw() {
     let self = this;
@@ -223,8 +223,8 @@ class World {
   }
 
   /**
-   *
-   * @param {*} objects
+   * draw several objects to Map
+   * @param {objects} objects
    */
   addObjectsToMap(objects) {
     objects.forEach((o) => {
@@ -233,8 +233,8 @@ class World {
   }
 
   /**
-   *
-   * @param {*} mo
+   * draw object to Map
+   * @param {object} mo
    */
   addToMap(mo) {
     if (mo.otherDirection) {
@@ -250,8 +250,8 @@ class World {
   }
 
   /**
-   *
-   * @param {*} mo
+   * flip image from object
+   * @param {object} mo
    */
   flipImage(mo) {
     this.ctx.save();
@@ -263,8 +263,8 @@ class World {
   }
 
   /**
-   *
-   * @param {*} mo
+   * flip image from object back
+   * @param {object} mo
    */
   flipImageBack(mo) {
     this.ctx.restore();
@@ -273,7 +273,7 @@ class World {
   }
 
   /**
-   *
+   * check collisions
    */
   checkCollisions() {
     setInterval(() => {
@@ -287,7 +287,7 @@ class World {
   }
 
   /**
-   *
+   * collsions with enemy
    */
   collisionsWithEnemy() {
     this.level.enemies.forEach((enemy, index) => {
@@ -297,8 +297,8 @@ class World {
   }
 
   /**
-   *
-   * @param {*} enemy
+   * enemy hurting character
+   * @param {object} enemy
    */
   enemyHurtCharacter(enemy) {
     if (this.character.isColliding(enemy) && !this.character.isAboveGround()) {
@@ -307,9 +307,9 @@ class World {
   }
 
   /**
-   *
-   * @param {*} enemy
-   * @param {*} index
+   * death process for enemy
+   * @param {object} enemy
+   * @param {index} index
    */
   enemyDiedProzess(enemy, index) {
     if (this.character.isColliding(enemy) && this.character.isAboveGround()) {
@@ -318,7 +318,7 @@ class World {
   }
 
   /**
-   *
+   * splice enemy after one sec
    */
   enemyDied(enemy, index) {
     enemy.dead = true;
@@ -328,7 +328,7 @@ class World {
   }
 
   /**
-   *
+   * collisions with Endboss
    * @returns
    */
   collisionsWithEndboss() {
@@ -343,7 +343,7 @@ class World {
   }
 
   /**
-   *
+   * collisions with collectable (bottle, coin)
    */
   collisionsWithCollectable() {
     let collectables = this.level.collectables;
@@ -357,8 +357,8 @@ class World {
   }
 
   /**
-   *
-   * @param {*} collectable
+   * collected Bottle
+   * @param {object} collectable
    */
   collectedBottle(collectable) {
     if (collectable.constructor.name == "Bottle") {
@@ -368,7 +368,7 @@ class World {
   }
 
   /**
-   *
+   * collected Coin
    * @param {*} collectable
    */
   collectedCoin(collectable) {
@@ -379,7 +379,7 @@ class World {
   }
 
   /**
-   *
+   * collsions between throwable object (Bottle) and Opponents or Ground
    */
   collisionsCoordinationWithThrowableObject() {
     let throwableObjects = this.throwableObjects;
@@ -396,10 +396,10 @@ class World {
   }
 
   /**
-   *
-   * @param {*} throwableObject
-   * @param {*} index
-   * @param {*} endboss
+   * collsions between throwable object (Bottle) and Endboss
+   * @param {object} throwableObject
+   * @param {index} index
+   * @param {object} endboss
    */
   throwableObjectsCollisionsWithEndboss(throwableObject, index, endboss) {
     if (throwableObject.isColliding(endboss) && this.coordinates.wasThrown) {
@@ -410,10 +410,10 @@ class World {
   }
 
   /**
-   *
-   * @param {*} throwableObject
-   * @param {*} index
-   * @param {*} endboss
+   * death prozess for Endboss
+   * @param {object} throwableObject
+   * @param {index} index
+   * @param {object} endboss
    */
   processForEndboss(throwableObject, index, endboss) {
     this.statusBarEndboss.endbossEnergy--;
@@ -431,9 +431,9 @@ class World {
   }
 
   /**
-   *
-   * @param {*} throwableObject
-   * @param {*} indexBottle
+   * collsions between throwable object (Bottle) and normal Enemies
+   * @param {object} throwableObject
+   * @param {index} indexBottle
    */
   throwableObjectsCollisionsWithChicken(throwableObject, indexBottle) {
     this.level.enemies.forEach((enemy, index) => {
@@ -445,9 +445,9 @@ class World {
   }
 
   /**
-   *
-   * @param {*} throwableObject
-   * @param {*} index
+   * collsions between throwable object (Bottle) and Ground
+   * @param {object} throwableObject
+   * @param {index} index
    */
   throwableObjectsCollisionsWithGround(throwableObject, index) {
     if (throwableObject.isCollidingGround() && this.coordinates.wasThrown) {
@@ -457,18 +457,18 @@ class World {
   }
 
   /**
-   *
-   * @param {*} throwableObject
-   * @param {*} index
+   * throwable object (Bottle) splice on ground prozess
+   * @param {object} throwableObject
+   * @param {index} index
    */
   processForGround(throwableObject, index) {
     this.bottleSplash(throwableObject, index);
   }
 
   /**
-   *
-   * @param {*} throwableObject
-   * @param {*} index
+   * throwable object (Bottle) splice prozess
+   * @param {object} throwableObject
+   * @param {index} index
    */
   bottleSplash(throwableObject, index) {
     let throwableObjects = this.throwableObjects;
@@ -481,7 +481,7 @@ class World {
   }
 
   /**
-   *
+   * checks whether bottle can be thrown
    */
   checkThrowBottle() {
     let tOX = this.character.x + this.coordinates.throwableObjectX;
@@ -504,8 +504,8 @@ class World {
   }
 
   /**
-   *
-   * @param {*} bottle
+   * throw Bottle
+   * @param {object} bottle
    */
   throwBottle(bottle) {
     this.coordinates.wasThrown = true;
@@ -519,7 +519,7 @@ class World {
   }
 
   /**
-   *
+   * exchange Coin to Bottle or Health
    */
   exchangeCoin() {
     if (this.statusBarCoin.coinCache > 0) {
@@ -533,7 +533,7 @@ class World {
   }
 
   /**
-   *
+   * exchange Coin to Bottle
    */
   coinToBottle() {
     if (this.statusBarBottle.bottleCache < 5) {
@@ -547,7 +547,7 @@ class World {
   }
 
   /**
-   *
+   * exchange Coin to Health
    */
   coinToHealth() {
     if (this.character.characterEnergy < 100) {
@@ -561,7 +561,7 @@ class World {
   }
 
   /**
-   *
+   * toggle exchange boolean
    * @returns
    */
   toggleExchange() {
@@ -569,7 +569,7 @@ class World {
   }
 
   /**
-   *
+   * Coin to Bottle
    * @returns
    */
   prozessCoinToBottle() {
@@ -577,7 +577,7 @@ class World {
   }
 
   /**
-   *
+   * Coin to Health
    * @returns
    */
   prozessCoinToHealth() {
@@ -585,7 +585,7 @@ class World {
   }
 
   /**
-   *
+   * check if character health full or not
    * @returns
    */
   checkMaxHealth() {
@@ -600,7 +600,7 @@ class World {
   }
 
   /**
-   *
+   * set world
    */
   setWorld() {
     this.statusBarCoin.world = this;

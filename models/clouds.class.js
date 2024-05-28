@@ -24,7 +24,7 @@ class Clouds extends MovableObject {
   }
 
   /**
-   *
+   * animate
    */
   animate() {
     let intervalMove = setInterval(() => {
@@ -36,7 +36,7 @@ class Clouds extends MovableObject {
   }
 
   /**
-   *
+   * strings for clouds v1
    * @returns
    */
   clouds() {
@@ -44,7 +44,7 @@ class Clouds extends MovableObject {
   }
 
   /**
-   *
+   * strings for clouds v2
    * @returns
    */
   sec_Clouds() {

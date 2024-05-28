@@ -27,7 +27,7 @@ class Endboss extends MovableObject {
   }
 
   /**
-   *
+   * animate model
    */
   animateModel() {
     this.endbossMovement();
@@ -35,7 +35,7 @@ class Endboss extends MovableObject {
   }
 
   /**
-   *
+   * endboss movement
    */
   endbossMovement() {
     setInterval(() => {
@@ -51,7 +51,7 @@ class Endboss extends MovableObject {
   }
 
   /**
-   *
+   * endboss move left
    */
   endbossMoveLeft() {
     this.moveLeft(this.speed);
@@ -62,7 +62,7 @@ class Endboss extends MovableObject {
   }
 
   /**
-   *
+   * endboss died
    */
   endbossDied(intervalMove) {
     if (!this.deadSoundPlayed) {
@@ -74,7 +74,7 @@ class Endboss extends MovableObject {
   }
 
   /**
-   *
+   * endboss animations
    */
   endbossAnimation() {
     setInterval(() => {
@@ -91,7 +91,7 @@ class Endboss extends MovableObject {
   }
 
   /**
-   *
+   * endboss hurt
    */
   endbossHurt() {
     this.soundPlayed = false;
@@ -103,7 +103,7 @@ class Endboss extends MovableObject {
   }
 
   /**
-   *
+   * strings for endboss walking
    * @returns
    */
   endboss_Walking() {
@@ -111,7 +111,7 @@ class Endboss extends MovableObject {
   }
 
   /**
-   *
+   * strings for endboss alert
    * @returns
    */
   endboss_Alert() {
@@ -119,7 +119,7 @@ class Endboss extends MovableObject {
   }
 
   /**
-   *
+   * strings for endboss attack
    * @returns
    */
   endboss_Attack() {
@@ -127,7 +127,7 @@ class Endboss extends MovableObject {
   }
 
   /**
-   *
+   * strings for endboss hurt
    * @returns
    */
   endboss_Hurt() {
@@ -135,7 +135,7 @@ class Endboss extends MovableObject {
   }
 
   /**
-   *
+   * strings for endboss dead
    * @returns
    */
   endboss_Dead() {

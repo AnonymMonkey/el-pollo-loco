@@ -24,7 +24,7 @@ class Coin extends MovableObject {
   }
 
   /**
-   *
+   * animate model
    */
   animateModel() {
     let intervalAnimation = setInterval(() => {
@@ -37,7 +37,7 @@ class Coin extends MovableObject {
   }
 
   /**
-   *
+   * strings for coin
    * @returns
    */
   coin() {

@@ -23,7 +23,7 @@ class Bottle extends MovableObject {
   }
 
   /**
-   *
+   * animate model
    */
   animateModel() {
     let intervalAnimation = setInterval(() => {
@@ -36,7 +36,7 @@ class Bottle extends MovableObject {
   }
 
   /**
-   *
+   * strings for bottle normal
    * @returns
    */
   bottle_Normal() {
@@ -44,7 +44,7 @@ class Bottle extends MovableObject {
   }
 
   /**
-   *
+   * strings for bottle rotation
    * @returns
    */
   bottle_Rotation() {
@@ -52,7 +52,7 @@ class Bottle extends MovableObject {
   }
 
   /**
-   *
+   * strings for battle splash
    * @returns
    */
   bottle_Splash() {

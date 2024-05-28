@@ -21,8 +21,8 @@ class BackgroundObject extends MovableObject {
   }
 
   /**
-   *
-   * @param {*} layer
+   * load background
+   * @param {number} layer
    */
   loadBackground(layer) {
     let index;
@@ -36,9 +36,9 @@ class BackgroundObject extends MovableObject {
   }
 
   /**
-   *
-   * @param {*} layer
-   * @param {*} index
+   * load full layer
+   * @param {number} layer
+   * @param {index} index
    */
   loadFullLayer(layer, index) {
     if (layer == 0) {
@@ -56,8 +56,8 @@ class BackgroundObject extends MovableObject {
   }
 
   /**
-   *
-   * @param {*} currentLayer
+   * load layer
+   * @param {string} currentLayer
    */
   loadLayer(currentLayer) {
     this.img = new Image();
@@ -65,7 +65,7 @@ class BackgroundObject extends MovableObject {
   }
 
   /**
-   *
+   * background air
    * @returns
    */
   background_Air() {
@@ -73,8 +73,8 @@ class BackgroundObject extends MovableObject {
   }
 
   /**
-   *
-   * @param {*} index
+   * background first layer
+   * @param {index} index
    * @returns
    */
   background_FirstLayer(index) {
@@ -82,8 +82,8 @@ class BackgroundObject extends MovableObject {
   }
 
   /**
-   *
-   * @param {*} index
+   * background sec layer
+   * @param {index} index
    * @returns
    */
   background_SecLayer(index) {
@@ -91,8 +91,8 @@ class BackgroundObject extends MovableObject {
   }
 
   /**
-   *
-   * @param {*} index
+   * background third layer
+   * @param {index} index
    * @returns
    */
   background_ThirdLayer(index) {

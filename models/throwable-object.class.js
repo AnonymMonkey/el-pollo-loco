@@ -31,6 +31,9 @@ class ThrowableObject extends MovableObject {
     this.animateModel();
   }
 
+  /**
+   * throw
+   */
   throw() {
     this.applyGravity();
     let interval = setInterval(() => {
@@ -43,6 +46,9 @@ class ThrowableObject extends MovableObject {
     }, 40);
   }
 
+  /**
+   * animate model
+   */
   animateModel() {
     let interval = setInterval(() => {
       if (this.isCollided) {
@@ -56,10 +62,18 @@ class ThrowableObject extends MovableObject {
     }, 120);
   }
 
+  /**
+   * strings for bottle rotation
+   * @returns
+   */
   bottle_Rotation() {
     return this.IMAGES[1]["IMAGES_BOTTLE_ROTATION"];
   }
 
+  /**
+   * strings for bottle splash
+   * @returns
+   */
   bottle_Splash() {
     return this.IMAGES[2]["IMAGES_BOTTLE_SPLASH"];
   }

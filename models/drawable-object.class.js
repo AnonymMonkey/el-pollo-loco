@@ -4,8 +4,8 @@ class DrawableObject extends Coordinates {
   currentImage = 0;
 
   /**
-   *
-   * @param {*} object
+   * get all Images from a object
+   * @param {object} object
    */
   getAllImages(object) {
     let images = object.IMAGES;
@@ -25,9 +25,9 @@ class DrawableObject extends Coordinates {
   }
 
   /**
-   *
-   * @param {*} object
-   * @param {*} index
+   * load first image from a object
+   * @param {object} object
+   * @param {index} index
    */
   loadFirstImage(object, index) {
     if (index == undefined) {
@@ -42,8 +42,8 @@ class DrawableObject extends Coordinates {
   }
 
   /**
-   *
-   * @param {*} object
+   * load all images from a object
+   * @param {object} object
    */
   loadAllImages(object) {
     let images = object.IMAGES;
@@ -60,8 +60,8 @@ class DrawableObject extends Coordinates {
   }
 
   /**
-   *
-   * @param {*} ctx
+   * draw context
+   * @param {canvas - CanvasRenderingContext2D} ctx
    */
   draw(ctx) {
     ctx.drawImage(this.img, this.x, this.y, this.width, this.height);

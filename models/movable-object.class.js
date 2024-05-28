@@ -7,7 +7,7 @@ class MovableObject extends DrawableObject {
   lastHit = 0;
 
   /**
-   *
+   * apply gravity
    */
   applyGravity() {
     setInterval(() => {
@@ -19,7 +19,7 @@ class MovableObject extends DrawableObject {
   }
 
   /**
-   *
+   * is above ground
    * @returns
    */
   isAboveGround() {
@@ -32,8 +32,8 @@ class MovableObject extends DrawableObject {
   }
 
   /**
-   *
-   * @param {*} mo
+   * is colliding
+   * @param {object} mo
    * @returns
    */
   isColliding(mo) {
@@ -41,8 +41,8 @@ class MovableObject extends DrawableObject {
   }
 
   /**
-   *
-   * @param {*} mo
+   * is colliding X
+   * @param {object} mo
    * @returns
    */
   collidingX(mo) {
@@ -54,8 +54,8 @@ class MovableObject extends DrawableObject {
   }
 
   /**
-   *
-   * @param {*} mo
+   * is colliding Y
+   * @param {object} mo
    * @returns
    */
   collidingY(mo) {
@@ -67,7 +67,7 @@ class MovableObject extends DrawableObject {
   }
 
   /**
-   *
+   * is colliding ground
    * @returns
    */
   isCollidingGround() {
@@ -75,8 +75,8 @@ class MovableObject extends DrawableObject {
   }
 
   /**
-   *
-   * @param {*} enemy
+   * enemy hit character
+   * @param {object} enemy
    * @returns
    */
   hit(enemy) {
@@ -93,7 +93,7 @@ class MovableObject extends DrawableObject {
   }
 
   /**
-   *
+   * is hurt
    * @returns
    */
   isHurt() {
@@ -103,7 +103,7 @@ class MovableObject extends DrawableObject {
   }
 
   /**
-   *
+   * character is dead
    * @returns
    */
   isDead() {
@@ -111,7 +111,7 @@ class MovableObject extends DrawableObject {
   }
 
   /**
-   *
+   * sound play toggle
    * @param {*} x
    */
   playSound(x) {
@@ -125,7 +125,7 @@ class MovableObject extends DrawableObject {
   }
 
   /**
-   *
+   * play animation
    * @param {*} images
    */
   playAnimation(images) {
@@ -136,21 +136,21 @@ class MovableObject extends DrawableObject {
   }
 
   /**
-   *
+   * move right
    */
   moveRight() {
     this.x += this.speed;
   }
 
   /**
-   *
+   * move left
    */
   moveLeft() {
     this.x -= this.speed;
   }
 
   /**
-   *
+   * jump
    */
   jump() {
     this.speedY = 25;

@@ -26,7 +26,7 @@ class Chicken extends MovableObject {
   }
 
   /**
-   *
+   * animate model
    */
   animateModel() {
     this.chickenMovement();
@@ -34,7 +34,7 @@ class Chicken extends MovableObject {
   }
 
   /**
-   *
+   * chicken movement
    */
   chickenMovement() {
     let intervalMove = setInterval(() => {
@@ -46,7 +46,7 @@ class Chicken extends MovableObject {
   }
 
   /**
-   *
+   * chicken animations
    */
   chickenAnimation() {
     let intervalDead = setInterval(() => {
@@ -62,7 +62,7 @@ class Chicken extends MovableObject {
   }
 
   /**
-   *
+   * strings for chicken walking
    * @returns
    */
   chicken_Walking() {
@@ -70,7 +70,7 @@ class Chicken extends MovableObject {
   }
 
   /**
-   *
+   * strings for chicken walking dead
    * @returns
    */
   chicken_Dead() {

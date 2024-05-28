@@ -23,11 +23,18 @@ class StatusBar extends DrawableObject {
     this.setCoordinates();
   }
 
+  /**
+   * set statusbar coordinates
+   */
   setCoordinates() {
     this.x = this.setX();
     this.y = this.setY();
   }
 
+  /**
+   * set statusbar X
+   * @returns
+   */
   setX() {
     if (this.healthStatusBar()) {
       return this.statusBarsX;
@@ -44,6 +51,10 @@ class StatusBar extends DrawableObject {
     }
   }
 
+  /**
+   * set statusbar Y
+   * @returns
+   */
   setY() {
     if (this.healthStatusBar()) {
       return this.statusBarsY;
@@ -59,6 +70,9 @@ class StatusBar extends DrawableObject {
     }
   }
 
+  /**
+   * set statusbar persentege
+   */
   setPersentege() {
     setInterval(() => {
       let path = this.getStatusBarPath()[this.getImageIndex()];
@@ -66,6 +80,10 @@ class StatusBar extends DrawableObject {
     }, 1000 / 120);
   }
 
+  /**
+   * get statusbar image index
+   * @returns
+   */
   getImageIndex() {
     if (this.healthStatusBar()) {
       return this.getHealthImageIndex();
@@ -81,6 +99,10 @@ class StatusBar extends DrawableObject {
     }
   }
 
+  /**
+   * get statusbar health image index
+   * @returns
+   */
   getHealthImageIndex() {
     if (this.world.character.characterEnergy == 100) {
       return 5;
@@ -102,6 +124,10 @@ class StatusBar extends DrawableObject {
     }
   }
 
+  /**
+   * get statusbar coin image index
+   * @returns
+   */
   getCoinImageIndex() {
     if (this.coinCache == 5) {
       return 5;
@@ -118,6 +144,10 @@ class StatusBar extends DrawableObject {
     }
   }
 
+  /**
+   * get statusbar bottle image index
+   * @returns
+   */
   getBottleImageIndex() {
     if (this.bottleCache == 5) {
       return 5;
@@ -134,6 +164,10 @@ class StatusBar extends DrawableObject {
     }
   }
 
+  /**
+   * get statusbar endboss image index
+   * @returns
+   */
   getEndbossImageIndex() {
     if (this.endbossEnergy == 0) {
       return 0;
@@ -150,22 +184,42 @@ class StatusBar extends DrawableObject {
     }
   }
 
+  /**
+   * statusbar health
+   * @returns
+   */
   healthStatusBar() {
     return this.index == 0;
   }
 
+  /**
+   * statusbar coin
+   * @returns
+   */
   coinStatusBar() {
     return this.index == 1;
   }
 
+  /**
+   * statusbar bottle
+   * @returns
+   */
   bottleStatusBar() {
     return this.index == 2;
   }
 
+  /**
+   * statusbar endboss
+   * @returns
+   */
   endbossStatusBar() {
     return this.index == 3;
   }
 
+  /**
+   * get statusbar path
+   * @returns
+   */
   getStatusBarPath() {
     let imagesIndex = this.IMAGES[this.index];
     return Object.values(imagesIndex)[4];

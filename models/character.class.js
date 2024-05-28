@@ -34,7 +34,7 @@ class Character extends MovableObject {
   }
 
   /**
-   *
+   * animate model
    */
   animateModel() {
     this.characterMovement();
@@ -42,7 +42,7 @@ class Character extends MovableObject {
   }
 
   /**
-   *
+   * character movement
    */
   characterMovement() {
     setInterval(() => {
@@ -59,7 +59,7 @@ class Character extends MovableObject {
   }
 
   /**
-   *
+   * character move right
    */
   characterMoveRight() {
     if (keyboard.KEY_RIGHT && this.x < this.world.level.level_end_x) {
@@ -71,7 +71,7 @@ class Character extends MovableObject {
   }
 
   /**
-   *
+   * character move left
    */
   characterMoveLeft() {
     if (keyboard.KEY_LEFT && this.x > 0) {
@@ -83,7 +83,7 @@ class Character extends MovableObject {
   }
 
   /**
-   *
+   * character jump
    */
   characterJump() {
     if (keyboard.KEY_UP && !this.isAboveGround()) {
@@ -92,7 +92,7 @@ class Character extends MovableObject {
   }
 
   /**
-   *
+   * character animations
    */
   characterAnimation() {
     setInterval(() => {
@@ -110,7 +110,7 @@ class Character extends MovableObject {
   }
 
   /**
-   *
+   * character hurt
    */
   characterHurt() {
     this.isAwake();
@@ -124,7 +124,7 @@ class Character extends MovableObject {
   }
 
   /**
-   *
+   * character died
    */
   characterDied() {
     this.isAwake();
@@ -138,7 +138,7 @@ class Character extends MovableObject {
   }
 
   /**
-   *
+   * character jumping
    */
   characterJumping() {
     this.isAwake();
@@ -148,7 +148,7 @@ class Character extends MovableObject {
   }
 
   /**
-   *
+   * character Idle
    */
   characterIdle() {
     this.playAnimation(this.pepe_Idle());
@@ -159,7 +159,7 @@ class Character extends MovableObject {
   }
 
   /**
-   *
+   * character walking
    */
   characterWalking() {
     let keyboard = this.world.keyboard;
@@ -173,7 +173,7 @@ class Character extends MovableObject {
   }
 
   /**
-   *
+   * character walking sound
    */
   walkingSound() {
     if (isSoundActiv) {
@@ -182,7 +182,7 @@ class Character extends MovableObject {
   }
 
   /**
-   *
+   * character tired
    */
   isTired() {
     if (this.awake) {
@@ -192,7 +192,7 @@ class Character extends MovableObject {
   }
 
   /**
-   *
+   * character sleeping
    * @returns
    */
   sleeping() {
@@ -202,7 +202,7 @@ class Character extends MovableObject {
   }
 
   /**
-   *
+   * check if character is sleeping
    */
   checkSleeping() {
     if (!this.isAboveGround() && this.sleeping()) {
@@ -213,14 +213,14 @@ class Character extends MovableObject {
   }
 
   /**
-   *
+   * character awake
    */
   isAwake() {
     this.awake = true;
   }
 
   /**
-   *
+   * strings for character idle
    * @returns
    */
   pepe_Idle() {
@@ -228,7 +228,7 @@ class Character extends MovableObject {
   }
 
   /**
-   *
+   * strings for character long idle (sleep)
    * @returns
    */
   pepe_Long_Idle() {
@@ -236,7 +236,7 @@ class Character extends MovableObject {
   }
 
   /**
-   *
+   *  strings for character walking
    * @returns
    */
   pepe_Walking() {
@@ -244,7 +244,7 @@ class Character extends MovableObject {
   }
 
   /**
-   *
+   * strings for character jumping
    * @returns
    */
   pepe_Jumping() {
@@ -252,7 +252,7 @@ class Character extends MovableObject {
   }
 
   /**
-   *
+   * strings for character hurt
    * @returns
    */
   pepe_Hurt() {
@@ -260,7 +260,7 @@ class Character extends MovableObject {
   }
 
   /**
-   *
+   * strings for character dead
    * @returns
    */
   pepe_Dead() {
