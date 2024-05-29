@@ -53,7 +53,7 @@ class World {
    * @param {object} level
    */
   chickenCoordination(number, level) {
-    number = 3;
+    number = 6;
     let enemies = level.enemies;
     this.chickenCoordinationSpawner(number, enemies);
     this.chickenCoordinationRandomizer(enemies);
@@ -68,8 +68,11 @@ class World {
     if (enemies.length == 0 && this.coordinates.enemeyFirstSpawn) {
       this.coordinates.enemeyFirstSpawn = false;
       for (let i = 0; i < number; i++) {
-        enemies.push(new Chicken());
-        enemies.push(new Chicken_Small());
+        if (Math.random() < 0.5) {
+          enemies.push(new Chicken());
+        } else {
+          enemies.push(new Chicken_Small());
+        }
       }
     }
   }
@@ -290,10 +293,18 @@ class World {
    * collsions with enemy
    */
   collisionsWithEnemy() {
+    let enemiesToRemove = new Set();
+
     this.level.enemies.forEach((enemy, index) => {
       this.enemyHurtCharacter(enemy);
-      this.enemyDiedProzess(enemy, index);
+      if (this.enemyDiedProzess(enemy, index)) {
+        enemiesToRemove.add(index);
+      }
     });
+
+    setTimeout(() => {
+      this.removeEnemies(enemiesToRemove);
+    }, 1000);
   }
 
   /**
@@ -312,19 +323,36 @@ class World {
    * @param {index} index
    */
   enemyDiedProzess(enemy, index) {
-    if (this.character.isColliding(enemy) && this.character.isAboveGround()) {
-      this.enemyDied(enemy, index);
+    if (
+      this.character.isColliding(enemy) &&
+      this.character.isAboveGround() &&
+      !enemy.isDead
+    ) {
+      this.enemyDied(enemy);
+      return true; // Markiere zum Löschen
     }
+    return false;
   }
 
   /**
-   * splice enemy after one sec
+   * Enemy marked as dead
    */
-  enemyDied(enemy, index) {
-    enemy.dead = true;
-    setTimeout(() => {
-      this.level.enemies.splice(index, 1);
-    }, 1000);
+  enemyDied(enemy) {
+    enemy.isDead = true;
+  }
+
+  /**
+   * splice enemy after index sort
+   * @param {object} indices
+   */
+  removeEnemies(indices) {
+    Array.from(indices)
+      .sort((a, b) => b - a)
+      .forEach((index) => {
+        if (this.level.enemies[index] && this.level.enemies[index].isDead) {
+          this.level.enemies.splice(index, 1);
+        }
+      });
   }
 
   /**
@@ -419,7 +447,7 @@ class World {
     this.statusBarEndboss.endbossEnergy--;
 
     if (this.statusBarEndboss.endbossEnergy == 0) {
-      endboss.dead = true;
+      endboss.isDead = true;
       setTimeout(() => {
         this.level.bosses.splice(0, 1);
         lose = false;

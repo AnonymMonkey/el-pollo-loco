@@ -11,7 +11,7 @@ class Endboss extends MovableObject {
 
   hasDiscoveredCharacter = false;
   wasHit = false;
-  dead = false;
+  isDead = false;
 
   deadSoundPlayed = false;
 
@@ -39,10 +39,10 @@ class Endboss extends MovableObject {
    */
   endbossMovement() {
     setInterval(() => {
-      if (this.hasDiscoveredCharacter && !this.dead) {
+      if (this.hasDiscoveredCharacter && !this.isDead) {
         let intervalMove = setInterval(() => {
           this.endbossMoveLeft();
-          if (this.dead) {
+          if (this.isDead) {
             this.endbossDied(intervalMove);
           }
         }, 200);
@@ -80,9 +80,9 @@ class Endboss extends MovableObject {
     setInterval(() => {
       if (!this.hasDiscoveredCharacter) {
         this.playAnimation(this.endboss_Alert());
-      } else if (this.wasHit && !this.dead) {
+      } else if (this.wasHit && !this.isDead) {
         this.endbossHurt();
-      } else if (this.dead) {
+      } else if (this.isDead) {
         this.playAnimation(this.endboss_Dead());
       } else {
         this.playAnimation(this.endboss_Walking());

@@ -5,7 +5,7 @@ class Chicken extends MovableObject {
   height = this.chickenSize;
   width = this.chickenSize;
 
-  dead = false;
+  isDead = false;
   soundPlayed = false;
 
   offset = this.chickenSizeOffsets;
@@ -39,7 +39,7 @@ class Chicken extends MovableObject {
   chickenMovement() {
     let intervalMove = setInterval(() => {
       this.moveLeft(this.speed);
-      if (this.dead) {
+      if (this.isDead) {
         clearInterval(intervalMove);
       }
     }, 1000 / 60);
@@ -51,9 +51,12 @@ class Chicken extends MovableObject {
   chickenAnimation() {
     let intervalDead = setInterval(() => {
       this.sound_deathEnemie_sec.pause();
-      if (this.dead) {
+      if (this.isDead) {
         this.playSound(this.sound_deathEnemie_sec);
         this.playAnimation(this.chicken_Dead());
+        setTimeout(() => {
+          this.y += 500;
+        }, 999);
         clearInterval(intervalDead);
       } else {
         this.playAnimation(this.chicken_Walking());
