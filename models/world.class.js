@@ -329,7 +329,7 @@ class World {
       !enemy.isDead
     ) {
       this.enemyDied(enemy);
-      return true; // Markiere zum Löschen
+      return true;
     }
     return false;
   }
