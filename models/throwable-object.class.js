@@ -1,6 +1,4 @@
 class ThrowableObject extends MovableObject {
-  world;
-
   x = this.throwableObjectX;
   y = this.throwableObjectY;
 

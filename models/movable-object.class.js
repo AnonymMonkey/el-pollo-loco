@@ -49,7 +49,7 @@ class MovableObject extends DrawableObject {
     return (
       this.x + this.width + this.offset.xl - this.offset.xr >=
         mo.x + mo.offset.xl &&
-      this.x + this.offset.xl <= mo.x + mo.width - mo.offset.xl - mo.offset.xr
+      this.x + this.offset.xl <= mo.x + mo.width - mo.offset.xl
     );
   }
 
@@ -80,7 +80,7 @@ class MovableObject extends DrawableObject {
    * @returns
    */
   hit(enemy) {
-    if (enemy.dead == false) {
+    if (enemy.isDead == false) {
       this.characterEnergy -= 2;
       if (this.characterEnergy < 0) {
         this.characterEnergy = 0;

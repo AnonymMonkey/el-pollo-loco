@@ -5,6 +5,7 @@ class Chicken_Small extends MovableObject {
   height = this.chickenSmallSize;
   width = this.chickenSmallSize;
 
+  wasHit = false;
   isDead = false;
   soundPlayed = false;
 

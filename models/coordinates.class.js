@@ -43,7 +43,7 @@ class Coordinates extends Images {
     this.canvasHeight - this.chickenSmallSize + 5 - this.levelSpawnY;
 
   // Endboss
-  endbossSizeOffsets = { xl: 10, yt: 75, xr: 50, yb: 75 + 45 };
+  endbossSizeOffsets = { xl: 60, yt: 75, xr: 110, yb: 75 + 45 };
   endbossSize = 400;
   endbossX = 2300;
   endbossY = this.canvasHeight - this.endbossSize + 45 - this.levelSpawnY;

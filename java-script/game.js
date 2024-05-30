@@ -24,6 +24,7 @@ sound_click = new Audio(new Sounds().sound_click);
 function init() {
   bodyElement = document.body;
   firstLoading = true;
+  //toggleSound();
   updateOrientation();
 }
 
@@ -51,7 +52,6 @@ function firstStartscreenLoading() {
  * show startscreen on all other loadings
  */
 function secStartscreenLoading(lastPage) {
-  //sound_click.play();
   lastPage = document.getElementById(lastPage);
   lastPage.classList.remove("animation-fade-in");
   lastPage.classList.add("animation-fade-out");
@@ -165,8 +165,6 @@ function initialNewGame() {
     keyboard = new Keyboard();
     world = new World(canvas, keyboard, coordinates);
     isGameStarted = true;
-
-    toggleSound();
   }, 250);
   setTimeout(hideLoader, 2500);
 }

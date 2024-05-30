@@ -7,9 +7,12 @@ function HTML_Startscreen() {
     <div id="startscreen" class="start-screen animation-fade-in">
       <h1 id="gameheadline">El pollo loco</h1>
       <img class="canvas-start-screen-background" src="assets/img/9_intro_outro_screens/start/startscreen_1.png" alt="background">
+      <div class="startscreen-controll-buttons">
+        <img onclick="showSubInformations(true)" class="startscreen-subinfo-button c-pointer" src="assets/img/buttons/info.png" alt="info">
+        <img onclick="showGameInformations(true)" class="startscreen-info-button c-pointer" src="assets/img/buttons/controlls.png" alt="info">
+        <img onclick="toggleSound(true)" id="soundbutton" class="sound-button c-pointer" src="assets/img/buttons/sound-on.png" alt="toggle sound">
+      </div>
       <img onclick="startGame(true)" class="play-button c-pointer" src="assets/img/buttons/play.png" alt="start game">
-      <img onclick="showGameInformations(true)" class="info-button c-pointer" src="assets/img/buttons/controlls.png" alt="info">
-      <img onclick="showSubInformations(true)" class="subinfo-button c-pointer" src="assets/img/buttons/info.png" alt="info">
     </div>
     `;
 }
