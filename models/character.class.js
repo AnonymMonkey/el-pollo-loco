@@ -198,7 +198,7 @@ class Character extends MovableObject {
   sleeping() {
     let sleepTimer = new Date().getTime() - this.tired;
     sleepTimer = sleepTimer / 1000;
-    return sleepTimer > 3;
+    return sleepTimer > 10;
   }
 
   /**

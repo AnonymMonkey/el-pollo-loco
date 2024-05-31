@@ -10,7 +10,7 @@ function HTML_Startscreen() {
       <div class="startscreen-controll-buttons">
         <img onclick="showSubInformations(true)" class="startscreen-subinfo-button c-pointer" src="assets/img/buttons/info.png" alt="info">
         <img onclick="showGameInformations(true)" class="startscreen-info-button c-pointer" src="assets/img/buttons/controlls.png" alt="info">
-        <img onclick="toggleSound(true)" id="soundbutton" class="sound-button c-pointer" src="assets/img/buttons/sound-on.png" alt="toggle sound">
+        <img onclick="toggleSound(true)" id="soundbutton" class="sound-button c-pointer" src="assets/img/buttons/sound-off.png" alt="toggle sound">
       </div>
       <img onclick="startGame(true)" class="play-button c-pointer" src="assets/img/buttons/play.png" alt="start game">
     </div>

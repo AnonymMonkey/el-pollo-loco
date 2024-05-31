@@ -48,7 +48,7 @@ class MovableObject extends DrawableObject {
   collidingX(mo) {
     return (
       this.x + this.width + this.offset.xl - this.offset.xr >=
-        mo.x + mo.offset.xl &&
+      mo.x + mo.offset.xl &&
       this.x + this.offset.xl <= mo.x + mo.width - mo.offset.xl
     );
   }
@@ -61,7 +61,7 @@ class MovableObject extends DrawableObject {
   collidingY(mo) {
     return (
       this.y + this.height + this.offset.yt - this.offset.yb >=
-        mo.y + mo.offset.yt &&
+      mo.y + mo.offset.yt &&
       this.y + this.offset.yt <= mo.y + mo.height + mo.offset.yt - mo.offset.yb
     );
   }
@@ -120,6 +120,7 @@ class MovableObject extends DrawableObject {
       this.soundPlayed = true;
     } else if (!isSoundActiv) {
       x.pause();
+      x.currentTime = 0;
       this.soundPlayed = true;
     }
   }

@@ -12,6 +12,7 @@ class ThrowableObject extends MovableObject {
   IMAGES = this.imagesBottle;
 
   isCollided = false;
+  hasCollided = false;
 
   bossWasHit = false;
   groundWasHit = false;

@@ -17,7 +17,7 @@ function exchangeCoin() {
  */
 function coinToBottle() {
   if (world.statusBarBottle.bottleCache < 5) {
-    world.sound_exchange.play();
+    soundActiv(sound_exchange);
     toggleExchange();
     prozessCoinToBottle();
     setTimeout(() => {
@@ -31,7 +31,7 @@ function coinToBottle() {
  */
 function coinToHealth() {
   if (world.character.characterEnergy < 100) {
-    world.sound_exchange.play();
+    soundActiv(sound_exchange);
     toggleExchange();
     prozessCoinToHealth();
     setTimeout(() => {

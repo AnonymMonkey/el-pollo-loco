@@ -5,9 +5,11 @@ function collisionsCoordinationWithThrowableObject() {
   let throwableObjects = world.throwableObjects;
   let endboss = world.level.bosses[0];
   throwableObjects.forEach((throwableObject, index) => {
-    throwableObjectsCollisionsWithEndboss(throwableObject, index, endboss);
-    throwableObjectsCollisionsWithChicken(throwableObject, index);
-    throwableObjectsCollisionsWithGround(throwableObject, index);
+    if (!throwableObject.hasCollided) {
+      throwableObjectsCollisionsWithEndboss(throwableObject, index, endboss);
+      throwableObjectsCollisionsWithChicken(throwableObject, index);
+      throwableObjectsCollisionsWithGround(throwableObject, index);
+    }
   });
 }
 
@@ -17,15 +19,9 @@ function collisionsCoordinationWithThrowableObject() {
  * @param {index} index
  * @param {object} endboss
  */
-function throwableObjectsCollisionsWithEndboss(
-  throwableObject,
-  index,
-  endboss
-) {
+function throwableObjectsCollisionsWithEndboss(throwableObject, index, endboss) {
   if (throwableObject.isColliding(endboss) && world.coordinates.wasThrown) {
-    world.coordinates.wasThrown = false;
     processForEndboss(throwableObject, index, endboss);
-    endboss.wasHit = true;
   }
 }
 
@@ -36,6 +32,8 @@ function throwableObjectsCollisionsWithEndboss(
  * @param {object} endboss
  */
 function processForEndboss(throwableObject, index, endboss) {
+  world.coordinates.wasThrown = false;
+  throwableObject.hasCollided = true;
   world.statusBarEndboss.endbossEnergy--;
 
   if (world.statusBarEndboss.endbossEnergy == 0) {
@@ -59,16 +57,28 @@ function throwableObjectsCollisionsWithChicken(throwableObject, indexBottle) {
   world.level.enemies.forEach((enemy, index) => {
     if (throwableObject.isColliding(enemy) && !enemy.wasHit) {
       enemy.wasHit = true;
-      if (enemy.wasHit) {
-        setTimeout(() => {
-          enemy.wasHit = false;
-        }, 50);
-
-        bottleSplash(throwableObject, indexBottle);
-      }
-      world.enemyDied(enemy, index);
+      processForChicken(throwableObject, indexBottle, enemy, index);
     }
   });
+}
+
+/**
+ * Process for bottle collision with chicken
+ * @param {object} throwableObject
+ * @param {index} indexBottle
+ * @param {object} enemy
+ * @param {index} index
+ */
+function processForChicken(throwableObject, indexBottle, enemy, enemyIndex) {
+  world.coordinates.wasThrown = false;
+  throwableObject.hasCollided = true;
+
+  setTimeout(() => {
+    enemy.wasHit = false;
+  }, 50);
+
+  bottleSplash(throwableObject, indexBottle);
+  world.enemyDied(enemy, enemyIndex);
 }
 
 /**
@@ -78,42 +88,43 @@ function throwableObjectsCollisionsWithChicken(throwableObject, indexBottle) {
  */
 function throwableObjectsCollisionsWithGround(throwableObject, index) {
   if (throwableObject.isCollidingGround() && world.coordinates.wasThrown) {
-    world.coordinates.wasThrown = false;
     processForGround(throwableObject, index);
   }
 }
 
 /**
- * throwable object (Bottle) splice on ground prozess
+ * Process for bottle collision with ground
  * @param {object} throwableObject
  * @param {index} index
  */
 function processForGround(throwableObject, index) {
+  world.coordinates.wasThrown = false;
+  throwableObject.hasCollided = true;
   bottleSplash(throwableObject, index);
 }
 
 /**
- * throwable object (Bottle) splice prozess
+ * Process for Splash Bottle
  * @param {object} throwableObject
  * @param {index} index
  */
 function bottleSplash(throwableObject, index) {
   let throwableObjects = world.throwableObjects;
-  world.sound_breakingBottle.play();
+  soundActiv(world.sound_breakingBottle);
   throwableObject.isCollided = true;
-  console.log(throwableObject.isCollided);
   setTimeout(() => {
     throwableObjects.splice(index, 1);
   }, 550);
 }
 
 /**
- * checks whether bottle can be thrown
+ * Check if bottle can be thrown
  */
 function checkThrowBottle() {
   let tOX = world.character.x + world.coordinates.throwableObjectX;
   let tOY = world.character.y + 110;
   let bottle = new ThrowableObject(tOX, tOY);
+  bottle.hasCollided = false;
 
   if (
     world.keyboard.KEY_D &&
@@ -140,11 +151,8 @@ function throwBottle(bottle) {
   world.throwableObjects.push(bottle);
   world.statusBarBottle.bottleCache--;
   if (Math.random() < 0.5) {
-    world.sound_throwBottle.play();
+    soundActiv(world.sound_throwBottle);
   } else {
-    world.sound_throwBottle_sec.play();
+    soundActiv(world.sound_throwBottle_sec);
   }
 }
-
-//ANCHOR - Flasche verschwindet noch in der Luft nach dem werfen, nachdem ich ein chicken getroffen habe.
-//ANCHOR - Sounds alle stummen können

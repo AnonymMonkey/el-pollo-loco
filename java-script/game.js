@@ -7,6 +7,7 @@ let bodyElement;
 
 let firstLoading = false;
 let isGameStarted = false;
+let isGameEnds = false;
 let isFullscreen = false;
 let isSoundActiv = false;
 
@@ -24,7 +25,6 @@ sound_click = new Audio(new Sounds().sound_click);
 function init() {
   bodyElement = document.body;
   firstLoading = true;
-  //toggleSound();
   updateOrientation();
 }
 
@@ -38,6 +38,7 @@ function showStartScreen(clicked, lastPage) {
   } else {
     secStartscreenLoading(lastPage);
   }
+  toggleSoundButton();
 }
 
 /**
@@ -160,11 +161,14 @@ function initialNewGame() {
     bodyElement.innerHTML = HTML_StartGame();
     showLoader();
     canvas = document.getElementById("canvas");
+    toggleSoundButton();
     loadLevel();
     coordinates = new Coordinates();
     keyboard = new Keyboard();
     world = new World(canvas, keyboard, coordinates);
     isGameStarted = true;
+    isGameEnds = false;
+    backgroundMusic();
   }, 250);
   setTimeout(hideLoader, 2500);
 }
@@ -174,8 +178,11 @@ function initialNewGame() {
  * @param {boolean} cancel
  */
 function gameEnd(cancel) {
-  isSoundActiv = true;
-  toggleSound();
+  isGameStarted = false;
+  isGameEnds = true;
+  checkClicked(cancel);
+  backgroundMusic();
+  battleMusic();
   checkIsGameCancel(cancel);
   if (lose) {
     setScreenToGameOver();
@@ -200,7 +207,9 @@ function checkIsGameCancel(cancel) {
  * show lose screen
  */
 function setScreenToGameOver() {
-  sound_gameOver.play();
+  if (isSoundActiv) {
+    sound_gameOver.play();
+  }
   bodyElement.innerHTML = HTML_GameOver();
 }
 
@@ -208,7 +217,9 @@ function setScreenToGameOver() {
  * show win screen
  */
 function setScreenToGameWin() {
-  sound_gameWin.play();
+  if (isSoundActiv) {
+    sound_gameWin.play();
+  }
   bodyElement.innerHTML = HTML_GameWin();
 }
 
@@ -268,20 +279,44 @@ function exitFullscreen() {
 }
 
 /**
+ * check if is sound activ before play
+ * @param {Audio} x 
+ */
+function soundActiv(x) {
+  if (isSoundActiv) {
+    x.play();
+  } else {
+    x.pause();
+    x.currentTime = 0;
+  }
+}
+
+/**
  * toggle sound
  * @param {boolean} clicked
  */
 function toggleSound(clicked) {
   checkClicked(clicked);
   if (!isSoundActiv) {
-    isSoundActiv = !isSoundActiv;
-    soundbutton.src = "assets/img/buttons/sound-on.png";
+    isSoundActiv = true;
+    toggleSoundButton();
     backgroundMusic();
   } else {
-    isSoundActiv = !isSoundActiv;
-    soundbutton.src = "assets/img/buttons/sound-off.png";
+    isSoundActiv = false;
+    isMusicActiv = false;
+    toggleSoundButton();
     backgroundMusic();
-    battleMusic();
+  }
+}
+
+/**
+ * toggle sound button
+ */
+function toggleSoundButton() {
+  if (isSoundActiv) {
+    soundbutton.src = "assets/img/buttons/sound-on.png";
+  } else {
+    soundbutton.src = "assets/img/buttons/sound-off.png";
   }
 }
 
@@ -289,11 +324,11 @@ function toggleSound(clicked) {
  * set background music
  */
 function backgroundMusic() {
-  if (isSoundActiv) {
+  if (isSoundActiv && isGameStarted) {
     game_sound.play();
     game_sound.loop = true;
     game_sound.volume = 0.5;
-  } else {
+  } else if (!isSoundActiv || isGameEnds) {
     game_sound.pause();
     game_sound.currentTime = 0;
   }
@@ -303,11 +338,11 @@ function backgroundMusic() {
  *set battle music
  */
 function battleMusic() {
-  if (isSoundActiv) {
+  if (isSoundActiv && isGameStarted) {
     sound_endboss_battle.play();
     sound_endboss_battle.loop = true;
     sound_endboss_battle.volume = 0.5;
-  } else {
+  } else if (!isSoundActiv || isGameEnds) {
     sound_endboss_battle.pause();
     sound_endboss_battle.currentTime = 0;
   }
@@ -319,7 +354,9 @@ function battleMusic() {
  */
 function checkClicked(clicked) {
   if (clicked) {
-    sound_click.play();
+    if (isSoundActiv) {
+      sound_click.play();
+    }
   }
 }
 
