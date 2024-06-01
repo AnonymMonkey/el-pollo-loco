@@ -2,7 +2,9 @@
  * exchange Coin to Bottle or Health
  */
 function exchangeCoin() {
-  if (world.statusBarCoin.coinCache > 0) {
+  if (world.statusBarCoin == undefined) {
+    return
+  } else if (world.statusBarCoin.coinCache > 0) {
     if (world.keyboard.KEY_C && !world.coordinates.gotExchanged) {
       coinToBottle();
     }
