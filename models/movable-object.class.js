@@ -81,7 +81,7 @@ class MovableObject extends DrawableObject {
    */
   hit(enemy) {
     if (enemy.isDead == false) {
-      this.characterEnergy -= 2;
+      this.characterEnergy -= 0.5;
       if (this.characterEnergy < 0) {
         this.characterEnergy = 0;
       } else {

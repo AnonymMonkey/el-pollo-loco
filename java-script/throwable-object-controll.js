@@ -21,6 +21,7 @@ function collisionsCoordinationWithThrowableObject() {
  */
 function throwableObjectsCollisionsWithEndboss(throwableObject, index, endboss) {
   if (throwableObject.isColliding(endboss) && world.coordinates.wasThrown) {
+    endboss.wasHit = true;
     processForEndboss(throwableObject, index, endboss);
   }
 }

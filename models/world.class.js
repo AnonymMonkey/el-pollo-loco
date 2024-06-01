@@ -231,7 +231,11 @@ class World {
     this.addToMap(this.statusBarCoin);
     this.addToMap(this.statusBarHealth);
     this.addToMap(this.statusBarBottle);
-    this.addToMap(this.statusBarEndboss);
+    if (this.level.bosses[0] == undefined) {
+      return
+    } else if (this.level.bosses[0].hasDiscoveredCharacter == true) {
+      this.addToMap(this.statusBarEndboss);
+    }
   }
 
   /**
@@ -301,15 +305,12 @@ class World {
    */
   checkCollisions() {
     setInterval(() => {
-      this.collisionsWithEnemy();
-      checkThrowBottle();
-      collisionsCoordinationWithThrowableObject();
-    }, 100);
-
-    setInterval(() => {
       exchangeCoin();
+      this.collisionsWithEnemy();
       this.collisionsWithEndboss();
+      checkThrowBottle();
       collisionsWithCollectable(this.level, this.character);
+      collisionsCoordinationWithThrowableObject();
     }, 1000 / 60);
   }
 
@@ -351,6 +352,7 @@ class World {
     if (
       this.character.isColliding(enemy) &&
       this.character.isAboveGround() &&
+      this.character.speedY <= 10 &&
       !enemy.isDead
     ) {
       this.enemyDied(enemy);

@@ -46,7 +46,7 @@ class Coordinates extends Images {
   endbossSizeOffsets = { xl: 60, yt: 75, xr: 110, yb: 75 + 45 };
   endbossSize = 400;
   endbossX = 2300;
-  endbossY = this.canvasHeight - this.endbossSize + 45 - this.levelSpawnY;
+  endbossY = this.canvasHeight - this.endbossSize - this.levelSpawnY + 20;
   endbossSpeed = 0.5;
 
   // Clouds
@@ -66,7 +66,7 @@ class Coordinates extends Images {
   bottleSizeOffsets = { xl: 20, yt: 15, xr: 30, yb: 20 };
   bottlesSize = 80;
   bottlesX = 500;
-  bottlesY = 344;
+  bottlesY = this.canvasHeight - this.bottlesSize - this.levelSpawnY + 5;
 
   // Throwable Objects
   throwableObjectSizeOffsets = { xl: 10, yt: 10, xr: 20, yb: 20 };
